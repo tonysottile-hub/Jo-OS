@@ -1,15 +1,14 @@
 name: Render Unmapped America Video
 on:
+  push:
+    paths:
+      - 'render-requests/*.json'
   workflow_dispatch:
     inputs:
-      manifest_path:
-        description: Manifest path in repository
+      request_path:
+        description: Render request path
         required: true
-        default: renderer/example-manifest.json
-      output_name:
-        description: Output MP4 filename
-        required: true
-        default: unmapped-render.mp4
+        default: render-requests/example.json
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -18,12 +17,34 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Select request
+        id: req
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.request_path }}" ]; then
+            REQUEST="${{ inputs.request_path }}"
+          else
+            REQUEST="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^render-requests/.*\.json$' | head -1)"
+          fi
+          test -n "$REQUEST" && test -f "$REQUEST"
+          echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
+          python3 - "$REQUEST" <<'PY'
+          import json,sys,pathlib
+          p=pathlib.Path(sys.argv[1]); d=json.loads(p.read_text())
+          for k in ("manifest_path","output_name"):
+              if not d.get(k): raise SystemExit(f"missing {k}")
+          print("request validated")
+          PY
       - name: Verify FFmpeg
         run: ffmpeg -version && ffprobe -version
       - name: Render
-        run: python3 renderer/render.py --manifest "${{ inputs.manifest_path }}" --output "output/${{ inputs.output_name }}"
+        shell: bash
+        run: |
+          MANIFEST="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["manifest_path"])' "${{ steps.req.outputs.path }}")"
+          OUTPUT="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["output_name"])' "${{ steps.req.outputs.path }}")"
+          python3 renderer/render.py --manifest "$MANIFEST" --output "output/$OUTPUT"
       - name: Verify output
-        run: test -s "output/${{ inputs.output_name }}" && ffprobe -v error "output/${{ inputs.output_name }}"
+        run: test -n "$(find output -name '*.mp4' -size +0c -print -quit)" && ffprobe -v error output/*.mp4
       - name: Upload render artifact
         uses: actions/upload-artifact@v4
         with:
