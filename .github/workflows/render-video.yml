@@ -1,0 +1,33 @@
+name: Render Unmapped America Video
+on:
+  workflow_dispatch:
+    inputs:
+      manifest_path:
+        description: Manifest path in repository
+        required: true
+        default: renderer/example-manifest.json
+      output_name:
+        description: Output MP4 filename
+        required: true
+        default: unmapped-render.mp4
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify FFmpeg
+        run: ffmpeg -version && ffprobe -version
+      - name: Render
+        run: python3 renderer/render.py --manifest "${{ inputs.manifest_path }}" --output "output/${{ inputs.output_name }}"
+      - name: Verify output
+        run: test -s "output/${{ inputs.output_name }}" && ffprobe -v error "output/${{ inputs.output_name }}"
+      - name: Upload render artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unmapped-render
+          path: output/*.mp4
+          if-no-files-found: error
+          retention-days: 7
