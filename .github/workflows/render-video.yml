@@ -17,22 +17,35 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - name: Select request
         id: req
         shell: bash
         run: |
-          if [ -n "${{ inputs.request_path }}" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             REQUEST="${{ inputs.request_path }}"
           else
-            REQUEST="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep '^render-requests/.*\.json$' | head -1)"
+            REQUEST="$(python3 - <<'PY'
+          import json, os
+          e=json.load(open(os.environ["GITHUB_EVENT_PATH"]))
+          hc=e.get("head_commit") or {}
+          files=(hc.get("added") or [])+(hc.get("modified") or [])
+          print(next((x for x in files if x.startswith("render-requests/") and x.endswith(".json")), ""))
+          PY
+          )"
           fi
-          test -n "$REQUEST" && test -f "$REQUEST"
+          echo "Selected request: $REQUEST"
+          test -n "$REQUEST"
+          test -f "$REQUEST"
           echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
           python3 - "$REQUEST" <<'PY'
           import json,sys,pathlib
           p=pathlib.Path(sys.argv[1]); d=json.loads(p.read_text())
           for k in ("manifest_path","output_name"):
               if not d.get(k): raise SystemExit(f"missing {k}")
+          if d.get("publish_authorized") is not False:
+              raise SystemExit("proof renderer requires publish_authorized=false")
           print("request validated")
           PY
       - name: Verify FFmpeg
