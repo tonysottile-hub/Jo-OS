@@ -1,0 +1,44 @@
+name: Test Commons Media Feed
+on:
+  push:
+    paths:
+      - 'media-requests/*.json'
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select request
+        id: req
+        shell: bash
+        run: |
+          REQUEST="$(git diff --name-only HEAD^ HEAD -- 'media-requests/*.json' | head -1)"
+          test -n "$REQUEST"
+          echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
+          python - <<'PY' "$REQUEST" >> "$GITHUB_OUTPUT"
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          print("query="+d["query"])
+          print("count="+str(d.get("count",6)))
+          PY
+      - name: Source Commons media
+        run: |
+          mkdir -p output/media
+          python renderer/commons_media.py --query "${{ steps.req.outputs.query }}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
+      - name: Verify manifest
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          m=json.load(open("output/manifest.json"))
+          assert len(m["assets"]) >= 3
+          assert len(m["media_sources"]) == len(m["assets"])
+          for x in m["assets"]: assert pathlib.Path(x["path"]).stat().st_size > 0
+          print("verified",len(m["assets"]),"media assets")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: commons-media
+          path: output/
+          retention-days: 7
