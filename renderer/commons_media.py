@@ -26,27 +26,34 @@ def clean(s):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--query",required=True);p.add_argument("--out-dir",required=True)
+    p.add_argument("--query",action="append",required=True);p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True);p.add_argument("--count",type=int,default=6)
     p.add_argument("--duration",type=float,default=8.0)
     a=p.parse_args();out=pathlib.Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
-    search=api({"action":"query","generator":"search","gsrsearch":a.query+" filetype:bitmap","gsrnamespace":6,
-      "gsrlimit":min(max(a.count*4,16),40),"prop":"imageinfo",
-      "iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
-    candidates=[]
-    for page in search.get("query",{}).get("pages",[]):
-        ii=(page.get("imageinfo") or [{}])[0];mime=ii.get("mime","")
-        if not mime.startswith("image/"):continue
-        w,h=ii.get("width",0),ii.get("height",0)
-        if min(w,h)<800:continue
-        meta=ii.get("extmetadata",{})
-        candidates.append({"title":page.get("title"),"url":ii.get("thumburl") or ii.get("url"),
-          "source_url":ii.get("descriptionurl"),"width":w,"height":h,
-          "license":clean(meta.get("LicenseShortName",{}).get("value")),
-          "license_url":clean(meta.get("LicenseUrl",{}).get("value")),
-          "artist":clean(meta.get("Artist",{}).get("value")),
-          "credit":clean(meta.get("Credit",{}).get("value")),
-          "description":clean(meta.get("ImageDescription",{}).get("value"))})
+    candidates=[]; seen=set()
+    reject=re.compile(r"\\b(cemetery|cemetery|grave|graves|headstone|tombstone|memorial park|burial)\\b",re.I)
+    for query in a.query:
+        search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,
+          "gsrlimit":min(max(a.count*5,20),50),"prop":"imageinfo",
+          "iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
+        for page in search.get("query",{}).get("pages",[]):
+            ii=(page.get("imageinfo") or [{}])[0];mime=ii.get("mime","")
+            if not mime.startswith("image/"):continue
+            w,h=ii.get("width",0),ii.get("height",0)
+            if min(w,h)<800:continue
+            meta=ii.get("extmetadata",{})
+            title=page.get("title") or ""; desc=clean(meta.get("ImageDescription",{}).get("value"))
+            if reject.search(title+" "+desc):continue
+            url=ii.get("thumburl") or ii.get("url")
+            if not url or url in seen:continue
+            seen.add(url)
+            candidates.append({"title":title,"url":url,
+              "source_url":ii.get("descriptionurl"),"width":w,"height":h,
+              "license":clean(meta.get("LicenseShortName",{}).get("value")),
+              "license_url":clean(meta.get("LicenseUrl",{}).get("value")),
+              "artist":clean(meta.get("Artist",{}).get("value")),
+              "credit":clean(meta.get("Credit",{}).get("value")),
+              "description":desc,"matched_query":query})
     candidates.sort(key=lambda x:(x["width"]*x["height"]),reverse=True)
     assets=[];sources=[]
     for i,c in enumerate(candidates,1):
@@ -62,5 +69,5 @@ def main():
     if len(assets)<3:raise SystemExit(f"Only {len(assets)} suitable Commons images downloaded")
     pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,
       "media_sources":sources},indent=2)+"\n")
-    print(json.dumps({"query":a.query,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
+    print(json.dumps({"queries":a.query,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
 if __name__=="__main__":main()
