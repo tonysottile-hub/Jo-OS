@@ -31,10 +31,11 @@ def main():
     p.add_argument("--duration",type=float,default=8.0)
     a=p.parse_args();out=pathlib.Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
     candidates=[]; seen=set()
-    reject=re.compile(r"\\b(cemetery|cemetery|grave|graves|headstone|tombstone|memorial park|burial)\\b",re.I)
+    reject=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|memorial\s+park|burial|funeral)\b",re.I)
+    place=re.compile(r"\bgoldfield\b",re.I)
     for query in a.query:
         search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,
-          "gsrlimit":min(max(a.count*5,20),50),"prop":"imageinfo",
+          "gsrlimit":min(max(a.count*8,30),50),"prop":"imageinfo",
           "iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
         for page in search.get("query",{}).get("pages",[]):
             ii=(page.get("imageinfo") or [{}])[0];mime=ii.get("mime","")
@@ -42,12 +43,16 @@ def main():
             w,h=ii.get("width",0),ii.get("height",0)
             if min(w,h)<800:continue
             meta=ii.get("extmetadata",{})
-            title=page.get("title") or ""; desc=clean(meta.get("ImageDescription",{}).get("value"))
-            if reject.search(title+" "+desc):continue
-            # Keep location-specific stories on location. Commons search can otherwise
-            # satisfy "Nevada mining" with nearby towns such as Hawthorne/Aurora.
-            hay=(title+" "+desc).lower()
-            if "goldfield" not in hay: continue
+            title=page.get("title") or ""
+            desc=clean(meta.get("ImageDescription",{}).get("value"))
+            categories=clean(meta.get("Categories",{}).get("value"))
+            credit=clean(meta.get("Credit",{}).get("value"))
+            location=clean(meta.get("Location",{}).get("value"))
+            # IMPORTANT: evaluate only returned asset metadata. Never use the search
+            # query itself as evidence that the asset depicts the requested place.
+            asset_metadata=" ".join((title,desc,categories,credit,location))
+            if reject.search(asset_metadata):continue
+            if not place.search(asset_metadata):continue
             url=ii.get("thumburl") or ii.get("url")
             if not url or url in seen:continue
             seen.add(url)
@@ -56,11 +61,11 @@ def main():
               "license":clean(meta.get("LicenseShortName",{}).get("value")),
               "license_url":clean(meta.get("LicenseUrl",{}).get("value")),
               "artist":clean(meta.get("Artist",{}).get("value")),
-              "credit":clean(meta.get("Credit",{}).get("value")),
-              "description":desc,"matched_query":query})
+              "credit":credit,"description":desc,"categories":categories,
+              "location":location,"matched_query":query})
     candidates.sort(key=lambda x:(x["width"]*x["height"]),reverse=True)
     assets=[];sources=[]
-    for i,c in enumerate(candidates,1):
+    for c in candidates:
         if len(assets)>=a.count:break
         try:
             data=get(c["url"],60); time.sleep(1.2)
