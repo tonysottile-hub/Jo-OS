@@ -22,7 +22,9 @@ def main():
         lines += [f"file '{path.as_posix()}'",f"duration {float(item.get('duration',duration))}"]
     lines.append(f"file '{pathlib.Path(assets[-1]['path']).resolve().as_posix()}'")
     concat.write_text("\n".join(lines)+"\n")
-    vf="scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,format=yuv420p"
+    # Fill the 9:16 canvas instead of letterboxing landscape source images.
+    # A slight zoom gives still photographs motion while preserving a clean vertical frame.
+    vf="scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,zoompan=z='min(zoom+0.0005,1.08)':d=1:s=1080x1920:fps=30,format=yuv420p"
     cmd=["ffmpeg","-y","-f","concat","-safe","0","-i",str(concat)]
     audio=m.get("audio")
     if audio:
