@@ -3,6 +3,12 @@ on:
   push:
     paths:
       - 'narration-requests/*.json'
+  workflow_dispatch:
+    inputs:
+      request_path:
+        description: Narration request path
+        required: true
+        type: string
 jobs:
   narrate:
     runs-on: ubuntu-latest
@@ -16,8 +22,14 @@ jobs:
       - name: Select request
         id: req
         shell: bash
+        env:
+          DISPATCH_REQUEST: ${{ inputs.request_path }}
         run: |
-          REQUEST="$(git diff --name-only HEAD^ HEAD -- 'narration-requests/*.json' | head -1)"
+          if [ -n "$DISPATCH_REQUEST" ]; then
+            REQUEST="$DISPATCH_REQUEST"
+          else
+            REQUEST="$(git diff --name-only HEAD^ HEAD -- 'narration-requests/*.json' | head -1)"
+          fi
           test -n "$REQUEST"
           test -f "$REQUEST"
           echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
