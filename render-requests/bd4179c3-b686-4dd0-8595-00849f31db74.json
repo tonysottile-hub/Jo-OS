@@ -1,0 +1,7 @@
+{
+  "render_id": "bd4179c3-b686-4dd0-8595-00849f31db74",
+  "manifest_path": "renderer/proof-manifest.json",
+  "output_name": "jo-os-auto-return-proof.mp4",
+  "publish_authorized": false,
+  "proof": "automatic-return"
+}
