@@ -22,9 +22,10 @@ def main():
         lines += [f"file '{path.as_posix()}'",f"duration {float(item.get('duration',duration))}"]
     lines.append(f"file '{pathlib.Path(assets[-1]['path']).resolve().as_posix()}'")
     concat.write_text("\n".join(lines)+"\n")
-    # Fill the 9:16 canvas instead of letterboxing landscape source images.
-    # A slight zoom gives still photographs motion while preserving a clean vertical frame.
-    vf="scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,zoompan=z='min(zoom+0.0005,1.08)':d=1:s=1080x1920:fps=30,format=yuv420p"
+    # Fill the 9:16 canvas without letterboxing. Keep concat timing intact;
+    # motion is applied with a time-based crop/scale chain rather than zoompan,
+    # because zoompan d=1 collapses concat still-image durations.
+    vf="scale=1200:2134:force_original_aspect_ratio=increase,crop=1080:1920:x='(iw-ow)/2+20*sin(t*0.35)':y='(ih-oh)/2+20*cos(t*0.27)',format=yuv420p"
     cmd=["ffmpeg","-y","-f","concat","-safe","0","-i",str(concat)]
     audio=m.get("audio")
     if audio:
@@ -34,6 +35,13 @@ def main():
     else: cmd += ["-an"]
     cmd += ["-movflags","+faststart",str(out)]
     run(cmd)
-    run(["ffprobe","-v","error","-show_entries","format=duration,size:stream=codec_name,codec_type,width,height","-of","json",str(out)])
+    probe=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration,size:stream=codec_name,codec_type,width,height","-of","json",str(out)]))
+    actual=float(probe["format"]["duration"])
+    expected=sum(float(item.get("duration",duration)) for item in assets)
+    # With narration and -shortest, output may end at narration length, but a near-zero
+    # render is always a production failure rather than a valid artifact.
+    if actual < min(5.0, expected * 0.5):
+        raise SystemExit(f"render duration invalid: actual={actual:.3f}s expected_visual={expected:.3f}s")
+    print(json.dumps(probe))
     print(out)
 if __name__=="__main__": main()
