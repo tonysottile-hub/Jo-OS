@@ -35,13 +35,16 @@ jobs:
           python - "$REQUEST" <<'PY' >> "$GITHUB_OUTPUT"
           import json,sys
           d=json.load(open(sys.argv[1]))
-          print("query="+d["query"])
+          queries=d.get("queries") or [d["query"]]
+          for q in queries: print("query="+q)
           print("count="+str(d.get("count",6)))
           PY
       - name: Source Commons media
         run: |
           mkdir -p output/media
-          python renderer/commons_media.py --query "${{ steps.req.outputs.query }}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
+          ARGS=()
+          while IFS= read -r q; do ARGS+=(--query "$q"); done <<< "${{ steps.req.outputs.query }}"
+          python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
           python - <<'PY'
