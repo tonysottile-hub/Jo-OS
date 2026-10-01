@@ -47,6 +47,14 @@ jobs:
           sudo apt-get install -y ffmpeg
       - name: Verify FFmpeg
         run: ffmpeg -version && ffprobe -version
+      - name: Download narration artifact when requested
+        if: ${{ hashFiles('production/rhyolite/manifest.json') != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: unmapped-narration
+          run-id: 36795018599
+          github-token: ${{ github.token }}
+          path: production/rhyolite
       - name: Render
         shell: bash
         run: |
