@@ -20,12 +20,18 @@ def clean(s):
     s=re.sub(r"<[^>]+>"," ",s or "")
     return html.unescape(re.sub(r"\s+"," ",s)).strip()
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--query",action="append",required=True);p.add_argument("--out-dir",required=True)
-    p.add_argument("--manifest",required=True);p.add_argument("--count",type=int,default=6);p.add_argument("--duration",type=float,default=8)
+    p=argparse.ArgumentParser()
+    p.add_argument("--query",action="append",required=True)
+    p.add_argument("--place")
+    p.add_argument("--out-dir",required=True)
+    p.add_argument("--manifest",required=True)
+    p.add_argument("--count",type=int,default=6)
+    p.add_argument("--duration",type=float,default=8)
     a=p.parse_args();out=pathlib.Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
     candidates=[];seen=set()
     reject=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|memorial\s+park|burial|funeral|stereoscopic|stereo|cross[ -]?eyed|3d)\b",re.I)
-    place=re.compile(r"\bgoldfield\b",re.I);conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I)
+    place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
+    goldfield_conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I) if (a.place or "").strip().lower()=="goldfield" else None
     for query in a.query:
         search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,
           "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
@@ -37,7 +43,9 @@ def main():
             meta=ii.get("extmetadata",{});title=page.get("title") or "";desc=clean(meta.get("ImageDescription",{}).get("value"))
             cats=clean(meta.get("Categories",{}).get("value"));credit=clean(meta.get("Credit",{}).get("value"));loc=clean(meta.get("Location",{}).get("value"))
             md=" ".join((title,desc,cats,credit,loc))
-            if reject.search(md) or conflicting.search(md) or not place.search(md):continue
+            if reject.search(md):continue
+            if goldfield_conflicting and goldfield_conflicting.search(md):continue
+            if place and not place.search(md):continue
             url=ii.get("thumburl") or ii.get("url")
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
@@ -47,16 +55,16 @@ def main():
     assets=[];sources=[];hotel_count=0
     for c in candidates:
         if len(assets)>=a.count:break
-        is_hotel=bool(re.search(r"\bgoldfield hotel\b",c["title"]+" "+c["description"],re.I))
-        if is_hotel and hotel_count>=2:continue
+        is_goldfield_hotel=(a.place or "").strip().lower()=="goldfield" and bool(re.search(r"\bgoldfield hotel\b",c["title"]+" "+c["description"],re.I))
+        if is_goldfield_hotel and hotel_count>=2:continue
         try:data=get(c["url"],60);time.sleep(1.2)
         except Exception as e:print("skip",c["title"],repr(e));continue
         ext=pathlib.Path(urllib.parse.urlparse(c["url"]).path).suffix.lower()
         if ext not in {".jpg",".jpeg",".png",".webp"}:ext=".jpg"
         dest=out/f"commons-{len(assets)+1:02d}{ext}";dest.write_bytes(data)
         assets.append({"path":str(dest),"duration":a.duration});sources.append({**c,"local_path":str(dest)})
-        if is_hotel:hotel_count+=1
+        if is_goldfield_hotel:hotel_count+=1
     if len(assets)<3:raise SystemExit(f"Only {len(assets)} suitable Commons images downloaded")
-    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"media_sources":sources},indent=2)+"\n")
-    print(json.dumps({"queries":a.query,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
+    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"media_sources":sources},indent=2)+"\n")
+    print(json.dumps({"queries":a.query,"required_place":a.place,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
 if __name__=="__main__":main()
