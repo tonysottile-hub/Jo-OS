@@ -44,6 +44,10 @@ def main():
             meta=ii.get("extmetadata",{})
             title=page.get("title") or ""; desc=clean(meta.get("ImageDescription",{}).get("value"))
             if reject.search(title+" "+desc):continue
+            # Keep location-specific stories on location. Commons search can otherwise
+            # satisfy "Nevada mining" with nearby towns such as Hawthorne/Aurora.
+            hay=(title+" "+desc).lower()
+            if "goldfield" not in hay: continue
             url=ii.get("thumburl") or ii.get("url")
             if not url or url in seen:continue
             seen.add(url)
