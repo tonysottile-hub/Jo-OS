@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - name: Select request
         id: req
         shell: bash
@@ -17,7 +19,7 @@ jobs:
           REQUEST="$(git diff --name-only HEAD^ HEAD -- 'media-requests/*.json' | head -1)"
           test -n "$REQUEST"
           echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
-          python - <<'PY' "$REQUEST" >> "$GITHUB_OUTPUT"
+          python - "$REQUEST" <<'PY' >> "$GITHUB_OUTPUT"
           import json,sys
           d=json.load(open(sys.argv[1]))
           print("query="+d["query"])
