@@ -38,6 +38,7 @@ jobs:
           queries=d.get("queries") or [d["query"]]
           print("queries_json="+json.dumps(queries,separators=(",",":")))
           print("count="+str(d.get("count",6)))
+          print("required_place="+str(d.get("required_place","")))
           PY
       - name: Source Commons media
         run: |
@@ -49,6 +50,8 @@ jobs:
           )
           ARGS=()
           for q in "${QUERIES[@]}"; do ARGS+=(--query "$q"); done
+          PLACE="${{ steps.req.outputs.required_place }}"
+          if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
@@ -58,7 +61,7 @@ jobs:
           assert len(m["assets"]) >= 3
           assert len(m["media_sources"]) == len(m["assets"])
           for x in m["assets"]: assert pathlib.Path(x["path"]).stat().st_size > 0
-          print("verified",len(m["assets"]),"media assets")
+          print("verified",len(m["assets"]),"media assets","for",m.get("required_place"))
           PY
       - uses: actions/upload-artifact@v4
         with:
