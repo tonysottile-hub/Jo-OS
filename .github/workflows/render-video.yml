@@ -31,7 +31,7 @@ jobs:
           python3 - "$REQUEST" <<'PY' >> "$GITHUB_OUTPUT"
           import json,sys
           d=json.load(open(sys.argv[1]))
-          for k in ("output_name","media_run_id","narration_run_id"): 
+          for k in ("output_name","media_run_id","narration_run_id"):
               if not d.get(k): raise SystemExit("missing "+k)
           if d.get("publish_authorized") is not False: raise SystemExit("publish_authorized must be false")
           print("media_run_id="+str(d["media_run_id"]))
@@ -62,7 +62,7 @@ jobs:
       - name: Prepare manifest
         run: |
           python3 - <<'PY'
-          import json,glob,os
+          import json,os
           p="production/current/manifest.json"
           m=json.load(open(p))
           for a in m["assets"]:
@@ -72,11 +72,94 @@ jobs:
           PY
       - name: Render
         run: python3 renderer/render.py --manifest production/current/manifest.json --output "output/${{ steps.req.outputs.output_name }}"
-      - name: Verify output
+      - name: Verify output exists
         run: test -n "$(find output -name '*.mp4' -size +0c -print -quit)" && ffprobe -v error output/*.mp4
+      - name: Build automated QA report
+        run: |
+          python3 - <<'PY'
+          import glob,json,os,re,subprocess,statistics
+          mp4=glob.glob("output/*.mp4")[0]
+          manifest=json.load(open("production/current/manifest.json"))
+          probe=json.loads(subprocess.check_output([
+            "ffprobe","-v","error","-show_entries",
+            "format=duration:stream=codec_type,codec_name,width,height,duration",
+            "-of","json",mp4
+          ],text=True))
+          duration=float(probe.get("format",{}).get("duration") or 0)
+          video=next((s for s in probe.get("streams",[]) if s.get("codec_type")=="video"),{})
+          audio=next((s for s in probe.get("streams",[]) if s.get("codec_type")=="audio"),{})
+          sources=manifest.get("media_sources") or []
+          required_place=str(manifest.get("required_place") or "").strip()
+          rejected=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|burial|funeral|stereoscopic|stereo|cross[ -]?eyed)\b",re.I)
+          source_texts=[" ".join(str(x.get(k,"")) for k in ("title","description","categories","location")) for x in sources]
+          source_place_ok=(not required_place) or all(re.search(r"\b"+re.escape(required_place)+r"\b",x,re.I) for x in source_texts)
+          source_reject_ok=all(not rejected.search(x) for x in source_texts)
+          unique_titles=len(set((x.get("title") or "").strip().lower() for x in sources if x.get("title")))
+          times=[max(.5,duration*f) for f in (.08,.28,.50,.72,.92)] if duration>1 else [.5]
+          hashes=[]
+          black_edge_samples=[]
+          for t in times:
+              h=subprocess.check_output([
+                "ffmpeg","-v","error","-ss",str(t),"-i",mp4,
+                "-frames:v","1","-f","md5","-"
+              ],text=True).strip()
+              hashes.append(h)
+              raw=subprocess.check_output([
+                "ffmpeg","-v","error","-ss",str(t),"-i",mp4,
+                "-frames:v","1","-vf","scale=270:480","-pix_fmt","gray","-f","rawvideo","-"
+              ])
+              w,hgt=270,480
+              top=statistics.fmean(raw[:w*10]); bottom=statistics.fmean(raw[-w*10:])
+              left=[];right=[]
+              for y in range(hgt):
+                  row=raw[y*w:(y+1)*w]
+                  left.extend(row[:6]);right.extend(row[-6:])
+              lm=statistics.fmean(left);rm=statistics.fmean(right)
+              black_edge_samples.append({"t":round(t,2),"top":round(top,1),"bottom":round(bottom,1),"left":round(lm,1),"right":round(rm,1)})
+          persistent_tb=sum(1 for x in black_edge_samples if x["top"]<18 and x["bottom"]<18)
+          persistent_lr=sum(1 for x in black_edge_samples if x["left"]<18 and x["right"]<18)
+          vol=subprocess.run(["ffmpeg","-i",mp4,"-af","volumedetect","-f","null","-"],capture_output=True,text=True)
+          m=re.search(r"mean_volume:\s*(-?[0-9.]+) dB",vol.stderr)
+          mean_volume=float(m.group(1)) if m else -999.0
+          checks={
+            "dimensions_1080x1920": video.get("width")==1080 and video.get("height")==1920,
+            "video_codec_h264": video.get("codec_name")=="h264",
+            "audio_codec_aac": audio.get("codec_name")=="aac",
+            "duration_short_sane": 20.0 <= duration <= 70.0,
+            "audio_not_silent": mean_volume > -45.0,
+            "source_count": len(sources) >= 3,
+            "source_place_match": source_place_ok,
+            "source_reject_terms_clear": source_reject_ok,
+            "source_title_diversity": unique_titles >= min(3,len(sources)),
+            "frame_diversity": len(set(hashes)) >= min(3,len(hashes)),
+            "no_persistent_black_bars": persistent_tb < 4 and persistent_lr < 4
+          }
+          report={
+            "passed":all(checks.values()),
+            "checks":checks,
+            "evidence":{
+              "duration":duration,
+              "video":video,
+              "audio":audio,
+              "mean_volume_db":mean_volume,
+              "source_count":len(sources),
+              "unique_source_titles":unique_titles,
+              "required_place":required_place,
+              "frame_hashes":hashes,
+              "black_edge_samples":black_edge_samples
+            },
+            "qa_method":"automated technical + source + structural visual/audio heuristics",
+            "perceptual_human_review":False
+          }
+          json.dump(report,open("output/qa.json","w"),indent=2)
+          print(json.dumps(report,indent=2))
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: unmapped-render
-          path: output/*.mp4
+          path: |
+            output/*.mp4
+            output/qa.json
+            production/current/manifest.json
           if-no-files-found: error
           retention-days: 7
