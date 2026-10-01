@@ -26,14 +26,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             REQUEST="${{ inputs.request_path }}"
           else
-            REQUEST="$(python3 - <<'PY'
-          import json, os
-          e=json.load(open(os.environ["GITHUB_EVENT_PATH"]))
-          hc=e.get("head_commit") or {}
-          files=(hc.get("added") or [])+(hc.get("modified") or [])
-          print(next((x for x in files if x.startswith("render-requests/") and x.endswith(".json")), ""))
-          PY
-          )"
+            REQUEST="$(git diff --name-only HEAD^ HEAD -- 'render-requests/*.json' | head -1)"
           fi
           echo "Selected request: $REQUEST"
           test -n "$REQUEST"
