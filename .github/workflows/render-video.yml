@@ -38,8 +38,8 @@ jobs:
           print("narration_run_id="+str(d["narration_run_id"]))
           print("output_name="+d["output_name"])
           PY
-      - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Verify FFmpeg
+        run: ffmpeg -version && ffprobe -version
       - name: Download media
         uses: actions/download-artifact@v4
         with:
