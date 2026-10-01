@@ -1,0 +1,48 @@
+name: Narration Smoke Test
+on:
+  push:
+    paths:
+      - 'narration-requests/*.json'
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Select request
+        id: req
+        shell: bash
+        run: |
+          REQUEST="$(git diff --name-only HEAD^ HEAD -- 'narration-requests/*.json' | head -1)"
+          test -n "$REQUEST"
+          test -f "$REQUEST"
+          echo "path=$REQUEST" >> "$GITHUB_OUTPUT"
+      - name: Install Piper and FFmpeg
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install piper-tts
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Generate narration
+        shell: bash
+        run: |
+          SCRIPT="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["script_path"])' "${{ steps.req.outputs.path }}")"
+          VOICE="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("voice","en_US-lessac-medium"))' "${{ steps.req.outputs.path }}")"
+          mkdir -p output
+          python3 -m piper.download_voices "$VOICE" --download-dir voices
+          python3 -m piper -m "$VOICE" --data-dir voices -f output/narration.wav -- "$(cat "$SCRIPT")"
+      - name: Verify narration
+        run: |
+          test -s output/narration.wav
+          ffprobe -v error -show_entries format=duration -of default=nw=1 output/narration.wav
+      - name: Upload narration
+        uses: actions/upload-artifact@v4
+        with:
+          name: unmapped-narration
+          path: output/narration.wav
+          if-no-files-found: error
+          retention-days: 7
