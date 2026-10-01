@@ -1,0 +1,27 @@
+{
+  "title": "Rhyolite, Nevada — Boom to Ghost Town",
+  "duration_per_asset": 9.77,
+  "assets": [
+    {
+      "path": "production/rhyolite/scene01.svg",
+      "duration": 9.77
+    },
+    {
+      "path": "production/rhyolite/scene02.svg",
+      "duration": 9.77
+    },
+    {
+      "path": "production/rhyolite/scene03.svg",
+      "duration": 9.77
+    },
+    {
+      "path": "production/rhyolite/scene04.svg",
+      "duration": 9.77
+    },
+    {
+      "path": "production/rhyolite/scene05.svg",
+      "duration": 9.77
+    }
+  ],
+  "audio": "production/rhyolite/narration.wav"
+}
