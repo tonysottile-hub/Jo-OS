@@ -36,14 +36,19 @@ jobs:
           import json,sys
           d=json.load(open(sys.argv[1]))
           queries=d.get("queries") or [d["query"]]
-          for q in queries: print("query="+q)
+          print("queries_json="+json.dumps(queries,separators=(",",":")))
           print("count="+str(d.get("count",6)))
           PY
       - name: Source Commons media
         run: |
           mkdir -p output/media
+          mapfile -t QUERIES < <(python - <<'PY'
+          import json
+          for q in json.loads(r'''${{ steps.req.outputs.queries_json }}'''): print(q)
+          PY
+          )
           ARGS=()
-          while IFS= read -r q; do ARGS+=(--query "$q"); done <<< "${{ steps.req.outputs.query }}"
+          for q in "${QUERIES[@]}"; do ARGS+=(--query "$q"); done
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
