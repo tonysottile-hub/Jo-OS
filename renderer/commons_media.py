@@ -24,7 +24,8 @@ def main():
     p.add_argument("--query",action="append",required=True)
     p.add_argument("--place")
     p.add_argument("--category")
-    p.add_argument("--file-title",action="append",default=[])\n    p.add_argument("--required-term",action="append",default=[])
+    p.add_argument("--file-title",action="append",default=[])
+    p.add_argument("--required-term",action="append",default=[])
     p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True)
     p.add_argument("--count",type=int,default=6)
@@ -33,6 +34,7 @@ def main():
     candidates=[];seen=set()
     reject=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|memorial\s+park|burial|funeral|stereoscopic|stereo|cross[ -]?eyed|3d)\b",re.I)
     place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
+    required_terms=[re.compile(r"\b"+re.escape(x.strip())+r"\b",re.I) for x in a.required_term if x.strip()]
     goldfield_conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I) if (a.place or "").strip().lower()=="goldfield" else None
     batches=[]
     if a.file_title:
@@ -62,7 +64,8 @@ def main():
             md=" ".join((title,desc,cats,credit,loc))
             if reject.search(md):continue
             if goldfield_conflicting and goldfield_conflicting.search(md):continue
-            if place and not place.search(md):continue\n            if required_terms and not all(rx.search(md) for rx in required_terms):continue
+            if place and not place.search(md):continue
+            if required_terms and not all(rx.search(md) for rx in required_terms):continue
             url=ii.get("thumburl") or ii.get("url")
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
@@ -82,6 +85,7 @@ def main():
         assets.append({"path":str(dest),"duration":a.duration});sources.append({**c,"local_path":str(dest)})
         if is_goldfield_hotel:hotel_count+=1
     if len(assets)<3:raise SystemExit(f"Only {len(assets)} suitable Commons images downloaded")
-    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"required_terms":a.required_term,"media_sources":sources},indent=2)+"\n")
+    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"required_terms":a.required_term,"media_sources":sources},indent=2)+"
+")
     print(json.dumps({"queries":a.query,"required_place":a.place,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
 if __name__=="__main__":main()
