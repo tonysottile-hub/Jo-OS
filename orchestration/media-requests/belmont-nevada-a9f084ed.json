@@ -14,7 +14,7 @@
     "CANFIELD'S MILL, BELMONT, NEVADA - NARA - 524117.jpg",
     "Ruins (14422062460).jpg"
   ],
-  "category": "",
+  "category": "Belmont, Nevada",
   "count": 8,
   "required_place": "Belmont",
   "exclude_terms": [
@@ -29,5 +29,8 @@
   ],
   "publish_authorized": false,
   "requested_at": "2026-10-02T19:39:00Z",
-  "recovery_note": "Curated exact Commons files after category retrieval included unrelated Belmont names and flora."
+  "recovery_note": "Strict Belmont plus Nevada context, exact-file priority, and category allowlist after fuzzy matches admitted France and biography images.",
+  "required_terms": [
+    "Nevada"
+  ]
 }
