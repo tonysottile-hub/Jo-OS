@@ -1,12 +1,13 @@
 {
   "build_id": "a9f084ed-d212-48c3-9a15-bd69dc57c1f7",
   "queries": [
-    "Belmont Nevada historic downtown",
-    "Belmont Nevada courthouse historic",
-    "Belmont Nevada silver mining historic",
-    "Belmont Nevada ghost town buildings"
+    "Belmont Nevada courthouse exterior",
+    "Belmont Nevada ghost town ruins",
+    "Belmont Nevada historic main street",
+    "Belmont Courthouse Nevada"
   ],
   "count": 8,
+  "required_place": "",
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -18,5 +19,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-01T23:19:01.404Z"
+  "requested_at": "2026-10-02T19:22:29.801Z"
 }
