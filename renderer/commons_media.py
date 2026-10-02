@@ -85,7 +85,6 @@ def main():
         assets.append({"path":str(dest),"duration":a.duration});sources.append({**c,"local_path":str(dest)})
         if is_goldfield_hotel:hotel_count+=1
     if len(assets)<3:raise SystemExit(f"Only {len(assets)} suitable Commons images downloaded")
-    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"required_terms":a.required_term,"media_sources":sources},indent=2)+"
-")
+    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"required_terms":a.required_term,"media_sources":sources},indent=2)+"\n")
     print(json.dumps({"queries":a.query,"required_place":a.place,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
 if __name__=="__main__":main()
