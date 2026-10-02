@@ -1,12 +1,10 @@
 {
   "build_id": "a9f084ed-d212-48c3-9a15-bd69dc57c1f7",
   "queries": [
-    ""Belmont, NV Courthouse"",
-    ""Belmont, NV Welcome sign"",
-    ""TOWN OF BELMONT, NEVADA"",
-    ""SHAFT TO ARIZONA MINE BELMONT, NEVADA"",
-    ""CANFIELD'S MILL, BELMONT, NEVADA""
+    "Belmont Nevada courthouse",
+    "Belmont Nevada ghost town"
   ],
+  "category": "Belmont, Nevada",
   "count": 8,
   "required_place": "Belmont",
   "exclude_terms": [
@@ -20,6 +18,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T19:29:00Z",
-  "recovery_note": "Exact Commons titles from verified Belmont category/search results after broad search returned unrelated media and strict generic search returned zero."
+  "requested_at": "2026-10-02T19:32:00Z",
+  "recovery_note": "Category-aware Commons retrieval added after broad matching produced unrelated media and strict text search returned zero."
 }
