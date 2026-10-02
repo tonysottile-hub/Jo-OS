@@ -4,7 +4,17 @@
     "Belmont Nevada courthouse",
     "Belmont Nevada ghost town"
   ],
-  "category": "Belmont, Nevada",
+  "file_titles": [
+    "Belmont, NV Courthouse.jpg",
+    "2014-07-30 12 52 40 Belmont Courthouse in Belmont, Nevada viewed from the east.JPG",
+    "2014-07-30 12 49 54 Belmont Courthouse in Belmont, Nevada viewed from the west.JPG",
+    "Belmont, NV Welcome sign.JPG",
+    "2014-07-30 12 37 55 Historical marker in Belmont, Nevada.JPG",
+    "SHAFT TO ARIZONA MINE BELMONT, NEVADA - NARA - 524119.jpg",
+    "CANFIELD'S MILL, BELMONT, NEVADA - NARA - 524117.jpg",
+    "Ruins (14422062460).jpg"
+  ],
+  "category": "",
   "count": 8,
   "required_place": "Belmont",
   "exclude_terms": [
@@ -18,6 +28,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T19:32:00Z",
-  "recovery_note": "Category-aware Commons retrieval added after broad matching produced unrelated media and strict text search returned zero."
+  "requested_at": "2026-10-02T19:39:00Z",
+  "recovery_note": "Curated exact Commons files after category retrieval included unrelated Belmont names and flora."
 }
