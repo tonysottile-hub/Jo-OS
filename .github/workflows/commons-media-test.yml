@@ -41,6 +41,7 @@ jobs:
           print("count="+str(d.get("count",6)))
           print("required_place="+str(d.get("required_place","")))
           print("category="+str(d.get("category","")))
+          print("file_titles_json="+json.dumps(d.get("file_titles",[]),separators=(",",":")))
           PY
       - name: Source Commons media
         run: |
@@ -56,6 +57,12 @@ jobs:
           CATEGORY="${{ steps.req.outputs.category }}"
           if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
           if [ -n "$CATEGORY" ]; then ARGS+=(--category "$CATEGORY"); fi
+          mapfile -t FILE_TITLES < <(python - <<\'PY\'
+          import json
+          for x in json.loads(r\'\'\'${{ steps.req.outputs.file_titles_json }}\'\'\'): print(x)
+          PY
+          )
+          for t in "${FILE_TITLES[@]}"; do ARGS+=(--file-title "$t"); done
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
