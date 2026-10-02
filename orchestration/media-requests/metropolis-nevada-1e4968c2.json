@@ -1,23 +1,17 @@
 {
   "build_id": "1e4968c2-e97d-4c97-ba15-8ac636c2c9e5",
   "queries": [
-    "Metropolis Nevada historic school hotel",
-    "Metropolis Nevada ghost town farming",
-    "Metropolis Nevada historic town 1912",
-    "Metropolis Nevada railroad historic"
+    "Metropolis Nevada ghost town school",
+    "Metropolis Nevada Elko County",
+    "Elko County Nevada historic farming irrigation 1910",
+    "Elko County Nevada historic ranch agriculture",
+    "Nevada homestead farming early 1900s",
+    "Nevada irrigation agriculture historic"
   ],
-  "count": 8,
-  "required_place": "Metropolis",
-  "exclude_terms": [
-    "cemetery",
-    "grave",
-    "graves",
-    "headstone",
-    "tombstone",
-    "burial",
-    "stereoscopic",
-    "stereo"
-  ],
+  "count": 6,
+  "required_place": "",
+  "exclude_terms": ["cemetery","grave","graves","headstone","tombstone","burial","stereoscopic","stereo"],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T01:49:02.421Z"
+  "recovery_reason": "Strict Metropolis place filter repeatedly returned only one suitable Commons image; broadened to historically relevant Elko County/Nevada contextual imagery while retaining Metropolis-specific searches.",
+  "requested_at": "2026-10-02T01:52:00Z"
 }
