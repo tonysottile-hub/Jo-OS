@@ -1,0 +1,23 @@
+{
+  "build_id": "3431a57f-c9ad-44a6-a880-0e3ede5267df",
+  "queries": [
+    "Delamar Nevada historic mining camp",
+    "Delamar Nevada stone ruins mining",
+    "Delamar Nevada historic town",
+    "Delamar Widow Maker Nevada mining"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-02T01:56:20.516Z"
+}
