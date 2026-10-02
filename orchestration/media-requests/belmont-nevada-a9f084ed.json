@@ -1,10 +1,11 @@
 {
   "build_id": "a9f084ed-d212-48c3-9a15-bd69dc57c1f7",
   "queries": [
-    "Belmont Nevada historic courthouse",
-    "Belmont Nevada ghost town buildings",
-    "Belmont Nevada mining town ruins",
-    "Belmont Nye County Nevada"
+    ""Belmont, NV Courthouse"",
+    ""Belmont, NV Welcome sign"",
+    ""TOWN OF BELMONT, NEVADA"",
+    ""SHAFT TO ARIZONA MINE BELMONT, NEVADA"",
+    ""CANFIELD'S MILL, BELMONT, NEVADA""
   ],
   "count": 8,
   "required_place": "Belmont",
@@ -19,6 +20,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T19:25:00Z",
-  "recovery_note": "Strict place match added after two unrelated-media visual QA failures."
+  "requested_at": "2026-10-02T19:29:00Z",
+  "recovery_note": "Exact Commons titles from verified Belmont category/search results after broad search returned unrelated media and strict generic search returned zero."
 }
