@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#111827"/>
+<title>Jo OS Command Center</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#17213a;--text:#f7f8fb;--muted:#9aa6bd;--line:#25324f;--good:#47d18c;--warn:#f7c948;--bad:#ff6b6b;--info:#70a7ff;--accent:#8b7cff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0a0f1d,#0f1527 45%,#0a0f1d);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit}.wrap{max-width:1180px;margin:0 auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{display:flex;gap:12px;align-items:center}.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#4f8cff);display:grid;place-items:center;font-weight:900}.brand h1{font-size:20px;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer}.btn.primary{background:linear-gradient(135deg,var(--accent),#4f8cff);border:0;font-weight:700}.btn:disabled{opacity:.5;cursor:default}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:rgba(18,26,46,.92);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 28px rgba(0,0,0,.18)}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.metric{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}.metric b{font-size:24px;display:block}.metric span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.sectionTitle h2{font-size:15px;margin:0}.sectionTitle small{color:var(--muted)}.workers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.worker{border:1px solid var(--line);background:var(--panel2);border-radius:16px;padding:14px}.workerHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.worker h3{margin:0 0 3px;font-size:16px}.worker .role{font-size:11px;color:var(--muted)}.pill{font-size:11px;border-radius:999px;padding:5px 8px;border:1px solid var(--line);white-space:nowrap}.pill.working{color:var(--good);border-color:rgba(71,209,140,.4);background:rgba(71,209,140,.08)}.pill.blocked{color:var(--bad);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.08)}.pill.waiting_verification{color:var(--warn);border-color:rgba(247,201,72,.4);background:rgba(247,201,72,.08)}.pill.idle{color:var(--muted)}.summary{margin:12px 0 8px;line-height:1.4}.meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:11px}.list{display:flex;flex-direction:column;gap:9px}.item{border:1px solid var(--line);background:var(--panel2);border-radius:13px;padding:12px}.item strong{display:block;margin-bottom:4px}.item p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}.commandBox{display:flex;gap:10px}.commandBox textarea{flex:1;min-height:72px;resize:vertical;background:#0d1427;border:1px solid var(--line);border-radius:14px;color:var(--text);padding:13px;outline:none}.commandResponse{margin-top:10px;padding:12px;border-radius:12px;background:#0d1427;border:1px solid var(--line);white-space:pre-wrap;display:none}.login{max-width:460px;margin:12vh auto;padding:24px}.login h2{margin-top:0}.login input{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0d1427;color:var(--text);margin:12px 0}.hidden{display:none!important}.muted{color:var(--muted)}.alert{border-color:rgba(255,107,107,.45);background:rgba(255,107,107,.08)}.ok{border-color:rgba(71,209,140,.35)}.briefText{white-space:pre-wrap;color:var(--muted);font-size:12px;line-height:1.5;max-height:280px;overflow:auto}.footer{color:var(--muted);font-size:11px;text-align:center;padding:22px 0 8px}
+@media(max-width:820px){.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.workers{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.commandBox{flex-direction:column}.top{align-items:flex-start}.top .right{display:flex;gap:8px}.wrap{padding:12px}.card{border-radius:15px}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login card">
+  <div class="brand"><div class="mark">JO</div><div><h1>Jo OS</h1><p>Owner Command Center</p></div></div>
+  <h2>Sign in</h2>
+  <p class="muted">Use the owner email. Jo OS data stays behind your authenticated session.</p>
+  <input id="email" type="email" value="tony.sottile@cigars30jax.com" autocomplete="email"/>
+  <button id="loginBtn" class="btn primary" style="width:100%">Send secure sign-in link</button>
+  <p id="loginMsg" class="muted"></p>
+</div>
+
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <div class="brand"><div class="mark">JO</div><div><h1>Jo OS Command Center</h1><p id="freshness">Connecting…</p></div></div>
+    <div class="right"><button id="refreshBtn" class="btn">Refresh</button><button id="logoutBtn" class="btn">Sign out</button></div>
+  </div>
+
+  <div class="grid">
+    <section class="card span12">
+      <div class="sectionTitle"><h2>Live Team</h2><small>Supabase Jo OS source of truth</small></div>
+      <div id="metrics" class="metrics"></div>
+    </section>
+
+    <section class="card span8">
+      <div class="sectionTitle"><h2>Workers</h2><small id="workerUpdated"></small></div>
+      <div id="workers" class="workers"></div>
+    </section>
+
+    <section class="card span4">
+      <div class="sectionTitle"><h2>Needs Tony</h2><small>owner-only</small></div>
+      <div id="needsTony" class="list"></div>
+    </section>
+
+    <section class="card span7">
+      <div class="sectionTitle"><h2>Tell Jo</h2><small>commands enter Jo OS</small></div>
+      <div class="commandBox"><textarea id="command" placeholder="Example: What is everybody doing?"></textarea><button id="sendBtn" class="btn primary">Send</button></div>
+      <div id="commandResponse" class="commandResponse"></div>
+    </section>
+
+    <section class="card span5">
+      <div class="sectionTitle"><h2>Latest Briefing</h2><small id="briefStatus"></small></div>
+      <div id="briefing" class="briefText">No briefing loaded.</div>
+    </section>
+
+    <section class="card span6">
+      <div class="sectionTitle"><h2>Steve · Missed Call Rescue</h2><small>launch stages</small></div>
+      <div id="steve" class="list"></div>
+    </section>
+
+    <section class="card span6">
+      <div class="sectionTitle"><h2>Jeff · Admin</h2><small>work queue</small></div>
+      <div id="jeff" class="list"></div>
+    </section>
+
+    <section class="card span6">
+      <div class="sectionTitle"><h2>Mary · Production</h2><small>KDP + merch</small></div>
+      <div id="mary" class="list"></div>
+    </section>
+
+    <section class="card span6">
+      <div class="sectionTitle"><h2>Tom · Unmapped America</h2><small>active builds</small></div>
+      <div id="tom" class="list"></div>
+    </section>
+
+    <section class="card span12">
+      <div class="sectionTitle"><h2>Recent Jo OS Activity</h2><small>verified state changes and cycles</small></div>
+      <div id="events" class="list"></div>
+    </section>
+  </div>
+  <div class="footer">Jo OS · live state, commands, approvals and verification outside ChatGPT</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://pubnivjjeofxqvmttuzh.supabase.co";
+const PUB_KEY="sb_publishable_MINsP95EHKXD3w0RQcn41A_M1OtfdqV";
+const OWNER="tony.sottile@cigars30jax.com";
+const DASHBOARD_URL=SUPABASE_URL+"/functions/v1/jo-dashboard";
+const sb=supabase.createClient(SUPABASE_URL,PUB_KEY,{auth:{persistSession:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);
+const fmt=t=>t?new Date(t).toLocaleString():"—";
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const pill=s=>'<span class="pill '+esc(s||"idle")+'">'+esc((s||"idle").replaceAll("_"," "))+'</span>';
+let latest=null;
+
+async function getSession(){
+  const {data:{session}}=await sb.auth.getSession();
+  return session;
+}
+async function boot(){
+  const session=await getSession();
+  if(!session){$("loginView").classList.remove("hidden");$("app").classList.add("hidden");return;}
+  if((session.user?.email||"").toLowerCase()!==OWNER){await sb.auth.signOut();$("loginMsg").textContent="This account is not authorized.";return;}
+  $("loginView").classList.add("hidden");$("app").classList.remove("hidden");await load();
+}
+async function load(){
+  $("freshness").textContent="Refreshing live Jo OS…";
+  const session=await getSession(); if(!session)return boot();
+  const res=await fetch(SUPABASE_URL+"/functions/v1/jo-dashboard-api",{headers:{"Authorization":"Bearer "+session.access_token,"apikey":PUB_KEY}});
+  if(res.status===401||res.status===403){await sb.auth.signOut();return boot();}
+  const data=await res.json();
+  if(!res.ok){$("freshness").textContent="Dashboard error: "+(data.error||res.status);return;}
+  latest=data; render(data);
+}
+function render(d){
+  $("freshness").textContent="Live · "+fmt(d.generated_at);
+  const c=d.counts||{};
+  $("metrics").innerHTML=[
+    ["Working",c.working||0],["Waiting verify",c.waiting_verification||0],["Blocked",c.blocked||0],["Approvals",c.approvals||0],["Idle",c.idle||0]
+  ].map(x=>'<div class="metric"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
+
+  $("workers").innerHTML=(d.workers||[]).map(w=>'<div class="worker"><div class="workerHead"><div><h3>'+esc(w.display_name||w.worker_key)+'</h3><div class="role">'+esc(w.role_description||w.primary_business_key||"")+'</div></div>'+pill(w.state)+'</div><div class="summary">'+esc(w.status_summary||"No current work")+'</div><div class="meta"><span>heartbeat '+fmt(w.last_heartbeat_at)+'</span><span>verified '+fmt(w.last_verified_at)+'</span></div></div>').join("");
+
+  const blockers=[];
+  for(const s of d.steve_stages||[]) if(s.status==="blocked_owner") blockers.push({who:"Steve",title:s.title,detail:s.last_error});
+  for(const j of d.jeff_items||[]) if(j.status==="blocked_owner") blockers.push({who:"Jeff",title:j.title,detail:j.last_error});
+  for(const a of d.approvals||[]) blockers.push({who:"Approval",title:a.approval_type||"Pending approval",detail:a.reason||a.status});
+  $("needsTony").innerHTML=blockers.length?blockers.map(x=>'<div class="item alert"><strong>'+esc(x.who)+' · '+esc(x.title)+'</strong><p>'+esc(x.detail||"")+'</p></div>').join(""):'<div class="item ok"><strong>Nothing owner-only right now</strong><p>Jo OS will keep the team moving.</p></div>';
+
+  const b=d.latest_briefing;
+  if(b){$("briefStatus").textContent=(b.status||"")+" · "+fmt(b.scheduled_for);const p=b.payload||{};const lines=(p.workers||[]).map(w=>(w.name||w.worker_key)+": "+(w.state||"")+(w.current_work?" — "+w.current_work:""));$("briefing").textContent=lines.join("\n")||"Briefing payload is present.";} else {$("briefStatus").textContent="none";$("briefing").textContent="No briefing available."}
+
+  $("steve").innerHTML=(d.steve_stages||[]).filter(x=>x.status!=="verified"||x.sequence_no>=8).slice(0,8).map(x=>'<div class="item"><strong>'+esc(x.sequence_no+". "+x.title)+' '+pill(x.status)+'</strong><p>'+esc(x.last_error||("verified "+fmt(x.verified_at)))+'</p></div>').join("");
+  $("jeff").innerHTML=(d.jeff_items||[]).filter(x=>x.status!=="verified").slice(0,7).map(x=>'<div class="item"><strong>'+esc(x.title)+' '+pill(x.status)+'</strong><p>'+esc(x.last_error||x.lane||"")+'</p></div>').join("");
+  const mary=[...(d.mary?.kdp||[]).map(x=>({...x,label:"KDP"})),...(d.mary?.merch||[]).map(x=>({...x,label:"Merch"}))];
+  $("mary").innerHTML=mary.slice(0,8).map(x=>'<div class="item"><strong>'+esc(x.label+" · "+x.title)+' '+pill(x.status)+'</strong><p>'+esc(x.last_error||"")+'</p></div>').join("")||'<div class="item"><p>No active Mary items.</p></div>';
+  $("tom").innerHTML=(d.tom_builds||[]).slice(0,7).map(x=>'<div class="item"><strong>'+esc(x.title||x.topic)+' '+pill(x.status)+'</strong><p>'+esc(x.blocker_stage||x.topic||"")+'</p></div>').join("")||'<div class="item"><p>No active Tom builds.</p></div>';
+
+  $("events").innerHTML=(d.recent_events||[]).slice(0,12).map(e=>'<div class="item"><strong>'+esc((e.worker_key||"jo")+" · "+(e.event_type||"event"))+'</strong><p>'+esc(fmt(e.created_at))+'</p></div>').join("");
+  $("workerUpdated").textContent=fmt(d.generated_at);
+}
+$("loginBtn").onclick=async()=>{
+  $("loginBtn").disabled=true;$("loginMsg").textContent="Sending secure link…";
+  const email=$("email").value.trim().toLowerCase();
+  if(email!==OWNER){$("loginMsg").textContent="Use the owner email."; $("loginBtn").disabled=false; return;}
+  const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:DASHBOARD_URL,shouldCreateUser:false}});
+  $("loginMsg").textContent=error?error.message:"Check your email for the secure Jo OS sign-in link.";
+  $("loginBtn").disabled=false;
+};
+$("refreshBtn").onclick=load;
+$("logoutBtn").onclick=async()=>{await sb.auth.signOut();location.href=DASHBOARD_URL;};
+$("sendBtn").onclick=async()=>{
+  const text=$("command").value.trim();if(!text)return;
+  const session=await getSession();if(!session)return boot();
+  $("sendBtn").disabled=true;$("commandResponse").style.display="block";$("commandResponse").textContent="Sending to Jo OS…";
+  const res=await fetch(SUPABASE_URL+"/functions/v1/jo-command-ingress",{method:"POST",headers:{"Authorization":"Bearer "+session.access_token,"apikey":PUB_KEY,"content-type":"application/json"},body:JSON.stringify({command:text})});
+  const data=await res.json();$("commandResponse").textContent=data.response||data.error||"Command received.";$("sendBtn").disabled=false;
+  await load();
+};
+sb.auth.onAuthStateChange(()=>setTimeout(boot,0));
+boot();
+setInterval(()=>{if(!$("app").classList.contains("hidden"))load();},30000);
+</script>
+</body>
+</html>
