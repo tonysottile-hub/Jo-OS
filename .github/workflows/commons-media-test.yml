@@ -2,6 +2,7 @@ name: Test Commons Media Feed
 on:
   push:
     paths:
+      - 'orchestration/media-requests/*.json'
       - 'media-requests/*.json'
   workflow_dispatch:
     inputs:
@@ -27,7 +28,7 @@ jobs:
           if [ -n "$DISPATCH_REQUEST" ]; then
             REQUEST="$DISPATCH_REQUEST"
           else
-            REQUEST="$(git diff --name-only HEAD^ HEAD -- 'media-requests/*.json' | head -1)"
+            REQUEST="$(git diff --name-only HEAD^ HEAD -- 'orchestration/media-requests/*.json' 'media-requests/*.json' | head -1)"
           fi
           test -n "$REQUEST"
           test -f "$REQUEST"
