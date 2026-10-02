@@ -6,8 +6,20 @@
     "Delamar Nevada historic town",
     "Delamar Widow Maker Nevada mining"
   ],
+  "category": "Delamar, Nevada",
+  "file_titles": [
+    "Mining town, Delamar Nevada 1890s.jpg",
+    "Delamar mining camp Nevada 1890s.jpg",
+    "Delamar Nevada newspaper office.jpg",
+    "Delamar Stone Arch Remains.jpg",
+    "Ruins-Ghosttown Delamar, Nevada - panoramio.jpg",
+    "Crossing Delamar Dry Lake, Looking NW to the South Pahroc Range, Lincoln County, NV, USA - panoramio.jpg"
+  ],
   "count": 8,
-  "required_place": "",
+  "required_place": "Delamar",
+  "required_terms": [
+    "Nevada"
+  ],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -16,8 +28,10 @@
     "tombstone",
     "burial",
     "stereoscopic",
-    "stereo"
+    "stereo",
+    "France",
+    "Belmont"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T21:33:03.529Z"
+  "requested_at": "2026-10-02T21:34:34.256Z"
 }
