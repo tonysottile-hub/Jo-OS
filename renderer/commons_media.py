@@ -26,6 +26,7 @@ def main():
     p.add_argument("--category")
     p.add_argument("--file-title",action="append",default=[])
     p.add_argument("--required-term",action="append",default=[])
+    p.add_argument("--explicit-only",action="store_true")
     p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True)
     p.add_argument("--count",type=int,default=6)
@@ -43,10 +44,11 @@ def main():
             search=api({"action":"query","titles":"|".join(titles[i:i+40]),
               "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
             batches.append(("explicit_files",search.get("query",{}).get("pages",[])))
-    for query in a.query:
-        search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,"gsrwhat":"text",
-          "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
-        batches.append((query,search.get("query",{}).get("pages",[])))
+    if not a.explicit_only:
+        for query in a.query:
+            search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,"gsrwhat":"text",
+              "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
+            batches.append((query,search.get("query",{}).get("pages",[])))
     if a.category and a.category.strip():
         cat=a.category.strip()
         if not cat.lower().startswith("category:"):cat="Category:"+cat
@@ -66,7 +68,9 @@ def main():
             if goldfield_conflicting and goldfield_conflicting.search(md):continue
             if place and not place.search(md):continue
             if required_terms and not all(rx.search(md) for rx in required_terms):continue
-            url=(ii.get("url") if query=="explicit_files" and w<=2000 and h<=2000 else ii.get("thumburl")) or ii.get("url")
+            url=ii.get("thumburl") or ii.get("url")
+            if query=="explicit_files" and ii.get("thumburl"):
+                url=re.sub(r"/\\d+px-", "/1024px-", ii["thumburl"])
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
               "license":clean(meta.get("LicenseShortName",{}).get("value")),"license_url":clean(meta.get("LicenseUrl",{}).get("value")),
