@@ -1,13 +1,13 @@
 {
   "build_id": "a9f084ed-d212-48c3-9a15-bd69dc57c1f7",
   "queries": [
-    "Belmont Nevada courthouse exterior",
-    "Belmont Nevada ghost town ruins",
-    "Belmont Nevada historic main street",
-    "Belmont Courthouse Nevada"
+    "Belmont Nevada historic courthouse",
+    "Belmont Nevada ghost town buildings",
+    "Belmont Nevada mining town ruins",
+    "Belmont Nye County Nevada"
   ],
   "count": 8,
-  "required_place": "",
+  "required_place": "Belmont",
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -19,5 +19,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T19:22:29.801Z"
+  "requested_at": "2026-10-02T19:25:00Z",
+  "recovery_note": "Strict place match added after two unrelated-media visual QA failures."
 }
