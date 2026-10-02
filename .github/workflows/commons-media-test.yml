@@ -42,6 +42,7 @@ jobs:
           print("required_place="+str(d.get("required_place","")))
           print("category="+str(d.get("category","")))
           print("file_titles_json="+json.dumps(d.get("file_titles",[]),separators=(",",":")))
+          print("required_terms_json="+json.dumps(d.get("required_terms",[]),separators=(",",":")))
           PY
       - name: Source Commons media
         run: |
@@ -63,6 +64,12 @@ jobs:
           PY
           )
           for t in "${FILE_TITLES[@]}"; do ARGS+=(--file-title "$t"); done
+          mapfile -t REQUIRED_TERMS < <(python - <<'PY'
+          import json
+          for x in json.loads(r'''${{ steps.req.outputs.required_terms_json }}'''): print(x)
+          PY
+          )
+          for t in "${REQUIRED_TERMS[@]}"; do ARGS+=(--required-term "$t"); done
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
