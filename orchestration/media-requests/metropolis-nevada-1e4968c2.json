@@ -1,10 +1,12 @@
 {
   "build_id": "1e4968c2-e97d-4c97-ba15-8ac636c2c9e5",
   "queries": [
-    "Metropolis Nevada historic school hotel",
-    "Metropolis Nevada ghost town farming",
-    "Metropolis Nevada historic town 1912",
-    "Metropolis Nevada railroad historic"
+    "Metropolis Nevada ghost town school",
+    "Metropolis Nevada Elko County",
+    "Elko County Nevada historic farming irrigation",
+    "Elko County Nevada historic ranch agriculture",
+    "Nevada homestead farming 1910",
+    "Nevada irrigation agriculture historic"
   ],
   "count": 8,
   "required_place": "",
@@ -19,5 +21,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T01:52:16.040Z"
+  "requested_at": "2026-10-02T01:53:01.758Z"
 }
