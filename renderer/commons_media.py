@@ -33,13 +33,13 @@ def main():
     place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
     goldfield_conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I) if (a.place or "").strip().lower()=="goldfield" else None
     for query in a.query:
-        search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,
+        search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,"gsrwhat":"text",
           "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
         for page in search.get("query",{}).get("pages",[]):
             ii=(page.get("imageinfo") or [{}])[0]
             if not ii.get("mime","").startswith("image/"):continue
             w,h=ii.get("width",0),ii.get("height",0)
-            if min(w,h)<800:continue
+            if min(w,h)<500:continue
             meta=ii.get("extmetadata",{});title=page.get("title") or "";desc=clean(meta.get("ImageDescription",{}).get("value"))
             cats=clean(meta.get("Categories",{}).get("value"));credit=clean(meta.get("Credit",{}).get("value"));loc=clean(meta.get("Location",{}).get("value"))
             md=" ".join((title,desc,cats,credit,loc))
