@@ -24,6 +24,7 @@ def main():
     p.add_argument("--query",action="append",required=True)
     p.add_argument("--place")
     p.add_argument("--category")
+    p.add_argument("--file-title",action="append",default=[])
     p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True)
     p.add_argument("--count",type=int,default=6)
@@ -34,6 +35,12 @@ def main():
     place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
     goldfield_conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I) if (a.place or "").strip().lower()=="goldfield" else None
     batches=[]
+    if a.file_title:
+        titles=[t if t.lower().startswith("file:") else "File:"+t for t in a.file_title]
+        for i in range(0,len(titles),40):
+            search=api({"action":"query","titles":"|".join(titles[i:i+40]),
+              "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
+            batches.append(("explicit_files",search.get("query",{}).get("pages",[])))
     for query in a.query:
         search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,"gsrwhat":"text",
           "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
