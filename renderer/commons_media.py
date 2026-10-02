@@ -23,6 +23,7 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--query",action="append",required=True)
     p.add_argument("--place")
+    p.add_argument("--category")
     p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True)
     p.add_argument("--count",type=int,default=6)
@@ -32,10 +33,19 @@ def main():
     reject=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|memorial\s+park|burial|funeral|stereoscopic|stereo|cross[ -]?eyed|3d)\b",re.I)
     place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
     goldfield_conflicting=re.compile(r"\b(hawthorne|aurora|mineral county courthouse|juniata mill)\b",re.I) if (a.place or "").strip().lower()=="goldfield" else None
+    batches=[]
     for query in a.query:
         search=api({"action":"query","generator":"search","gsrsearch":query+" filetype:bitmap","gsrnamespace":6,"gsrlimit":50,"gsrwhat":"text",
           "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
-        for page in search.get("query",{}).get("pages",[]):
+        batches.append((query,search.get("query",{}).get("pages",[])))
+    if a.category and a.category.strip():
+        cat=a.category.strip()
+        if not cat.lower().startswith("category:"):cat="Category:"+cat
+        search=api({"action":"query","generator":"categorymembers","gcmtitle":cat,"gcmnamespace":6,"gcmtype":"file","gcmlimit":100,
+          "prop":"imageinfo","iiprop":"url|size|mime|extmetadata","iiurlwidth":1600})
+        batches.append((cat,search.get("query",{}).get("pages",[])))
+    for query,pages in batches:
+        for page in pages:
             ii=(page.get("imageinfo") or [{}])[0]
             if not ii.get("mime","").startswith("image/"):continue
             w,h=ii.get("width",0),ii.get("height",0)
