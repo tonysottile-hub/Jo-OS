@@ -66,7 +66,7 @@ def main():
             if goldfield_conflicting and goldfield_conflicting.search(md):continue
             if place and not place.search(md):continue
             if required_terms and not all(rx.search(md) for rx in required_terms):continue
-            url=ii.get("thumburl") or ii.get("url")
+            url=(ii.get("url") if query=="explicit_files" and w<=2000 and h<=2000 else ii.get("thumburl")) or ii.get("url")
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
               "license":clean(meta.get("LicenseShortName",{}).get("value")),"license_url":clean(meta.get("LicenseUrl",{}).get("value")),
