@@ -57,9 +57,9 @@ jobs:
           CATEGORY="${{ steps.req.outputs.category }}"
           if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
           if [ -n "$CATEGORY" ]; then ARGS+=(--category "$CATEGORY"); fi
-          mapfile -t FILE_TITLES < <(python - <<\'PY\'
+          mapfile -t FILE_TITLES < <(python - <<'PY'
           import json
-          for x in json.loads(r\'\'\'${{ steps.req.outputs.file_titles_json }}\'\'\'): print(x)
+          for x in json.loads(r'''${{ steps.req.outputs.file_titles_json }}'''): print(x)
           PY
           )
           for t in "${FILE_TITLES[@]}"; do ARGS+=(--file-title "$t"); done
