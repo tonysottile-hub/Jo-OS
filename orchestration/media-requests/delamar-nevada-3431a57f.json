@@ -6,7 +6,7 @@
     "Delamar Nevada historic town",
     "Delamar Widow Maker Nevada mining"
   ],
-  "count": 8,
+  "count": 6,
   "required_place": "",
   "exclude_terms": [
     "cemetery",
@@ -19,5 +19,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-02T21:37:01.695Z"
+  "requested_at": "2026-10-02T21:40:11.928Z"
 }
