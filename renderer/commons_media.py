@@ -24,7 +24,7 @@ def main():
     p.add_argument("--query",action="append",required=True)
     p.add_argument("--place")
     p.add_argument("--category")
-    p.add_argument("--file-title",action="append",default=[])
+    p.add_argument("--file-title",action="append",default=[])\n    p.add_argument("--required-term",action="append",default=[])
     p.add_argument("--out-dir",required=True)
     p.add_argument("--manifest",required=True)
     p.add_argument("--count",type=int,default=6)
@@ -62,13 +62,13 @@ def main():
             md=" ".join((title,desc,cats,credit,loc))
             if reject.search(md):continue
             if goldfield_conflicting and goldfield_conflicting.search(md):continue
-            if place and not place.search(md):continue
+            if place and not place.search(md):continue\n            if required_terms and not all(rx.search(md) for rx in required_terms):continue
             url=ii.get("thumburl") or ii.get("url")
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
               "license":clean(meta.get("LicenseShortName",{}).get("value")),"license_url":clean(meta.get("LicenseUrl",{}).get("value")),
               "artist":clean(meta.get("Artist",{}).get("value")),"credit":credit,"description":desc,"categories":cats,"location":loc,"matched_query":query})
-    candidates.sort(key=lambda x:x["width"]*x["height"],reverse=True)
+    candidates.sort(key=lambda x:(0 if x["matched_query"]=="explicit_files" else 1,-x["width"]*x["height"]))
     assets=[];sources=[];hotel_count=0
     for c in candidates:
         if len(assets)>=a.count:break
@@ -82,6 +82,6 @@ def main():
         assets.append({"path":str(dest),"duration":a.duration});sources.append({**c,"local_path":str(dest)})
         if is_goldfield_hotel:hotel_count+=1
     if len(assets)<3:raise SystemExit(f"Only {len(assets)} suitable Commons images downloaded")
-    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"media_sources":sources},indent=2)+"\n")
+    pathlib.Path(a.manifest).write_text(json.dumps({"assets":assets,"duration_per_asset":a.duration,"required_place":a.place,"required_terms":a.required_term,"media_sources":sources},indent=2)+"\n")
     print(json.dumps({"queries":a.query,"required_place":a.place,"downloaded":len(assets),"manifest":a.manifest,"sources":sources},indent=2))
 if __name__=="__main__":main()
