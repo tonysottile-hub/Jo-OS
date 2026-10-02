@@ -40,6 +40,7 @@ jobs:
           print("queries_json="+json.dumps(queries,separators=(",",":")))
           print("count="+str(d.get("count",6)))
           print("required_place="+str(d.get("required_place","")))
+          print("category="+str(d.get("category","")))
           PY
       - name: Source Commons media
         run: |
@@ -52,7 +53,9 @@ jobs:
           ARGS=()
           for q in "${QUERIES[@]}"; do ARGS+=(--query "$q"); done
           PLACE="${{ steps.req.outputs.required_place }}"
+          CATEGORY="${{ steps.req.outputs.category }}"
           if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
+          if [ -n "$CATEGORY" ]; then ARGS+=(--category "$CATEGORY"); fi
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
         run: |
