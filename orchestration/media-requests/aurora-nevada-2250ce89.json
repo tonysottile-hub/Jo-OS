@@ -1,0 +1,23 @@
+{
+  "build_id": "2250ce89-d914-41fd-8c87-16d5614bebc7",
+  "queries": [
+    "Aurora Nevada historic mining town",
+    "Aurora Nevada Mark Twain historic",
+    "Aurora Nevada historic ruins",
+    "Aurora Nevada mining 1860s"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T03:23:24.363Z"
+}
