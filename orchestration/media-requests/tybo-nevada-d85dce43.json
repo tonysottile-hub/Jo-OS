@@ -5,7 +5,7 @@
     "Tybo Nevada charcoal kilns",
     "Tybo Nevada mine headframe historic"
   ],
-  "count": 3,
+  "count": 8,
   "required_place": "",
   "exclude_terms": [
     "cemetery",
@@ -18,12 +18,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-03T19:19:00Z",
-  "source_pdf_url": "https://npgallery.nps.gov/NRHP/GetAsset/NRHP/74001149_photos",
-  "source_pdf_pages": [
-    1,
-    2,
-    3
-  ],
-  "source_pdf_credit": "National Park Service NRHP nomination photographs; Donald W. Jarvis, 1973"
+  "requested_at": "2026-10-03T19:17:01.373Z"
 }
