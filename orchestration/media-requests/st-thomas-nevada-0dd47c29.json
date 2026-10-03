@@ -15,8 +15,12 @@
     "tombstone",
     "burial",
     "stereoscopic",
-    "stereo"
+    "stereo",
+    "Ontario",
+    "Canada",
+    "Port Stanley"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-03T09:15:25.775Z"
+  "requested_at": "2026-10-03T09:22:39.254Z",
+  "repair_reason": "visual_qc_rejected_off_topic_st_thomas_ontario_source"
 }
