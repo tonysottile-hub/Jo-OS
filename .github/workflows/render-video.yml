@@ -37,6 +37,7 @@ jobs:
           print("media_run_id="+str(d["media_run_id"]))
           print("narration_run_id="+str(d["narration_run_id"]))
           print("output_name="+d["output_name"])
+          print("exclude_media_terms_json="+json.dumps(d.get("exclude_media_title_terms",[]),separators=(",",":")))
           PY
       - name: Setup FFmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
@@ -60,11 +61,22 @@ jobs:
           github-token: ${{ github.token }}
           path: production/current
       - name: Prepare manifest
+        env:
+          EXCLUDE_MEDIA_TERMS_JSON: ${{ steps.req.outputs.exclude_media_terms_json }}
         run: |
           python3 - <<'PY'
           import json,os
           p="production/current/manifest.json"
           m=json.load(open(p))
+          terms=[str(x).strip().lower() for x in json.loads(os.environ.get("EXCLUDE_MEDIA_TERMS_JSON","[]")) if str(x).strip()]
+          assets=m.get("assets",[])
+          sources=m.get("media_sources",[])
+          if terms and len(assets)==len(sources):
+              kept=[(a,s) for a,s in zip(assets,sources) if not any(t in str(s.get("title","")).lower() for t in terms)]
+              m["assets"]=[a for a,_ in kept]
+              m["media_sources"]=[s for _,s in kept]
+          if len(m.get("assets",[])) < 3:
+              raise SystemExit("fewer than 3 media assets remain after exclusions")
           for a in m["assets"]:
               a["path"]="production/current/media/"+os.path.basename(a["path"])
           m["audio"]="production/current/narration.wav"
