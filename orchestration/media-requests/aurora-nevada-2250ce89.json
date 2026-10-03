@@ -1,23 +1,16 @@
 {
   "build_id": "2250ce89-d914-41fd-8c87-16d5614bebc7",
-  "queries": [
-    "Aurora Nevada historic mining town",
-    "Aurora Nevada Mark Twain historic",
-    "Aurora Nevada historic ruins",
-    "Aurora Nevada mining 1860s"
+  "queries": ["Aurora Nevada historic mining town"],
+  "file_titles": [
+    "Aurora NV.jpg",
+    "Aurora NV circa 1910.png",
+    "Mark Twain by AF Bradley.jpg",
+    "Silver-214781.jpg"
   ],
-  "count": 8,
-  "required_place": "",
-  "exclude_terms": [
-    "cemetery",
-    "grave",
-    "graves",
-    "headstone",
-    "tombstone",
-    "burial",
-    "stereoscopic",
-    "stereo"
-  ],
+  "explicit_only": true,
+  "count": 4,
+  "exclude_terms": ["cemetery","grave","headstone","tombstone","burial"],
   "publish_authorized": false,
-  "requested_at": "2026-10-03T03:31:01.464Z"
+  "requested_at": "2026-10-03T03:33:00Z",
+  "notes": "Exact vetted Commons files. No required_terms because that filter is conjunctive per file."
 }
