@@ -63,6 +63,7 @@ jobs:
           with urllib.request.urlopen(req,timeout=90) as r:
               open("output/source.pdf","wb").write(r.read())
           PY
+            if ! command -v pdftoppm >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils; fi
             pdftoppm -jpeg -r 180 output/source.pdf output/pdf-pages/page
             python - <<'PY'
           import json,os,pathlib,shutil
