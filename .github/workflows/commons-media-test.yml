@@ -43,6 +43,7 @@ jobs:
           print("category="+str(d.get("category","")))
           print("file_titles_json="+json.dumps(d.get("file_titles",[]),separators=(",",":")))
           print("required_terms_json="+json.dumps(d.get("required_terms",[]),separators=(",",":")))
+          print("exclude_terms_json="+json.dumps(d.get("exclude_terms",[]),separators=(",",":")))
           print("explicit_only="+("true" if d.get("explicit_only",False) else "false"))
           PY
       - name: Source Commons media
@@ -71,6 +72,12 @@ jobs:
           PY
           )
           for t in "${REQUIRED_TERMS[@]}"; do ARGS+=(--required-term "$t"); done
+          mapfile -t EXCLUDE_TERMS < <(python - <<'PY'
+          import json
+          for x in json.loads(r'''${{ steps.req.outputs.exclude_terms_json }}'''): print(x)
+          PY
+          )
+          for t in "${EXCLUDE_TERMS[@]}"; do ARGS+=(--exclude-term "$t"); done
           if [ "${{ steps.req.outputs.explicit_only }}" = "true" ]; then ARGS+=(--explicit-only); fi
           python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
       - name: Verify manifest
