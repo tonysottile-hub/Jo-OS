@@ -38,6 +38,7 @@ jobs:
           print("narration_run_id="+str(d["narration_run_id"]))
           print("output_name="+d["output_name"])
           print("exclude_media_terms_json="+json.dumps(d.get("exclude_media_title_terms",[]),separators=(",",":")))
+          print("media_order_titles_json="+json.dumps(d.get("media_order_titles",[]),separators=(",",":")))
           PY
       - name: Setup FFmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
@@ -63,18 +64,29 @@ jobs:
       - name: Prepare manifest
         env:
           EXCLUDE_MEDIA_TERMS_JSON: ${{ steps.req.outputs.exclude_media_terms_json }}
+          MEDIA_ORDER_TITLES_JSON: ${{ steps.req.outputs.media_order_titles_json }}
         run: |
           python3 - <<'PY'
           import json,os
           p="production/current/manifest.json"
           m=json.load(open(p))
           terms=[str(x).strip().lower() for x in json.loads(os.environ.get("EXCLUDE_MEDIA_TERMS_JSON","[]")) if str(x).strip()]
+          order_titles=[str(x).strip().lower() for x in json.loads(os.environ.get("MEDIA_ORDER_TITLES_JSON","[]")) if str(x).strip()]
           assets=m.get("assets",[])
           sources=m.get("media_sources",[])
           if terms and len(assets)==len(sources):
               kept=[(a,s) for a,s in zip(assets,sources) if not any(t in str(s.get("title","")).lower() for t in terms)]
               m["assets"]=[a for a,_ in kept]
               m["media_sources"]=[s for _,s in kept]
+          if order_titles and len(m.get("assets",[]))==len(m.get("media_sources",[])):
+              pairs=list(zip(m["assets"],m["media_sources"]))
+              selected=[]; remaining=pairs[:]
+              for wanted in order_titles:
+                  for i,(asset,source) in enumerate(remaining):
+                      if str(source.get("title","")).strip().lower()==wanted:
+                          selected.append((asset,source)); remaining.pop(i); break
+              m["assets"]=[a for a,_ in selected+remaining]
+              m["media_sources"]=[s for _,s in selected+remaining]
           if len(m.get("assets",[])) < 3:
               raise SystemExit("fewer than 3 media assets remain after exclusions")
           for a in m["assets"]:
