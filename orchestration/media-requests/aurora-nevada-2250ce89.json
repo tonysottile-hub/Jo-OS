@@ -1,6 +1,8 @@
 {
   "build_id": "2250ce89-d914-41fd-8c87-16d5614bebc7",
-  "queries": ["Aurora Nevada historic mining town"],
+  "queries": [
+    "Aurora Nevada historic mining town"
+  ],
   "file_titles": [
     "Aurora NV.jpg",
     "Aurora NV circa 1910.png",
@@ -9,8 +11,14 @@
   ],
   "explicit_only": true,
   "count": 4,
-  "exclude_terms": ["cemetery","grave","headstone","tombstone","burial"],
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "headstone",
+    "tombstone",
+    "burial"
+  ],
   "publish_authorized": false,
-  "requested_at": "2026-10-03T03:33:00Z",
-  "notes": "Exact vetted Commons files. No required_terms because that filter is conjunctive per file."
+  "requested_at": "2026-10-03T08:20:00Z",
+  "notes": "Exact vetted Commons files. No required_terms because that filter is conjunctive per file. Retry uses moderate-size originals to avoid Wikimedia thumbnail-generation throttling."
 }
