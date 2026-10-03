@@ -1,22 +1,61 @@
 {
   "build_id": "17a42d83-4caa-4cd0-87ca-3bafc407025e",
   "queries": [
-    "Unionville Nevada ghost town historic buildings",
-    "Unionville Nevada Mark Twain cabin",
-    "Unionville Nevada Buena Vista Canyon ruins"
+    "Unionville Nevada ghost town historic buildings"
   ],
   "count": 8,
-  "required_place": "",
+  "required_place": "Unionville",
+  "required_terms": [
+    "Unionville",
+    "Nevada"
+  ],
   "exclude_terms": [
     "cemetery",
     "grave",
-    "graves",
-    "headstone",
-    "tombstone",
-    "burial",
-    "stereoscopic",
-    "stereo"
+    "headstone"
   ],
+  "explicit_only": true,
+  "source_image_urls": [
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-townsite-buena-vista-canyon.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-historical-marker-145.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-stone-ruins.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-pioneer-house-scaled.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-old-schoolhouse.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-townsite-buena-vista-canyon.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-stone-ruins.jpg",
+    "https://ghosttownarchive.com/wp-content/uploads/2026/08/unionville-nevada-pioneer-house-scaled.jpg"
+  ],
+  "source_image_credits": [
+    "Ken Lund — CC BY-SA 2.0",
+    "Ken Lund — CC BY-SA 2.0",
+    "Ken Lund — CC BY-SA 2.0",
+    "Zack Sheppard — CC BY-SA 2.0",
+    "NevadaTraveller — CC BY-SA 3.0",
+    "Ken Lund — CC BY-SA 2.0",
+    "Ken Lund — CC BY-SA 2.0",
+    "Zack Sheppard — CC BY-SA 2.0"
+  ],
+  "source_image_titles": [
+    "Unionville townsite in Buena Vista Canyon",
+    "Nevada Historical Marker No. 145 at Unionville",
+    "Stone-wall ruins at Unionville",
+    "Surviving pioneer house in Unionville",
+    "Old Unionville schoolhouse",
+    "Unionville townsite detail",
+    "Unionville stone ruins detail",
+    "Unionville pioneer house detail"
+  ],
+  "source_image_licenses": [
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0",
+    "CC BY-SA 3.0",
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0"
+  ],
+  "source_image_attribution_url": "https://ghosttownarchive.com/unionville-nevada/",
   "publish_authorized": false,
-  "requested_at": "2026-10-03T19:35:04.432Z"
+  "requested_at": "2026-10-03T20:13:00Z"
 }
