@@ -64,22 +64,31 @@ jobs:
               open("output/source.pdf","wb").write(r.read())
           PY
             if ! command -v pdftoppm >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils; fi
+            if ! command -v ffmpeg >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; fi
             pdftoppm -jpeg -r 180 output/source.pdf output/pdf-pages/page
             python - <<'PY'
-          import json,os,pathlib,shutil
+          import json,os,pathlib,shutil,subprocess
           pages=json.loads(r'''${{ steps.req.outputs.source_pdf_pages_json }}''')
           if not pages: pages=[1,2,3]
           url=os.environ["SOURCE_PDF_URL"]
           credit=os.environ.get("SOURCE_PDF_CREDIT") or "National Park Service, NRHP nomination photographs"
-          assets=[]; sources=[]
+          assets=[]; sources=[]; seen={}
           for i,page in enumerate(pages,1):
               src=pathlib.Path(f"output/pdf-pages/page-{int(page):02d}.jpg")
               if not src.exists(): src=pathlib.Path(f"output/pdf-pages/page-{int(page)}.jpg")
               if not src.exists(): raise SystemExit(f"Missing rendered PDF page {page}")
               dest=pathlib.Path(f"output/media/nps-{i:02d}.jpg")
-              shutil.copyfile(src,dest)
+              seen[page]=seen.get(page,0)+1
+              variant=seen[page]
+              if variant==1:
+                  shutil.copyfile(src,dest)
+                  variant_name="full frame"
+              else:
+                  x="0" if variant==2 else "iw-ih"
+                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop=ih:ih:{x}:0","-q:v","2",str(dest)],check=True)
+                  variant_name="left detail crop" if variant==2 else "right detail crop"
               assets.append({"path":str(dest),"duration":8.0})
-              sources.append({"title":f"Tybo Charcoal Kilns — NRHP nomination photograph page {page}","source_url":url,"license":"Official NPS archival record; source attributed","artist":"Donald W. Jarvis (1973)","credit":credit,"local_path":str(dest),"matched_query":"official_nps_pdf"})
+              sources.append({"title":f"Tybo Charcoal Kilns — NRHP nomination photograph page {page}, {variant_name}","source_url":url,"license":"Official NPS archival record; source attributed","artist":"Donald W. Jarvis (1973)","credit":credit,"local_path":str(dest),"matched_query":"official_nps_pdf"})
           pathlib.Path("output/manifest.json").write_text(json.dumps({"assets":assets,"duration_per_asset":8.0,"required_place":"Tybo","required_terms":["Tybo"],"exclude_terms":[],"media_sources":sources},indent=2)+"\n")
           print(json.dumps({"source":"official_nps_pdf","downloaded":len(assets),"manifest":"output/manifest.json"},indent=2))
           PY
