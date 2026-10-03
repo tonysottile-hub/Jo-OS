@@ -1,0 +1,22 @@
+{
+  "build_id": "17a42d83-4caa-4cd0-87ca-3bafc407025e",
+  "queries": [
+    "Unionville Nevada ghost town historic buildings",
+    "Unionville Nevada Mark Twain cabin",
+    "Unionville Nevada Buena Vista Canyon ruins"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T19:31:16.484Z"
+}
