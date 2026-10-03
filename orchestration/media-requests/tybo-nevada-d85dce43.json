@@ -1,0 +1,22 @@
+{
+  "build_id": "d85dce43-2642-4d6b-baed-3a78fca35356",
+  "queries": [
+    "Tybo Nevada ghost town ruins",
+    "Tybo Nevada charcoal kilns",
+    "Tybo Nevada mine headframe historic"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T14:28:01.645Z"
+}
