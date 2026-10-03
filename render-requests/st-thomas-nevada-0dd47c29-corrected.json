@@ -2,12 +2,21 @@
   "build_id": "0dd47c29-8dbf-483c-a965-461379db1edf",
   "media_run_id": 37112843016,
   "narration_run_id": 37112434149,
-  "output_name": "st-thomas-nevada-0dd47c29-corrected.mp4",
+  "output_name": "st-thomas-nevada-0dd47c29-corrected-v2.mp4",
   "exclude_media_title_terms": [
     "Ontario",
     "Canada",
     "Port Stanley"
   ],
   "publish_authorized": false,
-  "correction_for_public_video_id": "IMR_6i8n0kM"
+  "correction_for_public_video_id": "IMR_6i8n0kM",
+  "media_order_titles": [
+    "File:Remains of Hanig Ice Cream Parlor - St. Thomas (24ca5e13-2e80-4125-8159-db7475a869f8).jpg",
+    "File:Remains of Hanig Ice Cream Parlor - St. Thomas (10a0dd3f-7d56-4ee2-b4e2-54f79d71f903).jpg",
+    "File:Hoover Dam, Nevada (Arizona, USA) -- 2012 -- 6130.jpg",
+    "File:Remains of Hanig Ice Cream Parlor - St. Thomas (d29914d3-0173-44d1-bc86-d9ab7aefe5d8).jpg",
+    "File:Hoover Dam, Nevada (Arizona-Nevada, USA) -- 2012 -- 6099.jpg",
+    "File:Remains of Hanig Ice Cream Parlor - St. Thomas (fb9877af-3d67-456f-a901-a9457bcce1da).jpg"
+  ],
+  "editorial_note": "Interleave St. Thomas ruins with Hoover Dam visuals before narration ends"
 }
