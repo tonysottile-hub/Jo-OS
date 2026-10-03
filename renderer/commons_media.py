@@ -69,8 +69,10 @@ def main():
             if place and not place.search(md):continue
             if required_terms and not all(rx.search(md) for rx in required_terms):continue
             url=ii.get("thumburl") or ii.get("url")
-            if query=="explicit_files" and ii.get("thumburl"):
-                url=re.sub(r"/\\d+px-", "/1024px-", ii["thumburl"])
+            # Prefer the original for moderate-size explicit files. Wikimedia can
+            # throttle on-demand thumbnail generation even when the original is small.
+            if query=="explicit_files" and ii.get("url") and w*h <= 12000000:
+                url=ii["url"]
             if not url or url in seen:continue
             seen.add(url);candidates.append({"title":title,"url":url,"source_url":ii.get("descriptionurl"),"width":w,"height":h,
               "license":clean(meta.get("LicenseShortName",{}).get("value")),"license_url":clean(meta.get("LicenseUrl",{}).get("value")),
