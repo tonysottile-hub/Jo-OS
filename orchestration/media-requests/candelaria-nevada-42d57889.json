@@ -1,0 +1,22 @@
+{
+  "build_id": "42d57889-1bca-47ca-a5da-53f4b979eda6",
+  "queries": [
+    "Candelaria Nevada ghost town ruins",
+    "Candelaria Nevada Northern Belle mine historic",
+    "Candelaria Nevada silver camp historic"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T14:19:02.985Z"
+}
