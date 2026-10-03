@@ -51,10 +51,11 @@ jobs:
           PY
       - name: Source media
         env:
-          SOURCE_PDF_URL: ${{ steps.req.outputs.source_pdf_url }}
-          SOURCE_PDF_CREDIT: ${{ steps.req.outputs.source_pdf_credit }}
+          REQUEST_PATH: ${{ steps.req.outputs.path }}
         run: |
           mkdir -p output/media
+          export SOURCE_PDF_URL="$(python -c 'import json,sys; print(json.load(open(sys.argv[1])).get("source_pdf_url",""))' "$REQUEST_PATH")"
+          export SOURCE_PDF_CREDIT="$(python -c 'import json,sys; print(json.load(open(sys.argv[1])).get("source_pdf_credit",""))' "$REQUEST_PATH")"
           if [ -n "$SOURCE_PDF_URL" ]; then
             mkdir -p output/pdf-pages
             python - <<'PY'
