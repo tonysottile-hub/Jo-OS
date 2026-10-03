@@ -1,0 +1,12 @@
+{
+  "build_id": "3431a57f-c9ad-44a6-a880-0e3ede5267df",
+  "output_name": "delamar-nevada-3431a57f-vetted.mp4",
+  "media_run_id": 37067651512,
+  "narration_run_id": 36953290447,
+  "exclude_media_title_terms": [
+    "CST-100"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T03:18:02.694Z",
+  "notes": "Five vetted Delamar assets retained; spacecraft test excluded after manual review."
+}
