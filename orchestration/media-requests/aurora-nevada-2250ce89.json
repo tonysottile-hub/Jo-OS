@@ -1,23 +1,29 @@
 {
   "build_id": "2250ce89-d914-41fd-8c87-16d5614bebc7",
   "queries": [
-    "Aurora Nevada historic mining town",
-    "Aurora Nevada Mark Twain historic",
-    "Aurora Nevada historic ruins",
-    "Aurora Nevada mining 1860s"
+    "Aurora Nevada historic mining town"
   ],
-  "count": 8,
-  "required_place": "",
+  "file_titles": [
+    "Aurora NV.jpg",
+    "Aurora NV circa 1910.png",
+    "Mark Twain by AF Bradley.jpg",
+    "Silver-214781.jpg"
+  ],
+  "required_terms": [
+    "Aurora",
+    "Mark Twain",
+    "Silver"
+  ],
+  "explicit_only": true,
+  "count": 4,
   "exclude_terms": [
     "cemetery",
     "grave",
-    "graves",
     "headstone",
     "tombstone",
-    "burial",
-    "stereoscopic",
-    "stereo"
+    "burial"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-03T03:27:01.424Z"
+  "requested_at": "2026-10-03T03:30:00Z",
+  "notes": "Exact vetted Commons files after two zero-result search runs; includes two Aurora records, Mark Twain portrait, and Nevada silver ore."
 }
