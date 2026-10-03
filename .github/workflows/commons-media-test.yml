@@ -48,6 +48,11 @@ jobs:
           print("source_pdf_url="+str(d.get("source_pdf_url","")))
           print("source_pdf_pages_json="+json.dumps(d.get("source_pdf_pages",[]),separators=(",",":")))
           print("source_pdf_credit="+str(d.get("source_pdf_credit","")))
+          print("source_image_urls_json="+json.dumps(d.get("source_image_urls",[]),separators=(",",":")))
+          print("source_image_credits_json="+json.dumps(d.get("source_image_credits",[]),separators=(",",":")))
+          print("source_image_titles_json="+json.dumps(d.get("source_image_titles",[]),separators=(",",":")))
+          print("source_image_licenses_json="+json.dumps(d.get("source_image_licenses",[]),separators=(",",":")))
+          print("source_image_attribution_url="+str(d.get("source_image_attribution_url","")))
           PY
       - name: Source media
         env:
@@ -92,6 +97,41 @@ jobs:
               sources.append({"title":f"Tybo Charcoal Kilns — NRHP nomination photograph page {page}, {variant_name}","source_url":url,"license":"Official NPS archival record; source attributed","artist":"Donald W. Jarvis (1973)","credit":credit,"local_path":str(dest),"matched_query":"official_nps_pdf"})
           pathlib.Path("output/manifest.json").write_text(json.dumps({"assets":assets,"duration_per_asset":8.0,"required_place":"Tybo","required_terms":["Tybo"],"exclude_terms":[],"media_sources":sources},indent=2)+"\n")
           print(json.dumps({"source":"official_nps_pdf","downloaded":len(assets),"manifest":"output/manifest.json"},indent=2))
+          PY
+          elif [ "$(python -c 'import json,sys; print(len(json.load(open(sys.argv[1])).get("source_image_urls",[])))' "$REQUEST_PATH")" -gt 0 ]; then
+            if ! command -v ffmpeg >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; fi
+            python - <<'PY'
+          import json,os,pathlib,shutil,subprocess,urllib.request
+          d=json.load(open(os.environ["REQUEST_PATH"]))
+          urls=d["source_image_urls"]
+          credits=d.get("source_image_credits",[])
+          titles=d.get("source_image_titles",[])
+          licenses=d.get("source_image_licenses",[])
+          attribution=d.get("source_image_attribution_url","")
+          required_place=d.get("required_place","")
+          required_terms=d.get("required_terms",[])
+          exclude_terms=d.get("exclude_terms",[])
+          assets=[]; sources=[]; seen={}
+          for i,url in enumerate(urls,1):
+              req=urllib.request.Request(url,headers={"User-Agent":"Jo-OS-UnmappedAmerica/1.0"})
+              src=pathlib.Path(f"output/source-{i:02d}.jpg")
+              with urllib.request.urlopen(req,timeout=90) as r: src.write_bytes(r.read())
+              seen[url]=seen.get(url,0)+1
+              variant=seen[url]
+              dest=pathlib.Path(f"output/media/direct-{i:02d}.jpg")
+              if variant==1:
+                  shutil.copyfile(src,dest); variant_name="full frame"
+              else:
+                  x="0" if variant==2 else "iw-ih"
+                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop=ih:ih:{x}:0","-q:v","2",str(dest)],check=True)
+                  variant_name="left detail crop" if variant==2 else "right detail crop"
+              title=titles[i-1] if i-1<len(titles) else f"{required_place} archival image {i}"
+              credit=credits[i-1] if i-1<len(credits) else "Source attribution in request"
+              license_name=licenses[i-1] if i-1<len(licenses) else "License specified by source"
+              assets.append({"path":str(dest),"duration":8.0})
+              sources.append({"title":f"{title} — {variant_name}","source_url":url,"attribution_url":attribution,"license":license_name,"credit":credit,"local_path":str(dest),"matched_query":"vetted_direct_image"})
+          pathlib.Path("output/manifest.json").write_text(json.dumps({"assets":assets,"duration_per_asset":8.0,"required_place":required_place,"required_terms":required_terms,"exclude_terms":exclude_terms,"media_sources":sources},indent=2)+"\n")
+          print(json.dumps({"source":"vetted_direct_images","downloaded":len(assets),"manifest":"output/manifest.json"},indent=2))
           PY
           else
             mapfile -t QUERIES < <(python - <<'PY'
