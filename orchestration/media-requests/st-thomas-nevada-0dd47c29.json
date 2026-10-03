@@ -1,0 +1,22 @@
+{
+  "build_id": "0dd47c29-8dbf-483c-a965-461379db1edf",
+  "queries": [
+    "St. Thomas Nevada Lake Mead ruins",
+    "St. Thomas Nevada historic town",
+    "Hoover Dam Lake Mead historic"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-03T09:15:25.775Z"
+}
