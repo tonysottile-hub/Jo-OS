@@ -45,41 +45,76 @@ jobs:
           print("required_terms_json="+json.dumps(d.get("required_terms",[]),separators=(",",":")))
           print("exclude_terms_json="+json.dumps(d.get("exclude_terms",[]),separators=(",",":")))
           print("explicit_only="+("true" if d.get("explicit_only",False) else "false"))
+          print("source_pdf_url="+str(d.get("source_pdf_url","")))
+          print("source_pdf_pages_json="+json.dumps(d.get("source_pdf_pages",[]),separators=(",",":")))
+          print("source_pdf_credit="+str(d.get("source_pdf_credit","")))
           PY
-      - name: Source Commons media
+      - name: Source media
+        env:
+          SOURCE_PDF_URL: ${{ steps.req.outputs.source_pdf_url }}
+          SOURCE_PDF_CREDIT: ${{ steps.req.outputs.source_pdf_credit }}
         run: |
           mkdir -p output/media
-          mapfile -t QUERIES < <(python - <<'PY'
+          if [ -n "$SOURCE_PDF_URL" ]; then
+            mkdir -p output/pdf-pages
+            python - <<'PY'
+          import os,urllib.request
+          req=urllib.request.Request(os.environ["SOURCE_PDF_URL"],headers={"User-Agent":"Jo-OS-UnmappedAmerica/1.0"})
+          with urllib.request.urlopen(req,timeout=90) as r:
+              open("output/source.pdf","wb").write(r.read())
+          PY
+            pdftoppm -jpeg -r 180 output/source.pdf output/pdf-pages/page
+            python - <<'PY'
+          import json,os,pathlib,shutil
+          pages=json.loads(r'''${{ steps.req.outputs.source_pdf_pages_json }}''')
+          if not pages: pages=[1,2,3]
+          url=os.environ["SOURCE_PDF_URL"]
+          credit=os.environ.get("SOURCE_PDF_CREDIT") or "National Park Service, NRHP nomination photographs"
+          assets=[]; sources=[]
+          for i,page in enumerate(pages,1):
+              src=pathlib.Path(f"output/pdf-pages/page-{int(page):02d}.jpg")
+              if not src.exists(): src=pathlib.Path(f"output/pdf-pages/page-{int(page)}.jpg")
+              if not src.exists(): raise SystemExit(f"Missing rendered PDF page {page}")
+              dest=pathlib.Path(f"output/media/nps-{i:02d}.jpg")
+              shutil.copyfile(src,dest)
+              assets.append({"path":str(dest),"duration":8.0})
+              sources.append({"title":f"Tybo Charcoal Kilns — NRHP nomination photograph page {page}","source_url":url,"license":"Official NPS archival record; source attributed","artist":"Donald W. Jarvis (1973)","credit":credit,"local_path":str(dest),"matched_query":"official_nps_pdf"})
+          pathlib.Path("output/manifest.json").write_text(json.dumps({"assets":assets,"duration_per_asset":8.0,"required_place":"Tybo","required_terms":["Tybo"],"exclude_terms":[],"media_sources":sources},indent=2)+"\n")
+          print(json.dumps({"source":"official_nps_pdf","downloaded":len(assets),"manifest":"output/manifest.json"},indent=2))
+          PY
+          else
+            mapfile -t QUERIES < <(python - <<'PY'
           import json
           for q in json.loads(r'''${{ steps.req.outputs.queries_json }}'''): print(q)
           PY
-          )
-          ARGS=()
-          for q in "${QUERIES[@]}"; do ARGS+=(--query "$q"); done
-          PLACE="${{ steps.req.outputs.required_place }}"
-          CATEGORY="${{ steps.req.outputs.category }}"
-          if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
-          if [ -n "$CATEGORY" ]; then ARGS+=(--category "$CATEGORY"); fi
-          mapfile -t FILE_TITLES < <(python - <<'PY'
+            )
+            ARGS=()
+            for q in "${QUERIES[@]}"; do ARGS+=(--query "$q"); done
+            PLACE="${{ steps.req.outputs.required_place }}"
+            CATEGORY="${{ steps.req.outputs.category }}"
+            if [ -n "$PLACE" ]; then ARGS+=(--place "$PLACE"); fi
+            if [ -n "$CATEGORY" ]; then ARGS+=(--category "$CATEGORY"); fi
+            mapfile -t FILE_TITLES < <(python - <<'PY'
           import json
           for x in json.loads(r'''${{ steps.req.outputs.file_titles_json }}'''): print(x)
           PY
-          )
-          for t in "${FILE_TITLES[@]}"; do ARGS+=(--file-title "$t"); done
-          mapfile -t REQUIRED_TERMS < <(python - <<'PY'
+            )
+            for t in "${FILE_TITLES[@]}"; do ARGS+=(--file-title "$t"); done
+            mapfile -t REQUIRED_TERMS < <(python - <<'PY'
           import json
           for x in json.loads(r'''${{ steps.req.outputs.required_terms_json }}'''): print(x)
           PY
-          )
-          for t in "${REQUIRED_TERMS[@]}"; do ARGS+=(--required-term "$t"); done
-          mapfile -t EXCLUDE_TERMS < <(python - <<'PY'
+            )
+            for t in "${REQUIRED_TERMS[@]}"; do ARGS+=(--required-term "$t"); done
+            mapfile -t EXCLUDE_TERMS < <(python - <<'PY'
           import json
           for x in json.loads(r'''${{ steps.req.outputs.exclude_terms_json }}'''): print(x)
           PY
-          )
-          for t in "${EXCLUDE_TERMS[@]}"; do ARGS+=(--exclude-term "$t"); done
-          if [ "${{ steps.req.outputs.explicit_only }}" = "true" ]; then ARGS+=(--explicit-only); fi
-          python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
+            )
+            for t in "${EXCLUDE_TERMS[@]}"; do ARGS+=(--exclude-term "$t"); done
+            if [ "${{ steps.req.outputs.explicit_only }}" = "true" ]; then ARGS+=(--explicit-only); fi
+            python renderer/commons_media.py "${ARGS[@]}" --out-dir output/media --manifest output/manifest.json --count "${{ steps.req.outputs.count }}"
+          fi
       - name: Verify manifest
         run: |
           python - <<'PY'
