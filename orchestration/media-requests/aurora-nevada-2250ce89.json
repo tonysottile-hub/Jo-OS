@@ -1,13 +1,52 @@
 {
   "build_id": "2250ce89-d914-41fd-8c87-16d5614bebc7",
-  "queries": [
-    "Aurora Nevada historic mining town",
-    "Aurora Nevada Mark Twain historic",
-    "Aurora Nevada historic ruins",
-    "Aurora Nevada mining 1860s"
+  "source_image_urls": [
+    "https://upload.wikimedia.org/wikipedia/commons/2/2c/Aurora_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/2/2c/Aurora_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/2/2c/Aurora_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/2/2c/Aurora_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b8/Aurora_NV_circa_1910.png",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b8/Aurora_NV_circa_1910.png",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b8/Aurora_NV_circa_1910.png",
+    "https://upload.wikimedia.org/wikipedia/commons/b/b8/Aurora_NV_circa_1910.png"
   ],
+  "source_image_titles": [
+    "Aurora Main Street, 1934 HABS — full frame",
+    "Aurora Main Street, 1934 HABS — left detail",
+    "Aurora Main Street, 1934 HABS — right detail",
+    "Aurora Main Street, 1934 HABS — alternate detail",
+    "Aurora Main Street after 1910 — full frame",
+    "Aurora Main Street after 1910 — left detail",
+    "Aurora Main Street after 1910 — right detail",
+    "Aurora Main Street after 1910 — alternate detail"
+  ],
+  "source_image_credits": [
+    "Historic American Buildings Survey / National Park Service, US Government",
+    "Historic American Buildings Survey / National Park Service, US Government",
+    "Historic American Buildings Survey / National Park Service, US Government",
+    "Historic American Buildings Survey / National Park Service, US Government",
+    "Unknown photographer; historic U.S. publication before 1931",
+    "Unknown photographer; historic U.S. publication before 1931",
+    "Unknown photographer; historic U.S. publication before 1931",
+    "Unknown photographer; historic U.S. publication before 1931"
+  ],
+  "source_image_licenses": [
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States",
+    "Public domain in the United States"
+  ],
+  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Aurora,_Nevada",
   "count": 8,
-  "required_place": "",
+  "required_place": "Aurora",
+  "required_terms": [
+    "Aurora",
+    "Nevada"
+  ],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -19,5 +58,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-04T06:16:01.941Z"
+  "requested_at": "2026-10-04T06:18:00.000Z",
+  "retry_reason": "Direct verified public-domain Aurora source package built after generic search and exact Commons mode did not meet the minimum visual count."
 }
