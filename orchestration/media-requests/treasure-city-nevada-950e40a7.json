@@ -1,9 +1,7 @@
 {
   "build_id": "950e40a7-a9ba-430d-8159-ec9a48de67eb",
   "queries": [
-    "Treasure City Nevada ghost town ruins",
-    "Treasure Hill Nevada silver mining historic",
-    "Treasure City Nevada 1869 historic photo"
+    "Treasure City Nevada"
   ],
   "count": 8,
   "required_place": "Treasure City",
@@ -12,25 +10,52 @@
     "Nevada"
   ],
   "exclude_terms": [
-    "Treasure City Florida",
-    "Treasure City China",
-    "treasure hunt",
-    "casino",
-    "jewelry",
     "cemetery",
     "grave",
-    "graves",
-    "headstone",
-    "tombstone",
-    "burial",
-    "stereoscopic",
-    "stereo",
-    "overdose",
-    "SNAP",
-    "rent",
-    "property tax"
+    "headstone"
   ],
   "explicit_only": true,
+  "source_image_urls": [
+    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg"
+  ],
+  "source_image_credits": [
+    "A. Hague, F. A. Clark, Clarence King — Library of Congress; public domain",
+    "QKC — CC BY-SA 3.0",
+    "A. Hague, F. A. Clark, Clarence King — Library of Congress; public domain",
+    "QKC — CC BY-SA 3.0",
+    "A. Hague, F. A. Clark, Clarence King — Library of Congress; public domain",
+    "QKC — CC BY-SA 3.0",
+    "A. Hague, F. A. Clark, Clarence King — Library of Congress; public domain",
+    "QKC — CC BY-SA 3.0"
+  ],
+  "source_image_titles": [
+    "Treasure Hill mining district map — full frame",
+    "Wells Fargo Bank ruin at Treasure Hill — full frame",
+    "Treasure City and Hamilton map detail",
+    "Treasure Hill bank ruin — left detail",
+    "White Pine mining claims map detail",
+    "Treasure Hill bank ruin — right detail",
+    "Treasure City elevation and mine-map detail",
+    "Treasure Hill stone ruin close detail"
+  ],
+  "source_image_licenses": [
+    "Public domain",
+    "CC BY-SA 3.0",
+    "Public domain",
+    "CC BY-SA 3.0",
+    "Public domain",
+    "CC BY-SA 3.0",
+    "Public domain",
+    "CC BY-SA 3.0"
+  ],
+  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/File:White_Pine_Mining_District_geological_map_circa_1869.jpg | https://commons.wikimedia.org/wiki/File:Ruin_of_the_Wells_Fargo_Bank_building,_silver-mining_ghost_town_of_Treasure_Hill,_Pogonip_Ridge_in_the_background,_White_Pine_County,_NV,_USA_-_panoramio.jpg",
   "publish_authorized": false,
-  "requested_at": "2026-10-04T00:29:00Z"
+  "requested_at": "2026-10-04T00:33:00Z"
 }
