@@ -1,0 +1,27 @@
+{
+  "build_id": "950e40a7-a9ba-430d-8159-ec9a48de67eb",
+  "queries": [
+    "Treasure City Nevada ghost town ruins",
+    "Treasure Hill Nevada silver mining historic",
+    "White Pine News Treasure City Nevada"
+  ],
+  "count": 8,
+  "required_place": "Treasure City",
+  "required_terms": [
+    "Treasure City",
+    "Nevada"
+  ],
+  "exclude_terms": [
+    "Treasure City Florida",
+    "Treasure City China",
+    "treasure hunt",
+    "casino",
+    "jewelry",
+    "cemetery",
+    "grave",
+    "headstone"
+  ],
+  "explicit_only": true,
+  "publish_authorized": false,
+  "requested_at": "2026-10-04T00:27:00Z"
+}
