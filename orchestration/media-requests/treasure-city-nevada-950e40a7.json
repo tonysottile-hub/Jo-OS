@@ -16,14 +16,14 @@
   ],
   "explicit_only": true,
   "source_image_urls": [
-    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/a/a5/White_Pine_Mining_District_geological_map_circa_1869.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg"
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-map.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-ruin.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-map.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-ruin.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-map.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-ruin.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-map.jpg",
+    "https://raw.githubusercontent.com/tonysottile-hub/Jo-OS/main/production/treasure-city-nevada-950e40a7/assets/treasure-city-ruin.jpg"
   ],
   "source_image_credits": [
     "A. Hague, F. A. Clark, Clarence King — Library of Congress; public domain",
@@ -57,5 +57,5 @@
   ],
   "source_image_attribution_url": "https://commons.wikimedia.org/wiki/File:White_Pine_Mining_District_geological_map_circa_1869.jpg | https://commons.wikimedia.org/wiki/File:Ruin_of_the_Wells_Fargo_Bank_building,_silver-mining_ghost_town_of_Treasure_Hill,_Pogonip_Ridge_in_the_background,_White_Pine_County,_NV,_USA_-_panoramio.jpg",
   "publish_authorized": false,
-  "requested_at": "2026-10-04T00:33:00Z"
+  "requested_at": "2026-10-04T00:36:00Z"
 }
