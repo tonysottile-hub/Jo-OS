@@ -3,11 +3,20 @@
   "queries": [
     "Treasure City Nevada ghost town ruins",
     "Treasure Hill Nevada silver mining historic",
-    "White Pine News Treasure City Nevada"
+    "Treasure City Nevada 1869 historic photo"
   ],
   "count": 8,
-  "required_place": "",
+  "required_place": "Treasure City",
+  "required_terms": [
+    "Treasure City",
+    "Nevada"
+  ],
   "exclude_terms": [
+    "Treasure City Florida",
+    "Treasure City China",
+    "treasure hunt",
+    "casino",
+    "jewelry",
     "cemetery",
     "grave",
     "graves",
@@ -15,8 +24,13 @@
     "tombstone",
     "burial",
     "stereoscopic",
-    "stereo"
+    "stereo",
+    "overdose",
+    "SNAP",
+    "rent",
+    "property tax"
   ],
+  "explicit_only": true,
   "publish_authorized": false,
-  "requested_at": "2026-10-04T00:24:03.645Z"
+  "requested_at": "2026-10-04T00:29:00Z"
 }
