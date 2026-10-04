@@ -6,8 +6,16 @@
     "Aurora Nevada historic ruins",
     "Aurora Nevada mining 1860s"
   ],
+  "file_titles": [
+    "File:Aurora NV.jpg",
+    "File:Aurora NV circa 1910.png"
+  ],
   "count": 8,
-  "required_place": "",
+  "required_place": "Aurora",
+  "required_terms": [
+    "Aurora",
+    "Nevada"
+  ],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -19,5 +27,6 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-04T06:12:13.522Z"
+  "requested_at": "2026-10-04T06:14:00.000Z",
+  "retry_reason": "Exact Aurora file titles restored after generic-query retry returned zero suitable images."
 }
