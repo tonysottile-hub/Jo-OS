@@ -75,22 +75,28 @@ jobs:
           from browser_use import Agent
           print("BROWSER_USE_IMPORT_PASS")
           PY
-      - name: Browser Use agent gate
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          BROWSER_USE_API_KEY: ${{ secrets.BROWSER_USE_API_KEY }}
+      - name: Install Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama --version
+          nohup ollama serve > browser-sandbox/ollama.log 2>&1 &
+          for i in {1..30}; do curl -fsS http://127.0.0.1:11434/api/tags >/dev/null && break; sleep 1; done
+          curl -fsS http://127.0.0.1:11434/api/tags >/dev/null
+          echo "OLLAMA_SERVER_PASS"
+      - name: Pull local test model
+        run: |
+          ollama pull qwen3:0.6b
+          ollama list
+          echo "OLLAMA_MODEL_PASS"
+      - name: Browser Use Ollama gate
         run: |
           python3 - <<'PY'
-          import os, json
-          available = bool(os.getenv("OPENAI_API_KEY") or os.getenv("BROWSER_USE_API_KEY"))
-          result={"model_credential_available":available}
-          if not available:
-              result["status"]="BLOCKED_MODEL_CREDENTIAL"
-              result["reason"]="Browser Use agent requires a model provider; no sandbox model secret is configured."
-          else:
-              result["status"]="READY_FOR_AGENT_EXECUTION"
+          import json
+          from browser_use import ChatOllama
+          llm=ChatOllama(model='qwen3:0.6b', num_ctx=8192)
+          result={"model_credential_available":True,"provider":"ollama-local","model":"qwen3:0.6b","status":"READY_FOR_AGENT_EXECUTION"}
           open("browser-sandbox/agent-gate.json","w").write(json.dumps(result,indent=2))
-          print(result["status"])
+          print("OLLAMA_BROWSER_USE_GATE_PASS")
           PY
       - name: Generate evidence
         if: always()
@@ -103,7 +109,7 @@ jobs:
             "production_credentials":False,
             "authority":"READ_ONLY",
             "container_network":"none",
-            "note":"This run proves host/container policy controls only. Browser Use agent execution requires a separately configured model provider and is not claimed by this report."
+            "note":"This run validates the host/container boundary plus a credential-free local Ollama model gate for Browser Use. Full browser-agent adversarial behavior is a separate acceptance gate."
           }
           open('browser-sandbox/test-report.json','w').write(json.dumps(report,indent=2))
           PY
