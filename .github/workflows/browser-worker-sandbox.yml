@@ -96,9 +96,7 @@ jobs:
           from browser_use import ChatOllama
           llm=ChatOllama(model='qwen3:0.6b')
           result={"model_credential_available":True,"provider":"ollama-local","model":"qwen3:0.6b","status":"READY_FOR_AGENT_EXECUTION"}
-          open("browser-sandbox/agent-gate.json
-            browser-sandbox/agent-result.json
-            browser-sandbox/agent-verification.json","w").write(json.dumps(result,indent=2))
+          open("browser-sandbox/agent-gate.json","w").write(json.dumps(result,indent=2))
           print("OLLAMA_BROWSER_USE_GATE_PASS")
           PY
       - name: Install Chromium for Browser Use
