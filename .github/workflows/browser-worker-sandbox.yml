@@ -67,6 +67,31 @@ jobs:
           else
             echo "FAIL: sandbox mount is not read-only"; exit 1
           fi
+      - name: Install Browser Use
+        run: |
+          python3 -m pip install --disable-pip-version-check browser-use
+          python3 - <<'PY'
+          import browser_use
+          from browser_use import Agent
+          print("BROWSER_USE_IMPORT_PASS")
+          PY
+      - name: Browser Use agent gate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          BROWSER_USE_API_KEY: ${{ secrets.BROWSER_USE_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, json
+          available = bool(os.getenv("OPENAI_API_KEY") or os.getenv("BROWSER_USE_API_KEY"))
+          result={"model_credential_available":available}
+          if not available:
+              result["status"]="BLOCKED_MODEL_CREDENTIAL"
+              result["reason"]="Browser Use agent requires a model provider; no sandbox model secret is configured."
+          else:
+              result["status"]="READY_FOR_AGENT_EXECUTION"
+          open("browser-sandbox/agent-gate.json","w").write(json.dumps(result,indent=2))
+          print(result["status"])
+          PY
       - name: Generate evidence
         if: always()
         run: |
@@ -89,3 +114,4 @@ jobs:
           path: |
             browser-sandbox/test-report.json
             browser-sandbox/docker-inspect.json
+            browser-sandbox/agent-gate.json
