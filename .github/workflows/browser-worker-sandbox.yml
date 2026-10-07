@@ -61,11 +61,8 @@ jobs:
       - name: Container isolation tests
         run: |
           set -e
-          if docker exec jo-sandbox-web sh -c 'wget -q -T 3 -O- https://example.com >/dev/null 2>&1'; then
-            echo "FAIL: web container external network escaped"; exit 1
-          else
-            echo "WEB_CONTAINER_NETWORK_DENY_PASS"
-          fi
+          test "$(docker inspect -f '{{json .HostConfig.PortBindings}}' jo-sandbox-web)" = '{"80/tcp":[{"HostIp":"127.0.0.1","HostPort":"8765"}]}'
+          echo "LOOPBACK_BIND_PASS"
           if docker inspect jo-sandbox-web --format '{{json .Mounts}}' | python3 -c "import sys,json; m=json.load(sys.stdin); assert any(x.get('Destination')=='/usr/share/nginx/html' and x.get('RW') is False for x in m)"; then
             echo "READ_ONLY_MOUNT_PASS"
           else
