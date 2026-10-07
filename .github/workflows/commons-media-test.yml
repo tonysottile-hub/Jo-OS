@@ -115,11 +115,29 @@ jobs:
           required_place=d.get("required_place","")
           required_terms=d.get("required_terms",[])
           exclude_terms=d.get("exclude_terms",[])
-          assets=[]; sources=[]; seen={}
+          assets=[]; sources=[]; seen={}; cache={}
           for i,url in enumerate(urls,1):
-              req=urllib.request.Request(url,headers={"User-Agent":"Jo-OS-UnmappedAmerica/1.0"})
               src=pathlib.Path(f"output/source-{i:02d}.jpg")
-              with urllib.request.urlopen(req,timeout=90) as r: src.write_bytes(r.read())
+              if url in cache:
+                  shutil.copyfile(cache[url],src)
+              else:
+                  req=urllib.request.Request(url,headers={"User-Agent":"Jo-OS-UnmappedAmerica/1.0","Accept":"image/*"})
+                  downloaded=False
+                  for attempt in range(4):
+                      try:
+                          with urllib.request.urlopen(req,timeout=90) as r: src.write_bytes(r.read())
+                          cache[url]=src
+                          downloaded=True
+                          break
+                      except (urllib.error.HTTPError, urllib.error.URLError) as exc:
+                          code=getattr(exc,"code",None)
+                          if code in (429,500,502,503,504) and attempt < 3:
+                              time.sleep(2 ** attempt)
+                              continue
+                          print(f"warning: skipping unavailable media URL {url}: {exc}")
+                          break
+                  if not downloaded:
+                      continue
               seen[url]=seen.get(url,0)+1
               variant=seen[url]
               dest=pathlib.Path(f"output/media/direct-{i:02d}.jpg")
