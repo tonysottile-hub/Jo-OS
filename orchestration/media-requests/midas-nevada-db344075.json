@@ -1,0 +1,23 @@
+{
+  "build_id": "db344075-e768-404f-bc43-67299da7e2c8",
+  "queries": [
+    "Midas Nevada historic downtown",
+    "Midas Nevada historic buildings",
+    "Midas Nevada mining historic",
+    "Midas Nevada historic streets"
+  ],
+  "count": 8,
+  "required_place": "Midas",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T15:17:54.298Z"
+}
