@@ -23,45 +23,37 @@
   ],
   "source_image_urls": [
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_fire_1908.jpg",
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_fire_1908.jpg",
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_bread_line_1908.jpg",
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_bread_line_1908.jpg",
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_street_1908.jpg",
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_street_1908.jpg",
     "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_1908_a.jpg",
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_1908_a.jpg"
+    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_Nevada_1910.jpg",
+    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rawhide_1915.jpeg"
   ],
   "source_image_titles": [
     "Rawhide, Nevada fire, September 4, 1908",
-    "Rawhide, Nevada fire, September 4, 1908",
     "Rawhide, Nevada post-fire bread line, 1908",
-    "Rawhide, Nevada post-fire bread line, 1908",
-    "Rawhide, Nevada street scene, 1908",
     "Rawhide, Nevada street scene, 1908",
     "Rawhide, Nevada town view, 1908",
-    "Rawhide, Nevada town view, 1908"
+    "Rawhide, Nevada on a 1910 USGS map",
+    "Rawhide, Nevada in 1915"
   ],
   "source_image_credits": [
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons",
-    "Unknown photographer; Myrtle Myles collection; published in Stanley W. Paher, Nevada Ghost Towns and Mining Camps; via Wikimedia Commons"
+    "Unknown photographer; Myrtle Myles collection; via Wikimedia Commons",
+    "Unknown photographer; Myrtle Myles collection; via Wikimedia Commons",
+    "Unknown photographer; Myrtle Myles collection; via Wikimedia Commons",
+    "Unknown photographer; Myrtle Miles collection; via Wikimedia Commons",
+    "U.S. Geological Survey; via Wikimedia Commons",
+    "Historical photograph; via Wikimedia Commons"
   ],
   "source_image_licenses": [
     "Public domain in the United States; pre-1931 publication",
     "Public domain in the United States; pre-1931 publication",
     "Public domain in the United States; pre-1931 publication",
     "Public domain in the United States; pre-1931 publication",
-    "Public domain in the United States; pre-1931 publication",
-    "Public domain in the United States; pre-1931 publication",
-    "Public domain in the United States; pre-1931 publication",
+    "Public domain; U.S. federal government work",
     "Public domain in the United States; pre-1931 publication"
   ],
   "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Ghost_towns_in_Nevada",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T14:13:36.818Z"
+  "requested_at": "2026-10-07T14:15:08.868Z"
 }
