@@ -170,5 +170,5 @@ jobs:
             browser-sandbox/test-report.json
             browser-sandbox/docker-inspect.json
             browser-sandbox/agent-gate.json
-          browser-sandbox/agent-result.json
-          browser-sandbox/agent-verification.json
+            browser-sandbox/agent-result.json
+            browser-sandbox/agent-verification.json
