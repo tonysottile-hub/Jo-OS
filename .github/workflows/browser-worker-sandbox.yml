@@ -62,10 +62,10 @@ jobs:
           else
             echo "NETWORK_DENY_PASS"
           fi
-          if docker exec jo-sandbox-web sh -c 'test -w /usr/share/nginx/html/index.html'; then
-            echo "FAIL: test content writable"; exit 1
-          else
+          if docker inspect jo-sandbox-web --format '{{json .Mounts}}' | python3 -c "import sys,json; m=json.load(sys.stdin); assert any(x.get('Destination')=='/usr/share/nginx/html' and x.get('RW') is False for x in m)"; then
             echo "READ_ONLY_MOUNT_PASS"
+          else
+            echo "FAIL: sandbox mount is not read-only"; exit 1
           fi
       - name: Generate evidence
         if: always()
