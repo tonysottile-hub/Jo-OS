@@ -6,8 +6,41 @@
     "Midas Nevada mining historic",
     "Midas Nevada historic streets"
   ],
-  "count": 8,
+  "count": 6,
   "required_place": "Midas",
+  "source_image_urls": [
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/2015-04-20_14_25_52_Signs_at_the_intersection_of_Midas_Road_%28Elko_County_Route_724%29_and_Main_Street_near_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_25_52_Signs_at_the_intersection_of_Midas_Road_%28Elko_County_Route_724%29_and_Main_Street_near_Midas%2C_Nevada.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/2015-04-20_14_25_58_View_north_along_Main_Street_from_the_junction_with_Midas_Road_%28Elko_County_Route_724%29_in_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_25_58_View_north_along_Main_Street_from_the_junction_with_Midas_Road_%28Elko_County_Route_724%29_in_Midas%2C_Nevada.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/2015-04-20_14_26_38_View_north_along_Main_Street_about_0.2_miles_north_of_the_junction_with_Midas_Road_%28Elko_County_Route_724%29_in_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_26_38_View_north_along_Main_Street_about_0.2_miles_north_of_the_junction_with_Midas_Road_%28Elko_County_Route_724%29_in_Midas%2C_Nevada.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/2015-04-20_14_30_49_%22Welcome_to_Midas%22_sign_in_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_30_49_%22Welcome_to_Midas%22_sign_in_Midas%2C_Nevada.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/2015-04-20_14_34_12_Old_building_and_wagon_wheel_in_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_34_12_Old_building_and_wagon_wheel_in_Midas%2C_Nevada.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/2015-04-20_14_37_38_Old_truck_along_Main_Street_in_Midas%2C_Nevada.jpg/1280px-2015-04-20_14_37_38_Old_truck_along_Main_Street_in_Midas%2C_Nevada.jpg"
+  ],
+  "source_image_titles": [
+    "Midas Road and Main Street signs",
+    "Main Street from Midas Road junction",
+    "Main Street north of Midas Road",
+    "Welcome to Midas sign",
+    "Old building and wagon wheel in Midas",
+    "Old truck along Main Street in Midas"
+  ],
+  "source_image_credits": [
+    "Famartin / Wikimedia Commons",
+    "Famartin / Wikimedia Commons",
+    "Famartin / Wikimedia Commons",
+    "Famartin / Wikimedia Commons",
+    "Famartin / Wikimedia Commons",
+    "Famartin / Wikimedia Commons"
+  ],
+  "source_image_licenses": [
+    "CC BY-SA 4.0",
+    "CC BY-SA 4.0",
+    "CC BY-SA 4.0",
+    "CC BY-SA 4.0",
+    "CC BY-SA 4.0",
+    "CC BY-SA 4.0"
+  ],
+  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Midas,_Nevada",
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -19,5 +52,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-07T15:21:02.771Z"
+  "requested_at": "2026-10-07T15:24:00Z"
 }
