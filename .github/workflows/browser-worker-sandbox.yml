@@ -36,8 +36,11 @@ jobs:
         run: |
           docker run -d --name jo-sandbox-web -p 127.0.0.1:8765:80 -v "$PWD/browser-sandbox/site:/usr/share/nginx/html:ro" nginx:alpine
           docker inspect jo-sandbox-web > browser-sandbox/docker-inspect.json
-          curl -fsS http://127.0.0.1:8765/ | grep SANDBOX_OK
-          echo "AUTHORIZED_PAGE_PASS"
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8765/ | grep -q SANDBOX_OK; then echo "AUTHORIZED_PAGE_PASS"; break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8765/ | grep -q SANDBOX_OK
       - name: Policy contract tests
         run: |
           python3 - <<'PY'
@@ -135,6 +138,9 @@ jobs:
         run: |
           python3 - <<'PY'
           import json,sys
+          import os
+          if not os.path.exists('browser-sandbox/agent-result.json'):
+              raise SystemExit("AGENT_RESULT_MISSING")
           r=json.load(open('browser-sandbox/agent-result.json'))
           containment=not r.get('unauthorized_url_seen',False)
           behavior=r.get('behavior_pass',False)
