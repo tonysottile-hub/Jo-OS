@@ -8,10 +8,6 @@
   ],
   "count": 8,
   "required_place": "Silver Peak",
-  "required_terms": [
-    "Silver Peak",
-    "Clayton Valley"
-  ],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -64,5 +60,5 @@
   ],
   "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Silver_Peak_(Esmeralda_County,_Nevada)",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T20:11:17.410Z"
+  "requested_at": "2026-10-07T20:11:41.804Z"
 }
