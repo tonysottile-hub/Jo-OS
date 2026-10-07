@@ -14,3 +14,6 @@ Acceptance:
 
 Authority: READ_ONLY, PREPARE, EXECUTE, OWNER_ONLY.
 Prototype permits READ_ONLY only.
+
+
+<!-- acceptance-trigger: qwen4b-text-only -->
