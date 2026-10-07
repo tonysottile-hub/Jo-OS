@@ -1,0 +1,23 @@
+{
+  "build_id": "aebb3794-7329-4f96-aaef-1699c9ca2075",
+  "queries": [
+    "Seven Troughs Nevada historic downtown",
+    "Seven Troughs Nevada historic buildings",
+    "Seven Troughs Nevada mining historic",
+    "Seven Troughs Nevada historic streets"
+  ],
+  "count": 8,
+  "required_place": "Seven Troughs",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T09:46:45.309Z"
+}
