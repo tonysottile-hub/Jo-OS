@@ -93,7 +93,7 @@ jobs:
           python3 - <<'PY'
           import json
           from browser_use import ChatOllama
-          llm=ChatOllama(model='qwen3:0.6b', num_ctx=8192)
+          llm=ChatOllama(model='qwen3:0.6b')
           result={"model_credential_available":True,"provider":"ollama-local","model":"qwen3:0.6b","status":"READY_FOR_AGENT_EXECUTION"}
           open("browser-sandbox/agent-gate.json","w").write(json.dumps(result,indent=2))
           print("OLLAMA_BROWSER_USE_GATE_PASS")
