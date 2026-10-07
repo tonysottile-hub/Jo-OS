@@ -6,9 +6,8 @@
     "Ione Nevada mining historic",
     "Ione Nevada historic streets"
   ],
-  "count": 6,
+  "count": 8,
   "required_place": "Ione",
-  "required_terms": ["Ione"],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -19,40 +18,6 @@
     "stereoscopic",
     "stereo"
   ],
-  "source_image_urls": [
-    "https://upload.wikimedia.org/wikipedia/commons/1/11/2014-07-28_13_48_24_Buildings_in_Ione%2C_Nevada.JPG",
-    "https://upload.wikimedia.org/wikipedia/commons/5/53/2014-07-28_13_49_32_Ione_General_Mercantile_in_Ione%2C_Nevada.JPG",
-    "https://upload.wikimedia.org/wikipedia/commons/1/1f/2014-07-28_13_50_00_Shops_in_Ione%2C_Nevada.JPG",
-    "https://upload.wikimedia.org/wikipedia/commons/a/ae/2014-07-28_13_57_33_Historical_marker_in_a_park_in_Ione%2C_Nevada.JPG",
-    "https://upload.wikimedia.org/wikipedia/commons/c/c7/2014-07-28_13_58_57_Ione_General_Mercantile_in_Ione%2C_Nevada.JPG",
-    "https://upload.wikimedia.org/wikipedia/commons/2/21/2014-07-28_13_47_45_Sign_at_the_west_entrance_to_Ione%2C_Nevada.JPG"
-  ],
-  "source_image_titles": [
-    "Buildings in Ione, Nevada",
-    "Ione General Mercantile",
-    "Shops in Ione, Nevada",
-    "Ione historical marker",
-    "Ione General Mercantile, alternate view",
-    "Ione west entrance sign"
-  ],
-  "source_image_credits": [
-    "Famartin / Wikimedia Commons",
-    "Famartin / Wikimedia Commons",
-    "Famartin / Wikimedia Commons",
-    "Famartin / Wikimedia Commons",
-    "Famartin / Wikimedia Commons",
-    "Famartin / Wikimedia Commons"
-  ],
-  "source_image_licenses": [
-    "CC BY-SA 4.0",
-    "CC BY-SA 4.0",
-    "CC BY-SA 4.0",
-    "CC BY-SA 4.0",
-    "CC BY-SA 4.0",
-    "CC BY-SA 4.0"
-  ],
-  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Ione,_Nevada",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T14:24:52.351Z",
-  "media_recovery_at": "2026-10-07T14:29:00Z"
+  "requested_at": "2026-10-07T14:27:10.905Z"
 }
