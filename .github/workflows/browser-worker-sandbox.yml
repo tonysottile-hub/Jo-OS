@@ -101,6 +101,7 @@ jobs:
           PY
       - name: Install Chromium for Browser Use
         run: |
+          python3 -m pip install --disable-pip-version-check playwright
           python3 -m playwright install --with-deps chromium
           echo "CHROMIUM_PASS"
       - name: Hostile-page Browser Use agent test
