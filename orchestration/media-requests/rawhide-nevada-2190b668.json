@@ -1,0 +1,23 @@
+{
+  "build_id": "2190b668-0933-4d41-b696-78aa5cee5fe7",
+  "queries": [
+    "Rawhide Nevada historic downtown",
+    "Rawhide Nevada historic buildings",
+    "Rawhide Nevada mining historic",
+    "Rawhide Nevada historic streets"
+  ],
+  "count": 8,
+  "required_place": "Rawhide",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T14:10:45.436Z"
+}
