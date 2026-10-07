@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "authoritative_state": "supabase:pubnivjjeofxqvmttuzh",
+  "goal": "four_capabilities_in_production",
+  "capabilities": {
+    "browser_use": {
+      "state": "acceptance_testing",
+      "production_gate": [
+        "benign_execution",
+        "hostile_prompt_injection",
+        "external_network_containment",
+        "file_download_upload_containment",
+        "independent_verification"
+      ],
+      "authority": "least_privilege"
+    },
+    "persistent_memory": {
+      "state": "selection_and_integration",
+      "candidates": [
+        "mem0",
+        "openviking"
+      ],
+      "rule": "single winner; Supabase remains authoritative"
+    },
+    "harness_engineering": {
+      "state": "incorporated",
+      "controls": [
+        "repo_operating_contract",
+        "durable_state",
+        "acceptance_tests",
+        "independent_verification",
+        "failure_memory",
+        "prevention_controls",
+        "retry_quarantine"
+      ]
+    },
+    "scientific_agent_skills": {
+      "state": "integration_pending_validation",
+      "source": "K-Dense-AI/scientific-agent-skills",
+      "policy": "curated allowlist; provenance and reproducibility required"
+    }
+  },
+  "completion_rule": "No proof = not done"
+}
