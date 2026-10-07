@@ -1,0 +1,23 @@
+{
+  "build_id": "3e4d7b29-731e-4187-9f3f-b641f46cce6e",
+  "queries": [
+    "Rhyolite Nevada ghost town Cook Bank ruins",
+    "Rhyolite Nevada 1909 Sanborn map",
+    "Rhyolite Nevada Bottle House historic",
+    "Bullfrog Mine Rhyolite Nevada historic"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T04:15:54.298Z"
+}
