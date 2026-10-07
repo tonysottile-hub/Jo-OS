@@ -7,61 +7,17 @@
     "Rochester Nevada silver mine historic"
   ],
   "count": 8,
-  "required_place": "Rochester",
-  "required_terms": [
-    "Rochester",
-    "Nenzel"
-  ],
+  "required_place": "",
   "exclude_terms": [
-    "Rochester New York",
-    "Rochester Minnesota",
     "cemetery",
     "grave",
+    "graves",
     "headstone",
+    "tombstone",
+    "burial",
     "stereoscopic",
     "stereo"
   ],
-  "source_image_urls": [
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page11-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page11-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page11-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page15-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page15-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page23-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page23-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf/page23-1280px-The_Rochester_mining_district%2C_Nevada_%28IA_rochesterminingd00schr%29.pdf.jpg"
-  ],
-  "source_image_titles": [
-    "Silicified croppings and mines on Nenzel Hill, Rochester district, Nevada — USGS Bulletin 580-M, figure 89",
-    "Nenzel Hill mining district detail — USGS Bulletin 580-M, figure 89",
-    "Nenzel Hill mines detail — USGS Bulletin 580-M, figure 89",
-    "Geologic map of the Rochester district, Nevada — USGS Bulletin 580-M, plate VIII",
-    "Rochester district geologic map detail — USGS Bulletin 580-M, plate VIII",
-    "Principal lodes and veins on Nenzel Hill — USGS Bulletin 580-M, figure 91",
-    "Nenzel Hill claims and mine workings detail — USGS Bulletin 580-M, figure 91",
-    "Rochester mines and lodes detail — USGS Bulletin 580-M, figure 91"
-  ],
-  "source_image_credits": [
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons",
-    "Frank C. Schrader, U.S. Geological Survey, Bulletin 580-M (1914); scan hosted by Wikimedia Commons"
-  ],
-  "source_image_licenses": [
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914",
-    "Public domain; U.S. Government publication, 1914"
-  ],
-  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/File:The_Rochester_mining_district,_Nevada_(IA_rochesterminingd00schr).pdf",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T05:27:00Z"
+  "requested_at": "2026-10-07T05:25:04.327Z"
 }
