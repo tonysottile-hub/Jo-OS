@@ -1,0 +1,23 @@
+{
+  "build_id": "be81cced-ac91-4df8-80a5-64412402b8e0",
+  "queries": [
+    "Wonder Nevada historic downtown",
+    "Wonder Nevada historic buildings",
+    "Wonder Nevada mining historic",
+    "Wonder Nevada historic streets"
+  ],
+  "count": 8,
+  "required_place": "Wonder",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T09:38:33.744Z"
+}
