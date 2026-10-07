@@ -1,0 +1,23 @@
+{
+  "build_id": "49c1c3b6-49ce-4b2d-99ea-245beeec148d",
+  "queries": [
+    "Rochester Nevada ghost town ruins",
+    "Rochester Nevada mining camp historic",
+    "Rochester Nevada tram towers",
+    "Rochester Nevada silver mine historic"
+  ],
+  "count": 8,
+  "required_place": "",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T05:15:14.215Z"
+}
