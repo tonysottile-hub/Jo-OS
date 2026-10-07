@@ -90,9 +90,13 @@ jobs:
                   shutil.copyfile(src,dest)
                   variant_name="full frame"
               else:
-                  x="0" if variant==2 else "iw-ih"
-                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop=ih:ih:{x}:0","-q:v","2",str(dest)],check=True)
-                  variant_name="left detail crop" if variant==2 else "right detail crop"
+                  probe=subprocess.check_output(["ffprobe","-v","error","-select_streams","v:0","-show_entries","stream=width,height","-of","csv=p=0",str(src)],text=True).strip()
+                  w,h=map(int,probe.split(","))
+                  side=min(w,h)
+                  x=0 if variant==2 else w-side
+                  y=0 if variant==2 else h-side
+                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop={side}:{side}:{x}:{y}","-q:v","2",str(dest)],check=True)
+                  variant_name="top-left detail crop" if variant==2 else "bottom-right detail crop"
               assets.append({"path":str(dest),"duration":8.0})
               sources.append({"title":f"Tybo Charcoal Kilns — NRHP nomination photograph page {page}, {variant_name}","source_url":url,"license":"Official NPS archival record; source attributed","artist":"Donald W. Jarvis (1973)","credit":credit,"local_path":str(dest),"matched_query":"official_nps_pdf"})
           pathlib.Path("output/manifest.json").write_text(json.dumps({"assets":assets,"duration_per_asset":8.0,"required_place":"Tybo","required_terms":["Tybo"],"exclude_terms":[],"media_sources":sources},indent=2)+"\n")
@@ -122,9 +126,13 @@ jobs:
               if variant==1:
                   shutil.copyfile(src,dest); variant_name="full frame"
               else:
-                  x="0" if variant==2 else "iw-ih"
-                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop=ih:ih:{x}:0","-q:v","2",str(dest)],check=True)
-                  variant_name="left detail crop" if variant==2 else "right detail crop"
+                  probe=subprocess.check_output(["ffprobe","-v","error","-select_streams","v:0","-show_entries","stream=width,height","-of","csv=p=0",str(src)],text=True).strip()
+                  w,h=map(int,probe.split(","))
+                  side=min(w,h)
+                  x=0 if variant==2 else w-side
+                  y=0 if variant==2 else h-side
+                  subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-vf",f"crop={side}:{side}:{x}:{y}","-q:v","2",str(dest)],check=True)
+                  variant_name="top-left detail crop" if variant==2 else "bottom-right detail crop"
               title=titles[i-1] if i-1<len(titles) else f"{required_place} archival image {i}"
               credit=credits[i-1] if i-1<len(credits) else "Source attribution in request"
               license_name=licenses[i-1] if i-1<len(licenses) else "License specified by source"
