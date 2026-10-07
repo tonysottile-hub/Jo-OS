@@ -1,0 +1,23 @@
+{
+  "build_id": "2afba697-7d3b-49c9-83c9-eeb845f48520",
+  "queries": [
+    "Silver Peak Nevada historic downtown",
+    "Silver Peak Nevada historic buildings",
+    "Silver Peak Nevada mining historic",
+    "Silver Peak Nevada historic streets"
+  ],
+  "count": 8,
+  "required_place": "Silver Peak",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-07T19:20:05.990Z"
+}
