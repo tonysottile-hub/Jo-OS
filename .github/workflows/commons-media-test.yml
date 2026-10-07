@@ -105,7 +105,7 @@ jobs:
           elif [ "$(python -c 'import json,sys; print(len(json.load(open(sys.argv[1])).get("source_image_urls",[])))' "$REQUEST_PATH")" -gt 0 ]; then
             if ! command -v ffmpeg >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; fi
             python - <<'PY'
-          import json,os,pathlib,shutil,subprocess,urllib.request
+          import json,os,pathlib,shutil,subprocess,time,urllib.error,urllib.request
           d=json.load(open(os.environ["REQUEST_PATH"]))
           urls=d["source_image_urls"]
           credits=d.get("source_image_credits",[])
