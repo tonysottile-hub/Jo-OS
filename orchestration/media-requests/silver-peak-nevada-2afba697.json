@@ -8,6 +8,10 @@
   ],
   "count": 8,
   "required_place": "Silver Peak",
+  "required_terms": [
+    "Silver Peak",
+    "Clayton Valley"
+  ],
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -18,6 +22,47 @@
     "stereoscopic",
     "stereo"
   ],
+  "source_image_urls": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg/1280px-Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Silver_Peak%2C_Nevada%2C_USA.jpg/1280px-Silver_Peak%2C_Nevada%2C_USA.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Clayton_Valley%2C_NV_%28ASTER%29.jpg/960px-Clayton_Valley%2C_NV_%28ASTER%29.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Silver_Peak%2C_NV.jpg/1280px-Silver_Peak%2C_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/e/e9/Lithium_Mining%2C_Nevada_%28ASTER%29.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg/1280px-Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg",
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Silver_Peak%2C_NV.jpg/1280px-Silver_Peak%2C_NV.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/e/e9/Lithium_Mining%2C_Nevada_%28ASTER%29.jpg"
+  ],
+  "source_image_titles": [
+    "Chemetall Foote lithium operation at Silver Peak — aerial view",
+    "Silver Peak and Clayton Valley — CBERS-4 satellite view",
+    "Clayton Valley lithium brine fields — ASTER 2023",
+    "Silver Peak, Nevada townscape in 2013",
+    "Silver Peak lithium operation — ASTER 2013",
+    "Chemetall Foote lithium operation at Silver Peak — detail crop",
+    "Silver Peak, Nevada townscape — detail crop",
+    "Silver Peak lithium operation — detail crop"
+  ],
+  "source_image_credits": [
+    "Ken Lund",
+    "Coordenação-Geral de Observação da Terra/INPE",
+    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
+    "Theo Schear",
+    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
+    "Ken Lund",
+    "Theo Schear",
+    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team"
+  ],
+  "source_image_licenses": [
+    "CC BY-SA 2.0",
+    "CC BY-SA 2.0",
+    "Public domain (NASA)",
+    "CC BY-SA 4.0",
+    "Public domain (NASA)",
+    "CC BY-SA 2.0",
+    "CC BY-SA 4.0",
+    "Public domain (NASA)"
+  ],
+  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Silver_Peak_(Esmeralda_County,_Nevada)",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T20:10:03.839Z"
+  "requested_at": "2026-10-07T20:11:17.410Z"
 }
