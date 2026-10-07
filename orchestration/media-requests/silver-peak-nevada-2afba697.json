@@ -19,46 +19,46 @@
     "stereo"
   ],
   "source_image_urls": [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg/1280px-Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Silver_Peak%2C_Nevada%2C_USA.jpg/1280px-Silver_Peak%2C_Nevada%2C_USA.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Clayton_Valley%2C_NV_%28ASTER%29.jpg/960px-Clayton_Valley%2C_NV_%28ASTER%29.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Silver_Peak%2C_NV.jpg/1280px-Silver_Peak%2C_NV.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/e/e9/Lithium_Mining%2C_Nevada_%28ASTER%29.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg/1280px-Chemetall_Foote_Lithium_Operation_at_Silver_Peak%2C_Nevada_%2810753715084%29.jpg",
-    "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Silver_Peak%2C_NV.jpg/1280px-Silver_Peak%2C_NV.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/e/e9/Lithium_Mining%2C_Nevada_%28ASTER%29.jpg"
+    "https://shpo.nv.gov/uploads/images/photos/155_Silver_Peak_-_CU.JPG",
+    "https://asterweb.jpl.nasa.gov/gallery/images/clayton-nat.jpg",
+    "https://asterweb.jpl.nasa.gov/gallery/images/lithiummine.jpg",
+    "https://shpo.nv.gov/uploads/images/photos/155_Silver_Peak_-_CU.JPG",
+    "https://asterweb.jpl.nasa.gov/gallery/images/clayton-nat.jpg",
+    "https://asterweb.jpl.nasa.gov/gallery/images/lithiummine.jpg",
+    "https://shpo.nv.gov/uploads/images/photos/155_Silver_Peak_-_CU.JPG",
+    "https://www.energy.gov/sites/default/files/styles/full_article_width/public/2026-08/Lithium-front_Geothermal-Everywhere-Postcards-4x6-no-border-FY26.jpg?itok=n91OhAy3"
   ],
   "source_image_titles": [
-    "Chemetall Foote lithium operation at Silver Peak — aerial view",
-    "Silver Peak and Clayton Valley — CBERS-4 satellite view",
+    "Silver Peak historical marker — full view",
     "Clayton Valley lithium brine fields — ASTER 2023",
-    "Silver Peak, Nevada townscape in 2013",
     "Silver Peak lithium operation — ASTER 2013",
-    "Chemetall Foote lithium operation at Silver Peak — detail crop",
-    "Silver Peak, Nevada townscape — detail crop",
-    "Silver Peak lithium operation — detail crop"
+    "Silver Peak historical marker — top-left detail",
+    "Clayton Valley lithium brine fields — top-left detail",
+    "Silver Peak lithium operation — top-left detail",
+    "Silver Peak historical marker — lower detail",
+    "Lithium: Electrifying the Future"
   ],
   "source_image_credits": [
-    "Ken Lund",
-    "Coordenação-Geral de Observação da Terra/INPE",
+    "Nevada State Historic Preservation Office; photo courtesy David J. Harrison",
     "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
-    "Theo Schear",
     "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
-    "Ken Lund",
-    "Theo Schear",
-    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team"
+    "Nevada State Historic Preservation Office; photo courtesy David J. Harrison",
+    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
+    "NASA/METI/AIST/Japan Space Systems and U.S./Japan ASTER Science Team",
+    "Nevada State Historic Preservation Office; photo courtesy David J. Harrison",
+    "U.S. Department of Energy"
   ],
   "source_image_licenses": [
-    "CC BY-SA 2.0",
-    "CC BY-SA 2.0",
+    "Official Nevada SHPO image; credited use",
     "Public domain (NASA)",
-    "CC BY-SA 4.0",
     "Public domain (NASA)",
-    "CC BY-SA 2.0",
-    "CC BY-SA 4.0",
-    "Public domain (NASA)"
+    "Official Nevada SHPO image; credited use",
+    "Public domain (NASA)",
+    "Public domain (NASA)",
+    "Official Nevada SHPO image; credited use",
+    "U.S. government work"
   ],
-  "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:Silver_Peak_(Esmeralda_County,_Nevada)",
+  "source_image_attribution_url": "https://shpo.nv.gov/nevadas-historical-markers/historical-markers/silver-peak",
   "publish_authorized": false,
-  "requested_at": "2026-10-07T20:11:41.804Z"
+  "requested_at": "2026-10-07T20:15:18.542Z"
 }
