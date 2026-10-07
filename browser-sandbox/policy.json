@@ -1,0 +1,27 @@
+{
+  "mode": "sandbox",
+  "authority": "READ_ONLY",
+  "production_credentials": false,
+  "network": {
+    "default": "deny",
+    "allowed_hosts": [
+      "sandbox.local"
+    ]
+  },
+  "browser": {
+    "downloads": false,
+    "uploads": false,
+    "local_file_access": false,
+    "history_access": false,
+    "max_steps": 12,
+    "timeout_seconds": 60
+  },
+  "recovery": {
+    "max_attempts": 3,
+    "quarantine_on_exhaustion": true
+  },
+  "verification": {
+    "independent": true,
+    "executor_can_self_certify": false
+  }
+}
