@@ -4,8 +4,8 @@ function permitted(raw, method='GET', type='document') {
     const u=new URL(raw);
     return ORIGINS.has(u.origin) && !u.username && !u.password && !u.search &&
       method==='GET' && type==='document' &&
-      (u.pathname==='/' || u.pathname==='/robots.txt' || u.pathname==='/sitemap.xml' ||
-        /^\/(products|collections)\/[a-zA-Z0-9_-]+\/?$/.test(u.pathname));
+      ((/^\/(?:en-(?:usd|eur|gbp|cad|aud)\/)?$/.test(u.pathname)) || u.pathname==='/robots.txt' || u.pathname==='/sitemap.xml' ||
+        /^\/(?:en-(?:usd|eur|gbp|cad|aud)\/)?(products|collections)\/[a-zA-Z0-9_-]+\/?$/.test(u.pathname));
   } catch { return false; }
 }
 module.exports={permitted};

@@ -23,7 +23,7 @@ async function main(){
    const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
    r.status=response.status();r.final_url=page.url();r.title=await page.title();
    const links=await page.locator('a[href]').evaluateAll(as=>as.map(a=>({url:a.href,text:(a.textContent||'').trim().slice(0,200)})));
-   r.products=links.filter(l=>permitted(l.url)&&new URL(l.url).pathname.startsWith('/products/')).filter((l,i,a)=>a.findIndex(x=>x.url===l.url)===i).slice(0,30);
+   r.products=links.filter(l=>permitted(l.url)&&new URL(l.url).pathname.includes('/products/')).filter((l,i,a)=>a.findIndex(x=>x.url===l.url)===i).slice(0,30);
    if(worker==='mary'&&r.products.length){
     const product=r.products[0];
     await page.locator('a[href]').filter({hasText:product.text}).first().click({timeout:15000}).catch(()=>page.goto(product.url,{waitUntil:'domcontentloaded',timeout:15000}));
@@ -32,7 +32,7 @@ async function main(){
    r.browser_passed=r.status===200&&permitted(r.final_url)&&(worker!=='mary'||r.products.length>0);
    await page.screenshot({path:'browser-output/'+worker+'.png',fullPage:false});
   }catch(e){r.browser_passed=false;r.error=String(e.message).slice(0,300);}
-  r.denied_requests=denied;results.push(r);await context.close();
+  r.denied_requests=denied;console.log(JSON.stringify(r));results.push(r);await context.close();
  }
  await browser.close();
  fs.writeFileSync('browser-output/execution.json',JSON.stringify({version:1,results},null,2));
