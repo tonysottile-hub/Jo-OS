@@ -24,6 +24,7 @@ for row in execution['results']:
             matches=[p for p in row['products'] if urllib.parse.urlsplit(p['url']).path in html]
             proof['confirmed_products']=matches
             product_url=row.get('product_navigation',{}).get('url','')
+            if not product_url: raise ValueError('Browser could not navigate storefront: HTTP '+str(row.get('status','unknown')))
             pstatus,phtml=fetch(product_url)
             proof['product_http_status']=pstatus
             proof['passed']=bool(row.get('browser_passed') and matches and pstatus==200 and 'cigar' in phtml.lower())

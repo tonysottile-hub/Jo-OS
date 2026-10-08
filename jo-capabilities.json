@@ -1,10 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "authoritative_state": "supabase:pubnivjjeofxqvmttuzh",
   "goal": "four_capabilities_in_production",
   "capabilities": {
     "browser_use": {
-      "state": "acceptance_testing",
+      "state": "limited_public_read_only_cloud_execution_verified",
       "production_gate": [
         "benign_execution",
         "hostile_prompt_injection",
@@ -12,15 +12,33 @@
         "file_download_upload_containment",
         "independent_verification"
       ],
-      "authority": "least_privilege"
+      "authority": "least_privilege",
+      "implementation": "playwright_fixed_policy",
+      "verified_scope": "public website audit with separate HTTP verifier",
+      "remaining": [
+        "authenticated_workflows",
+        "form_submission",
+        "full_network_and_adversarial_acceptance"
+      ]
     },
     "persistent_memory": {
-      "state": "selection_and_integration",
+      "state": "versioned_postgres_integrated_with_capability_checkpoints",
       "candidates": [
         "mem0",
         "openviking"
       ],
-      "rule": "single winner; Supabase remains authoritative"
+      "rule": "single winner; Supabase remains authoritative",
+      "selected": "supabase_postgresql_versioned_memory",
+      "verified": [
+        "durable_write",
+        "separate_session_retrieval",
+        "correction_history",
+        "cloud_worker_checkpoint_retrieval"
+      ],
+      "remaining": [
+        "general_conversation_capture",
+        "full_runtime_restart_acceptance"
+      ]
     },
     "harness_engineering": {
       "state": "incorporated",
