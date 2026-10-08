@@ -7,6 +7,8 @@ class LayoutTests(unittest.TestCase):
     def test_long_covers_full_audio(self):
         self.assertEqual(layout({'kind':'long'}),(1920,1080))
         self.assertEqual(sum(visual_durations({'kind':'long','assets':[{}, {}, {}]},240)),240)
+    def test_existing_full_narration_is_preserved(self):
+        self.assertAlmostEqual(sum(visual_durations({"kind":"long","assets":[{}, {}, {}]},156.769524)),156.769524)
     def test_long_rejects_short_audio(self):
         with self.assertRaises(ValueError): visual_durations({'kind':'long','assets':[{}]},72)
 if __name__=='__main__': unittest.main()

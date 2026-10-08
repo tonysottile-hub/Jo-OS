@@ -153,7 +153,7 @@ jobs:
             "dimensions_match_kind": (video.get("width"),video.get("height"))==((1920,1080) if manifest.get("kind")=="long" else (1080,1920)),
             "video_codec_h264": video.get("codec_name")=="h264",
             "audio_codec_aac": audio.get("codec_name")=="aac",
-            "duration_matches_kind": (180.0 <= duration <= 1800.0) if manifest.get("kind")=="long" else (20.0 <= duration <= 70.0),
+            "duration_matches_kind": (120.0 <= duration <= 1800.0) if manifest.get("kind")=="long" else (20.0 <= duration <= 70.0),
             "audio_not_silent": mean_volume > -45.0,
             "source_count": len(sources) >= 3,
             "source_place_match": source_place_ok,

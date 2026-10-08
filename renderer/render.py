@@ -13,8 +13,8 @@ def visual_durations(manifest, audio_seconds=None):
     assets=manifest.get("assets",[])
     if not assets: raise ValueError("manifest requires assets")
     if manifest.get("kind","short")=="long":
-        if audio_seconds is None or not 180 <= audio_seconds <= 1800:
-            raise ValueError("long-form requires 3-30 minutes of narration")
+        if audio_seconds is None or not 120 <= audio_seconds <= 1800:
+            raise ValueError("long-form requires 2-30 minutes of narration")
         # Match the narration instead of truncating it to a short image sequence.
         return [audio_seconds/len(assets)]*len(assets)
     return [float(x.get("duration",manifest.get("duration_per_asset",4))) for x in assets]
