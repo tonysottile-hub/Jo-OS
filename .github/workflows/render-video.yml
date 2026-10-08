@@ -37,6 +37,8 @@ jobs:
           print("media_run_id="+str(d["media_run_id"]))
           print("narration_run_id="+str(d["narration_run_id"]))
           print("output_name="+d["output_name"])
+          if d.get("kind","short") not in ("short","long"): raise SystemExit("unsupported kind")
+          print("kind="+d.get("kind","short"))
           print("exclude_media_terms_json="+json.dumps(d.get("exclude_media_title_terms",[]),separators=(",",":")))
           print("media_order_titles_json="+json.dumps(d.get("media_order_titles",[]),separators=(",",":")))
           PY
@@ -63,6 +65,7 @@ jobs:
           path: production/current
       - name: Prepare manifest
         env:
+          VIDEO_KIND: ${{ steps.req.outputs.kind }}
           EXCLUDE_MEDIA_TERMS_JSON: ${{ steps.req.outputs.exclude_media_terms_json }}
           MEDIA_ORDER_TITLES_JSON: ${{ steps.req.outputs.media_order_titles_json }}
         run: |
@@ -70,6 +73,7 @@ jobs:
           import json,os
           p="production/current/manifest.json"
           m=json.load(open(p))
+          m["kind"]=os.environ["VIDEO_KIND"]
           terms=[str(x).strip().lower() for x in json.loads(os.environ.get("EXCLUDE_MEDIA_TERMS_JSON","[]")) if str(x).strip()]
           order_titles=[str(x).strip().lower() for x in json.loads(os.environ.get("MEDIA_ORDER_TITLES_JSON","[]")) if str(x).strip()]
           assets=m.get("assets",[])
@@ -146,10 +150,10 @@ jobs:
           m=re.search(r"mean_volume:\s*(-?[0-9.]+) dB",vol.stderr)
           mean_volume=float(m.group(1)) if m else -999.0
           checks={
-            "dimensions_1080x1920": video.get("width")==1080 and video.get("height")==1920,
+            "dimensions_match_kind": (video.get("width"),video.get("height"))==((1920,1080) if manifest.get("kind")=="long" else (1080,1920)),
             "video_codec_h264": video.get("codec_name")=="h264",
             "audio_codec_aac": audio.get("codec_name")=="aac",
-            "duration_short_sane": 20.0 <= duration <= 70.0,
+            "duration_matches_kind": (180.0 <= duration <= 1800.0) if manifest.get("kind")=="long" else (20.0 <= duration <= 70.0),
             "audio_not_silent": mean_volume > -45.0,
             "source_count": len(sources) >= 3,
             "source_place_match": source_place_ok,
