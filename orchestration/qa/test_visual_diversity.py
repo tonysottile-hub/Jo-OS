@@ -40,6 +40,12 @@ class VisualDiversityTests(unittest.TestCase):
     def test_missing_metadata_fails_closed(self):
         self.assertFalse(qa.inspect({})["passed"])
 
+    def test_invalid_source_entry_fails_closed(self):
+        self.assertFalse(qa.inspect({"media_sources": [None]})["passed"])
+
+    def test_missing_identity_fails_closed(self):
+        self.assertFalse(qa.inspect({"media_sources": [{}]})["passed"])
+
     def test_insufficient_unique_sources_fails(self):
         self.assertFalse(qa.inspect({"media_sources": [asset("One photograph.jpg") ]})["passed"])
 
