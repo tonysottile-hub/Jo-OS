@@ -37,6 +37,9 @@ def verify(execution, expected_worker=None):
         try:
             status,html=fetch(row.get('final_url',row['url']))
             proof.update(http_status=status,sha256=hashlib.sha256(html.encode()).hexdigest())
+            proof['http_body_bytes']=len(html.encode('utf-8'))
+            proof['http_has_product_path']=('/products/' in html)
+            proof['http_has_collection_path']=('/collections/' in html)
             if row['worker']=='mary':
                 matches=[p for p in row.get('products',[]) if urllib.parse.urlsplit(p['url']).path in html]
                 proof['confirmed_products']=matches
