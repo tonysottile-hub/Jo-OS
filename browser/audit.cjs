@@ -3,6 +3,7 @@ const fs=require('node:fs');
 const {permitted}=require('./policy.cjs');
 // Fixed operations; untrusted page text is never interpreted as commands.
 async function main(){
+ if(process.env.JO_AUDIT_WORKER && !['mary','jeff'].includes(process.env.JO_AUDIT_WORKER)) throw new Error('Unknown worker scope');
  fs.mkdirSync('browser-output',{recursive:true});
  const browser=await chromium.launch({args:['--disable-background-networking','--disable-component-update','--disable-sync','--disable-extensions']});
  const results=[];
