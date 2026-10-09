@@ -54,6 +54,8 @@ def verify(execution, expected_worker=None):
                         checks.append({'path':path,'classification':classify_error(error),'error':str(error)[:120]})
                 proof['http_product_page_samples']=checks
                 proof['http_product_pages_ok']=sum(1 for check in checks if check.get('http_status')==200 and check.get('slug_present') and check.get('html_title_present'))
+                proof['http_catalog_identity_verified']=bool(candidates) and proof['http_product_pages_ok']==len(candidates)
+                proof['http_catalog_scope']='HTML identity only; not browser rendering, variants, cart, or checkout'
             if row['worker']=='mary':
                 matches=[p for p in row.get('products',[]) if urllib.parse.urlsplit(p['url']).path in html]
                 proof['confirmed_products']=matches
