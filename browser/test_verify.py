@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
-from verify import verify
+from verify import verify, fetch
 
 MARY={'results':[{'worker':'mary','url':'https://cigar30-shop.fourthwall.com/','final_url':'https://cigar30-shop.fourthwall.com/','browser_passed':False,'products':[]}]}
 class AuditClassificationTests(unittest.TestCase):
@@ -54,6 +54,12 @@ class AuditClassificationTests(unittest.TestCase):
             proof=verify({'results':[row]},'mary')['verification'][0]
         self.assertFalse(proof['passed'])
         self.assertEqual(proof['classification'],'product_content_unverified')
+    def test_disallowed_query_url_rejected_before_network(self):
+        with self.assertRaisesRegex(ValueError,'URL denied'):
+            fetch('https://cigar30-shop.fourthwall.com/?redirect=example.com')
+    def test_disallowed_fragment_url_rejected_before_network(self):
+        with self.assertRaisesRegex(ValueError,'URL denied'):
+            fetch('https://cigar30-shop.fourthwall.com/#fragment')
     def test_wrong_scope_rejected(self):
         with self.assertRaises(ValueError):
             verify(MARY,'jeff')
