@@ -54,7 +54,7 @@ def verify(execution, expected_worker=None):
                         checks.append({'path':path,'classification':classify_error(error),'error':str(error)[:120]})
                 proof['http_product_page_samples']=checks
                 proof['http_product_pages_ok']=sum(1 for check in checks if check.get('http_status')==200 and check.get('slug_present') and check.get('html_title_present'))
-                proof['http_catalog_identity_verified']=bool(candidates) and proof['http_product_pages_ok']==len(candidates)
+                proof['http_catalog_identity_verified']=bool(candidates) and len(checks)==len(candidates) and proof['http_product_pages_ok']==len(candidates)
                 proof['http_catalog_scope']='HTML identity only; not browser rendering, variants, cart, or checkout'
                 proof['http_catalog_classification']='all_discovered_product_pages_retrievable' if proof['http_catalog_identity_verified'] else 'product_page_http_incomplete'
             if row['worker']=='mary':
@@ -71,7 +71,8 @@ def verify(execution, expected_worker=None):
                 else:
                     pstatus,phtml=fetch(product_url)
                     proof['product_http_status']=pstatus
-                    proof['passed']=bool(pstatus==200 and 'cigar' in phtml.lower())
+                    product_path=urllib.parse.urlsplit(product_url).path
+                    proof['passed']=bool(pstatus==200 and product_path.startswith('/products/') and product_path.split('/')[-1] in phtml.lower() and re.search(r'<title[^>]*>[^<]+</title>',phtml,re.I))
                     proof['classification']='public_product_page_verified' if proof['passed'] else 'product_content_unverified'
             else:
                 proof['passed']=bool(row.get('browser_passed') and status==200)
