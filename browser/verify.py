@@ -42,7 +42,8 @@ def verify(execution, expected_worker=None):
                 proof['confirmed_products']=matches
                 product_url=row.get('product_navigation',{}).get('url','')
                 if not row.get('browser_passed'):
-                    proof['classification']='browser_incomplete'
+                    proof['classification']='browser_access_restricted' if row.get('status') in (401,403,429) else 'browser_incomplete'
+                    proof['browser_http_status']=row.get('status')
                 elif not matches:
                     proof['classification']='product_links_unverified'
                 elif not product_url:
