@@ -9,7 +9,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 def fetch(url):
     parsed=urllib.parse.urlsplit(url)
-    if parsed.scheme!='https' or parsed.hostname not in ALLOWED or parsed.username or parsed.password or parsed.query or parsed.port not in (None,443):
+    if parsed.scheme!='https' or parsed.hostname not in ALLOWED or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.port not in (None,443):
         raise ValueError('URL denied')
     request=urllib.request.Request(url,headers={'User-Agent':'Jo-OS-Public-Audit/1.0'})
     with urllib.request.build_opener(NoRedirect).open(request,timeout=25) as response:
