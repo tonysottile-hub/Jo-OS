@@ -1,0 +1,15 @@
+name: Tom visual diversity QA
+on:
+  push:
+    branches:
+      - repair/tom-visual-diversity-qa
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run source-diversity regression tests
+        run: python3 -m unittest discover -s orchestration/qa -p 'test_visual_diversity.py' -v
