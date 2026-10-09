@@ -17,6 +17,7 @@ create table if not exists gstack.templates (
 );
 create table if not exists gstack.department_agents (
  agent_id uuid primary key default gen_random_uuid(),
+ provision_request_key text not null unique,
  template_id text not null,
  template_version text not null,
  manager_key text not null check(manager_key in ('jo','tom','mary','steve','jeff')),
@@ -36,11 +37,13 @@ create table if not exists gstack.agent_memory_checkpoints (
  evidence_ref text,
  sensitivity text not null default 'department' check(sensitivity in ('department','company_candidate','restricted')),
  verification_status text not null default 'unverified' check(verification_status in ('unverified','verified','rejected')),
+ verified_at timestamptz,
+ check(verification_status <> 'verified' or (evidence_ref is not null and verified_at is not null)),
  created_at timestamptz not null default now()
 );
 create table if not exists gstack.memory_promotions (
  promotion_id uuid primary key default gen_random_uuid(),
- checkpoint_id uuid not null references gstack.agent_memory_checkpoints(checkpoint_id),
+ checkpoint_id uuid not null unique references gstack.agent_memory_checkpoints(checkpoint_id),
  manager_key text not null check(manager_key in ('jo','tom','mary','steve','jeff')),
  decision text not null check(decision in ('approved','rejected')),
  verification_ref text,
@@ -53,5 +56,13 @@ alter table gstack.templates enable row level security;
 alter table gstack.department_agents enable row level security;
 alter table gstack.agent_memory_checkpoints enable row level security;
 alter table gstack.memory_promotions enable row level security;
+-- SECURITY REVIEW REQUIRED BEFORE DEPLOYMENT:
+-- The database constraints alone do not prove template approval, agent-manager ownership,
+-- checkpoint-manager match, or verified status at promotion time.
+-- Implement these as SECURITY DEFINER functions with fixed search_path and strict role checks,
+-- or as triggers plus tightly restricted grants. Do not grant direct client INSERT/UPDATE.
+-- Require template approved=true, reject suspended/retired agents, enforce manager ownership,
+-- require verified checkpoint and company_candidate sensitivity for promotion.
+-- Do not copy credentials or customer data into templates, agents or company memory.
 -- No client policies. Server-side service roles only until explicit auth model is tested.
 commit;
