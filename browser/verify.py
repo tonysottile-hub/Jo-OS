@@ -14,6 +14,11 @@ def fetch(url):
         if len(data)>2_000_000: raise ValueError('Response too large')
         return response.status,data.decode('utf-8','replace')
 execution=json.load(open('browser-output/execution.json'))
+expected_worker=__import__('os').environ.get('JO_AUDIT_WORKER')
+expected={'mary','jeff'} if not expected_worker else {expected_worker}
+actual=[row.get('worker') for row in execution.get('results',[])]
+if set(actual)!=expected or len(actual)!=len(expected):
+    raise SystemExit('Audit scope mismatch: expected '+repr(sorted(expected))+'; got '+repr(actual))
 results=[]
 for row in execution['results']:
     proof={'worker':row['worker'],'url':row['url'],'checked_at':datetime.now(timezone.utc).isoformat(),'mechanism':'independent_urllib_get','passed':False}
