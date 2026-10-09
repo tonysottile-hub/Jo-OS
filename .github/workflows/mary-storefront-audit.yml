@@ -1,6 +1,10 @@
 name: Mary independent storefront audit
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'browser/**'
+      - '.github/workflows/mary-storefront-audit.yml'
   push:
     branches: [main]
     paths:
@@ -29,6 +33,7 @@ jobs:
       - run: npm ci --prefix browser
       - run: npx --prefix browser playwright install --with-deps chromium
       - run: node --test browser/policy.test.cjs
+      - run: python3 -m unittest discover -s browser -p 'test_verify.py'
       - run: node browser/audit.cjs
       - name: Independently verify Mary storefront
         run: python3 browser/verify.py
