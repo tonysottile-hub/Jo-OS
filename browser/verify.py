@@ -45,7 +45,7 @@ def verify(execution, expected_worker=None):
                 proof['http_product_path_count']=len(candidates)
                 proof['http_product_paths_sample']=candidates[:10]
                 checks=[]
-                for path in candidates[:3]:
+                for path in candidates[:18]:
                     product_url='https://cigar30-shop.fourthwall.com'+path
                     try:
                         product_status,product_html=fetch(product_url)
@@ -53,6 +53,7 @@ def verify(execution, expected_worker=None):
                     except Exception as error:
                         checks.append({'path':path,'classification':classify_error(error),'error':str(error)[:120]})
                 proof['http_product_page_samples']=checks
+                proof['http_product_pages_ok']=sum(1 for check in checks if check.get('http_status')==200 and check.get('slug_present') and check.get('html_title_present'))
             if row['worker']=='mary':
                 matches=[p for p in row.get('products',[]) if urllib.parse.urlsplit(p['url']).path in html]
                 proof['confirmed_products']=matches
