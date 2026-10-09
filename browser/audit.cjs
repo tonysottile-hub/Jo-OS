@@ -6,7 +6,7 @@ async function main(){
  fs.mkdirSync('browser-output',{recursive:true});
  const browser=await chromium.launch({args:['--disable-background-networking','--disable-component-update','--disable-sync','--disable-extensions']});
  const results=[];
- for(const [worker,url] of [['mary','https://cigar30-shop.fourthwall.com/'],['jeff','https://cigars30jax.com/']]){
+ for(const [worker,url] of [['mary','https://cigar30-shop.fourthwall.com/'],['jeff','https://cigars30jax.com/']].filter(([worker])=>!process.env.JO_AUDIT_WORKER||process.env.JO_AUDIT_WORKER===worker)){
   const context=await browser.newContext({javaScriptEnabled:false,acceptDownloads:false,serviceWorkers:'block',permissions:[]});
   let denied=0;
   await context.route('**/*',async route=>{
