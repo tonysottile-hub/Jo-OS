@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - repair/tom-visual-diversity-qa
+  pull_request:
+    paths:
+      - 'orchestration/qa/**'
+      - '.github/workflows/render-video.yml'
+      - '.github/workflows/tom-visual-diversity-qa.yml'
   workflow_dispatch:
 jobs:
   regression:
