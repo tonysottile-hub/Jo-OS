@@ -26,6 +26,26 @@ class AuditClassificationTests(unittest.TestCase):
         self.assertEqual(proof['classification'],'browser_access_restricted')
         self.assertEqual(proof['browser_http_status'],403)
         self.assertFalse(proof['passed'])
+    def test_http_catalog_identity_does_not_certify_browser(self):
+        row=dict(MARY['results'][0],status=403)
+        html='<html><a href="/products/cigar-30-test-shirt">Test</a></html>'
+        product='<html><title>Cigar 30 Test Shirt</title>cigar-30-test-shirt</html>'
+        with patch('verify.fetch',side_effect=[(200,html),(200,product)]):
+            result=verify({'results':[row]},'mary')
+        proof=result['verification'][0]
+        self.assertTrue(proof['http_catalog_identity_verified'])
+        self.assertEqual(proof['http_product_pages_ok'],1)
+        self.assertEqual(proof['http_catalog_classification'],'all_discovered_product_pages_retrievable')
+        self.assertEqual(proof['classification'],'browser_access_restricted')
+        self.assertFalse(result['overall_passed'])
+    def test_failed_product_http_does_not_certify_catalog(self):
+        row=dict(MARY['results'][0],status=403)
+        html='<html><a href="/products/cigar-30-test-shirt">Test</a></html>'
+        with patch('verify.fetch',side_effect=[(200,html),HTTPError('https://cigar30-shop.fourthwall.com/products/cigar-30-test-shirt',404,'Not Found',None,None)]):
+            proof=verify({'results':[row]},'mary')['verification'][0]
+        self.assertFalse(proof['http_catalog_identity_verified'])
+        self.assertEqual(proof['http_catalog_classification'],'product_page_http_incomplete')
+        self.assertFalse(proof['passed'])
     def test_wrong_scope_rejected(self):
         with self.assertRaises(ValueError):
             verify(MARY,'jeff')
