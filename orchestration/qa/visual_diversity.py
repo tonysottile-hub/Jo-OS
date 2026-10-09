@@ -1,51 +1,55 @@
 #!/usr/bin/env python3
-"""Reject visually redundant media packages before documentary rendering.
+"""Pre-render source diversity gate for Unmapped America.
 
 Usage: python3 orchestration/qa/visual_diversity.py manifest.json
-Manifest must contain an array 'assets' (or 'media') of objects with a
-local path/file_path and optional source_url/title. No network calls.
+Works on the existing render manifest's media_sources metadata, without
+requiring local media files. Blocks duplicate representations of the same
+historical work and rejects a one-category documentary visual package.
 """
-import hashlib
 import json
 import pathlib
 import re
 import sys
+from urllib.parse import unquote, urlparse
 
-def canonical_title(value):
-    s = str(value or "").lower()
-    s = re.sub(r"\.(tiff?|jpe?g|png|webp)$", "", s)
-    s = re.sub(r"\b(?:original|thumb|thumbnail|large|small|scan|copy)\b", "", s)
-    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+def identity(source):
+    title = unquote(str(source.get("title") or source.get("source_url") or source.get("url") or ""))
+    title = title.split("File:")[-1].split("/")[-1]
+    title = re.sub(r"\.(?:tiff?|jpe?g|png|webp)(?:\?.*)?$", "", title, flags=re.I)
+    return re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+def category(source):
+    title = str(source.get("title", "")).lower()
+    if "map" in title or "atlas" in title or "plat" in title:
+        return "map"
+    if "photograph" in title or "photo" in title:
+        return "photo"
+    if "postcard" in title:
+        return "postcard"
+    if "newspaper" in title:
+        return "newspaper"
+    return "other"
 
 def inspect(manifest):
-    assets = manifest.get("assets", manifest.get("media", []))
-    if not isinstance(assets, list):
-        raise ValueError("assets must be an array")
-    unique, duplicates = {}, []
-    for item in assets:
-        if not isinstance(item, dict):
-            raise ValueError("each asset must be an object")
-        path = item.get("path") or item.get("file_path")
-        if not path or not pathlib.Path(path).is_file():
-            raise ValueError("missing local media file: " + str(path))
-        digest = hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
-        source = item.get("source_url") or item.get("url") or ""
-        # Wikimedia's Special:FilePath and thumbnail URLs can encode the same
-        # filename; use an explicit work_id when available for robust grouping.
-        identity = canonical_title(item.get("work_id") or item.get("source_title") or item.get("title") or pathlib.Path(path).stem)
-        key = identity or digest
-        if key in unique or digest in [x["sha256"] for x in unique.values()]:
-            duplicates.append({"path": path, "identity": key})
-        else:
-            unique[key] = {"path": path, "sha256": digest, "source_url": source}
-    return {"total_assets": len(assets), "distinct_works": len(unique),
-            "duplicates": duplicates, "passed": len(unique) >= 5 and not duplicates}
+    sources = manifest.get("media_sources")
+    if not isinstance(sources, list) or not sources:
+        return {"passed": False, "error": "media_sources metadata missing; cannot verify source diversity"}
+    identities = [identity(s) for s in sources]
+    counts = {i: identities.count(i) for i in set(identities)}
+    duplicates = sorted(i for i, count in counts.items() if count > 1)
+    categories = sorted({category(s) for s in sources})
+    # Five distinct works and two media categories are conservative minimums,
+    # not a substitute for final human perceptual review.
+    passed = len(counts) >= 5 and len(categories) >= 2 and not duplicates
+    return {"passed": passed, "total_assets": len(sources),
+            "distinct_works": len(counts), "duplicate_works": duplicates,
+            "media_categories": categories, "requires_human_review": True}
 
 if __name__ == "__main__":
     try:
         result = inspect(json.loads(pathlib.Path(sys.argv[1]).read_text()))
         print(json.dumps(result, indent=2))
         sys.exit(0 if result["passed"] else 1)
-    except (IndexError, OSError, ValueError, KeyError) as exc:
+    except (IndexError, OSError, ValueError, TypeError) as exc:
         print(json.dumps({"passed": False, "error": str(exc)}))
         sys.exit(2)
