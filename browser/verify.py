@@ -41,3 +41,5 @@ for row in execution['results']:
     results.append(proof)
 json.dump({'version':1,'execution':execution,'verification':results},open('browser-output/result.json','w'),indent=2)
 print(json.dumps(results,indent=2))
+if not all(row['passed'] for row in results):
+    raise SystemExit('Independent public audit verification failed')
