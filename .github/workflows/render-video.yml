@@ -98,6 +98,9 @@ jobs:
           m["audio"]="production/current/narration.wav"
           json.dump(m,open(p,"w"),indent=2)
           PY
+      - name: Check long-form visual source diversity
+        if: steps.req.outputs.kind == 'long'
+        run: python3 orchestration/qa/visual_diversity.py production/current/manifest.json
       - name: Render
         run: python3 renderer/render.py --manifest production/current/manifest.json --output "output/${{ steps.req.outputs.output_name }}"
       - name: Verify output exists
