@@ -1,5 +1,5 @@
 """Independent HTTP verifier. No browser evidence can self-certify success."""
-import json, hashlib, urllib.request, urllib.parse
+import json, hashlib, urllib.request, urllib.parse, os
 from datetime import datetime, timezone
 ALLOWED={'cigar30-shop.fourthwall.com','cigars30jax.com','www.cigars30jax.com'}
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -14,7 +14,9 @@ def fetch(url):
         if len(data)>2_000_000: raise ValueError('Response too large')
         return response.status,data.decode('utf-8','replace')
 execution=json.load(open('browser-output/execution.json'))
-expected_worker=__import__('os').environ.get('JO_AUDIT_WORKER')
+expected_worker=os.environ.get('JO_AUDIT_WORKER')
+if expected_worker and expected_worker not in {'mary','jeff'}:
+    raise SystemExit('Unknown worker scope')
 expected={'mary','jeff'} if not expected_worker else {expected_worker}
 actual=[row.get('worker') for row in execution.get('results',[])]
 if set(actual)!=expected or len(actual)!=len(expected):
@@ -39,7 +41,8 @@ for row in execution['results']:
     except Exception as e:
         proof['error']=str(e)[:300]
     results.append(proof)
-json.dump({'version':1,'execution':execution,'verification':results},open('browser-output/result.json','w'),indent=2)
+overall_passed=bool(results) and all(row['passed'] for row in results)
+json.dump({'version':1,'execution':execution,'verification':results,'overall_passed':overall_passed,'scope':sorted(expected)},open('browser-output/result.json','w'),indent=2)
 print(json.dumps(results,indent=2))
-if not all(row['passed'] for row in results):
+if not overall_passed:
     raise SystemExit('Independent public audit verification failed')
