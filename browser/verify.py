@@ -49,7 +49,7 @@ def verify(execution, expected_worker=None):
                     product_url='https://cigar30-shop.fourthwall.com'+path
                     try:
                         product_status,product_html=fetch(product_url)
-                        checks.append({'path':path,'http_status':product_status,'html_bytes':len(product_html.encode('utf-8'))})
+                        checks.append({'path':path,'http_status':product_status,'html_bytes':len(product_html.encode('utf-8')),'slug_present':path.split('/')[-1] in product_html.lower(),'html_title_present':bool(re.search(r'<title[^>]*>[^<]+</title>',product_html,re.I))})
                     except Exception as error:
                         checks.append({'path':path,'classification':classify_error(error),'error':str(error)[:120]})
                 proof['http_product_page_samples']=checks
