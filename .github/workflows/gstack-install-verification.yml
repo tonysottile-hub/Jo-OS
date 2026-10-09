@@ -1,0 +1,26 @@
+name: Verify G Stack installation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  install-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Jo OS
+        uses: actions/checkout@v4
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Checkout official G Stack source
+        run: git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git /tmp/gstack
+      - name: Install G Stack for Codex in isolated runner
+        run: cd /tmp/gstack && ./setup --host codex
+      - name: Verify installed host
+        run: cd /tmp/gstack && ./setup --status
+      - name: Verify specialist skill files
+        run: |
+          test -d "$HOME/.codex/skills"
+          find "$HOME/.codex/skills" -name SKILL.md | grep -q gstack
