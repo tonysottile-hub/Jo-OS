@@ -46,6 +46,14 @@ class AuditClassificationTests(unittest.TestCase):
         self.assertFalse(proof['http_catalog_identity_verified'])
         self.assertEqual(proof['http_catalog_classification'],'product_page_http_incomplete')
         self.assertFalse(proof['passed'])
+    def test_generic_cigar_branding_cannot_certify_product(self):
+        row=dict(MARY['results'][0],browser_passed=True,status=200,products=[{'url':'https://cigar30-shop.fourthwall.com/products/cigar-30-test-shirt'}],product_navigation={'url':'https://cigar30-shop.fourthwall.com/products/cigar-30-test-shirt'})
+        html='<html><a href="/products/cigar-30-test-shirt">Cigar</a></html>'
+        generic='<html><title>Cigar 30 Store</title>cigar brand generic</html>'
+        with patch('verify.fetch',side_effect=[(200,html),(200,generic),(200,generic)]):
+            proof=verify({'results':[row]},'mary')['verification'][0]
+        self.assertFalse(proof['passed'])
+        self.assertEqual(proof['classification'],'product_content_unverified')
     def test_wrong_scope_rejected(self):
         with self.assertRaises(ValueError):
             verify(MARY,'jeff')
