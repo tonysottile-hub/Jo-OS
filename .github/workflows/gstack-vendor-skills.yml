@@ -1,0 +1,33 @@
+name: Vendor G Stack skills (review only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout official G Stack
+        run: git clone --depth 1 https://github.com/garrytan/gstack.git /tmp/gstack
+      - name: Capture upstream revision and skill inventory
+        run: |
+          mkdir -p vendor/gstack
+          git -C /tmp/gstack rev-parse HEAD > vendor/gstack/UPSTREAM_COMMIT
+          find /tmp/gstack -name SKILL.md -type f | sort > /tmp/gstack-skill-paths.txt
+          test -s /tmp/gstack-skill-paths.txt
+          while IFS= read -r file; do
+            rel="${file#/tmp/gstack/}"
+            mkdir -p "vendor/gstack/$(dirname "$rel")"
+            cp "$file" "vendor/gstack/$rel"
+          done < /tmp/gstack-skill-paths.txt
+          find vendor/gstack -type f | sort
+      - name: Open review pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: integration/gstack-vendored-skills
+          title: 'Review upstream G Stack specialist skill definitions'
+          body: 'Untrusted upstream skills are staged for security and license review only. No execution or template approval is implied.'
+          commit-message: 'Stage upstream G Stack skill definitions for review'
