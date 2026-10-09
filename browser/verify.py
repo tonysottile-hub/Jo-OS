@@ -1,6 +1,6 @@
 """Classify independent storefront checks without conflating access failures with product absence."""
 from __future__ import annotations
-import json, hashlib, urllib.request, urllib.parse, urllib.error, os
+import json, hashlib, urllib.request, urllib.parse, urllib.error, os, re
 from datetime import datetime, timezone
 
 ALLOWED={'cigar30-shop.fourthwall.com','cigars30jax.com','www.cigars30jax.com'}
@@ -40,6 +40,10 @@ def verify(execution, expected_worker=None):
             proof['http_body_bytes']=len(html.encode('utf-8'))
             proof['http_has_product_path']=('/products/' in html)
             proof['http_has_collection_path']=('/collections/' in html)
+            if row['worker']=='mary':
+                candidates=sorted(set(re.findall(r'/products/[a-zA-Z0-9_-]+',html)))
+                proof['http_product_path_count']=len(candidates)
+                proof['http_product_paths_sample']=candidates[:10]
             if row['worker']=='mary':
                 matches=[p for p in row.get('products',[]) if urllib.parse.urlsplit(p['url']).path in html]
                 proof['confirmed_products']=matches
