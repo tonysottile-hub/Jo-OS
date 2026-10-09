@@ -16,5 +16,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Compile QA and renderer source
+        run: python3 -m py_compile orchestration/qa/visual_diversity.py renderer/render.py
+      - name: Validate render workflow YAML
+        run: |
+          ruby -e 'require "yaml"; y=YAML.load_file(".github/workflows/render-video.yml"); abort "render jobs missing" unless y["jobs"] && y["jobs"]["render"]; s=y["jobs"]["render"]["steps"]; i=s.index{|x| x["name"]=="Check long-form visual source diversity"}; j=s.index{|x| x["name"]=="Render"}; abort "QA guard missing or after render" unless i && j && i<j'
       - name: Run source-diversity regression tests
         run: python3 -m unittest discover -s orchestration/qa -p 'test_visual_diversity.py' -v
