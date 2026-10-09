@@ -40,6 +40,11 @@ class VisualDiversityTests(unittest.TestCase):
     def test_missing_metadata_fails_closed(self):
         self.assertFalse(qa.inspect({})["passed"])
 
+    def test_unknown_category_does_not_count_as_diversity(self):
+        sources = [asset(f"Rhyolite building view {i}.jpg") for i in range(5)]
+        sources[0] = asset("Rhyolite Sanborn map.jpg")
+        self.assertFalse(qa.inspect({"media_sources": sources})["passed"])
+
     def test_invalid_source_entry_fails_closed(self):
         self.assertFalse(qa.inspect({"media_sources": [None]})["passed"])
 
