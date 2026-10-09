@@ -19,6 +19,13 @@ class AuditClassificationTests(unittest.TestCase):
         row=dict(MARY['results'][0],browser_passed=True)
         result=verify({'results':[row]},'mary')
         self.assertEqual(result['verification'][0]['classification'],'product_links_unverified')
+    @patch('verify.fetch',return_value=(200,'<html></html>'))
+    def test_browser_403_with_http_200_is_access_restricted(self,_):
+        row=dict(MARY['results'][0],status=403)
+        proof=verify({'results':[row]},'mary')['verification'][0]
+        self.assertEqual(proof['classification'],'browser_access_restricted')
+        self.assertEqual(proof['browser_http_status'],403)
+        self.assertFalse(proof['passed'])
     def test_wrong_scope_rejected(self):
         with self.assertRaises(ValueError):
             verify(MARY,'jeff')
