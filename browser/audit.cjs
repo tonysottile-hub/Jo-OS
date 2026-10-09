@@ -7,6 +7,7 @@ async function main(){
  fs.mkdirSync('browser-output',{recursive:true});
  const browser=await chromium.launch({args:['--disable-background-networking','--disable-component-update','--disable-sync','--disable-extensions']});
  const results=[];
+ const auditScope=process.env.JO_AUDIT_WORKER||'combined';
  for(const [worker,url] of [['mary','https://cigar30-shop.fourthwall.com/'],['jeff','https://cigars30jax.com/']].filter(([worker])=>!process.env.JO_AUDIT_WORKER||process.env.JO_AUDIT_WORKER===worker)){
   const context=await browser.newContext({javaScriptEnabled:false,acceptDownloads:false,serviceWorkers:'block',permissions:[]});
   let denied=0;
@@ -36,6 +37,6 @@ async function main(){
   r.denied_requests=denied;console.log(JSON.stringify(r));results.push(r);await context.close();
  }
  await browser.close();
- fs.writeFileSync('browser-output/execution.json',JSON.stringify({version:1,results},null,2));
+ fs.writeFileSync('browser-output/execution.json',JSON.stringify({version:1,scope:auditScope,results},null,2));
 }
 main().catch(e=>{console.error(e.message);process.exitCode=1;});
