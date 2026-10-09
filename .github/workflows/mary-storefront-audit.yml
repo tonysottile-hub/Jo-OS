@@ -29,7 +29,7 @@ jobs:
       - run: npm ci --prefix browser
       - run: npx --prefix browser playwright install --with-deps chromium
       - run: node --test browser/policy.test.cjs
-      - run: node browser/audit.cjs
+      - run: python3 -m unittest discover -s browser -p 'test_verify.py'\n      - run: node browser/audit.cjs
       - name: Independently verify Mary storefront
         run: python3 browser/verify.py
       - uses: actions/upload-artifact@v4
