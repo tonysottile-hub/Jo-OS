@@ -10,7 +10,7 @@ import json
 import pathlib
 import re
 import sys
-from urllib.parse import unquote, urlparse
+from urllib.parse import unquote
 
 def identity(source):
     title = unquote(str(source.get("title") or source.get("source_url") or source.get("url") or ""))
@@ -42,12 +42,14 @@ def inspect(manifest):
     counts = {i: identities.count(i) for i in set(identities)}
     duplicates = sorted(i for i, count in counts.items() if count > 1)
     categories = sorted({category(s) for s in sources})
+    known_categories = sorted(set(categories) - {"other"})
     # Five distinct works and two media categories are conservative minimums,
     # not a substitute for final human perceptual review.
-    passed = len(counts) >= 5 and len(categories) >= 2 and not duplicates and categories != ["other"]
+    passed = len(counts) >= 5 and len(known_categories) >= 2 and not duplicates
     return {"passed": passed, "total_assets": len(sources),
             "distinct_works": len(counts), "duplicate_works": duplicates,
-            "media_categories": categories, "requires_human_review": True}
+            "media_categories": categories, "known_media_categories": known_categories,
+            "requires_human_review": True}
 
 if __name__ == "__main__":
     try:
