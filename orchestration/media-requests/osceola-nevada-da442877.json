@@ -1,0 +1,22 @@
+{
+  "build_id": "da442877-89c9-408e-bdec-5298fec2b840",
+  "queries": [
+    "Osceola Nevada historic mining camp archival photograph",
+    "Osceola Nevada gold mine East Ditch historical photograph",
+    "Osceola Nevada placer mining ruins historic site"
+  ],
+  "count": 8,
+  "required_place": "Osceola",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-10T01:46:04.911Z"
+}
