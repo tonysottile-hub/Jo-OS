@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'render-requests/*.json'
+      - '.github/workflows/render-video.yml'
   workflow_dispatch:
     inputs:
       request_path:
