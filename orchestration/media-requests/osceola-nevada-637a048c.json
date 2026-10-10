@@ -1,0 +1,22 @@
+{
+  "build_id": "637a048c-f27c-4440-87db-446fa2120d3e",
+  "queries": [
+    "Osceola Nevada ghost town historic photos",
+    "Osceola East Ditch Great Basin historic mining",
+    "Snake Range Nevada archival landscape"
+  ],
+  "count": 8,
+  "required_place": "Osceola",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-10T01:37:11.185Z"
+}
