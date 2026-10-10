@@ -5,8 +5,15 @@
     "Osceola Nevada gold mine East Ditch historical photograph",
     "Osceola Nevada placer mining ruins historic site"
   ],
-  "count": 4,
+  "count": 8,
   "required_place": "Osceola",
+  "file_titles": [
+    "Osceola Mine 2.jpg",
+    "Osceola Mine on Mountain.jpg",
+    "Osceola Mine.jpg",
+    "Osceola Mineshaft.jpg"
+  ],
+  "explicit_only": true,
   "exclude_terms": [
     "cemetery",
     "grave",
@@ -18,13 +25,5 @@
     "stereo"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-10T01:50:21.893Z",
-  "file_titles": [
-    "Osceola Mine 2.jpg",
-    "Osceola Mine on Mountain.jpg",
-    "Osceola Mine.jpg",
-    "Osceola Mineshaft.jpg"
-  ],
-  "explicit_only": true,
-  "license_review_required": true
+  "requested_at": "2026-10-10T01:51:37.139Z"
 }
