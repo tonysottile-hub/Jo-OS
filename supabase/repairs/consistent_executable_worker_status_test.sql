@@ -2,8 +2,8 @@ BEGIN;
 DO $test$
 DECLARE blocked uuid; ready uuid; broken uuid; selected uuid; old_heartbeat timestamptz;
 BEGIN
- INSERT INTO team_v4.jobs(role,outcome_description,status,priority,blocking_reason,escalation_flag)
- VALUES('Jeff','TRANSACTIONAL TEST: owner blocker','blocked_owner',-300,'owner_credential_needed',true) RETURNING job_id INTO blocked;
+ INSERT INTO team_v4.jobs(role,outcome_description,status,priority,blocking_reason,escalation_flag,escalation_reason)
+ VALUES('Jeff','TRANSACTIONAL TEST: owner blocker','blocked_owner',-300,'owner_credential_needed',true,'Synthetic owner-only credential gate') RETURNING job_id INTO blocked;
  INSERT INTO team_v4.jobs(role,outcome_description,status,priority)
  VALUES('Jeff','TRANSACTIONAL TEST: missing step','queued',-200) RETURNING job_id INTO broken;
  INSERT INTO team_v4.jobs(role,outcome_description,status,priority)
