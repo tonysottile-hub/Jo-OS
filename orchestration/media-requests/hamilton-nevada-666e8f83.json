@@ -1,0 +1,22 @@
+{
+  "build_id": "666e8f83-1f40-4229-88ec-d66fbdaee3b6",
+  "queries": [
+    "Hamilton Nevada ghost town buildings",
+    "Hamilton Nevada White Pine historic town",
+    "Hamilton Nevada courthouse ruins"
+  ],
+  "count": 8,
+  "required_place": "Hamilton",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-13T11:43:08.279Z"
+}
