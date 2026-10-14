@@ -1,0 +1,21 @@
+{
+  "build_id": "a15769f4-c661-4a5e-b7bd-6ce3c364185c",
+  "queries": [
+    "Fay Nevada",
+    "Fay Lincoln County"
+  ],
+  "count": 8,
+  "required_place": "Fay",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-10-14T13:03:33.348Z"
+}
