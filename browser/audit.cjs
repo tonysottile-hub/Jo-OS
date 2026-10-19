@@ -34,6 +34,7 @@ async function main(){
    r.browser_passed=r.status===200&&permitted(r.final_url)&&(worker!=='mary'||r.products.length>0);
    await page.screenshot({path:'browser-output/'+worker+'.png',fullPage:false});
   }catch(e){r.browser_passed=false;r.error=String(e.message).slice(0,300);}
+  r.access_classification=[401,403,429].includes(r.status)?'browser_access_restricted':(r.browser_passed?'browser_verified':'browser_incomplete');
   r.denied_requests=denied;console.log(JSON.stringify(r));results.push(r);await context.close();
  }
  await browser.close();
