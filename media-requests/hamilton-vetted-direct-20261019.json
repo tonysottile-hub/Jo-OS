@@ -3,7 +3,7 @@
   "queries": [
     "Hamilton Nevada White Pine County"
   ],
-  "required_place": "Hamilton, Nevada",
+  "required_place": "Hamilton",
   "required_terms": [
     "Hamilton",
     "Nevada",
@@ -14,7 +14,11 @@
     "Lewis Hamilton",
     "Hamilton Ontario",
     "Hamilton Lake",
-    "California"
+    "California",
+    "cemetery",
+    "grave",
+    "headstone",
+    "tombstone"
   ],
   "source_image_urls": [
     "https://upload.wikimedia.org/wikipedia/commons/6/64/Ruins_at_the_silver_mining_ghost_town_of_Hamilton%2C_looking_N-NW%2C_White_Pine_Co.%2C_NV_-_panoramio.jpg",
@@ -22,19 +26,15 @@
     "https://upload.wikimedia.org/wikipedia/commons/f/fd/Geological_map_of_the_White_Pine_Mining_District_LOC_96686649.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/f/fd/Geological_map_of_the_White_Pine_Mining_District_LOC_96686649.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/f/fd/Geological_map_of_the_White_Pine_Mining_District_LOC_96686649.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/b/ba/Mourner%27s_Point_Cemetery%2C_Hamilton%2C_Nevada%2C_US.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg"
+    "https://upload.wikimedia.org/wikipedia/commons/f/fd/Geological_map_of_the_White_Pine_Mining_District_LOC_96686649.jpg"
   ],
   "source_image_titles": [
-    "Hamilton ghost-town ruins, White Pine County, Nevada",
-    "Hamilton ghost-town ruins, White Pine County, Nevada",
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "Mourner's Point Cemetery, Hamilton, Nevada",
-    "Wells Fargo bank ruin at Treasure Hill beside Hamilton, White Pine County, Nevada",
-    "Wells Fargo bank ruin at Treasure Hill beside Hamilton, White Pine County, Nevada"
+    "Hamilton, Nevada ghost-town ruins, White Pine County",
+    "Hamilton, Nevada ghost-town ruins detail, White Pine County",
+    "Hamilton, Nevada context map, White Pine Mining District overview",
+    "Hamilton, Nevada context map, White Pine Mining District western detail",
+    "Hamilton, Nevada context map, White Pine Mining District eastern detail",
+    "Hamilton, Nevada context map, White Pine Mining District regional detail"
   ],
   "source_image_credits": [
     "QKC via Wikimedia Commons",
@@ -42,9 +42,7 @@
     "Library of Congress Geography and Map Division; Hague, Clark, and King",
     "Library of Congress Geography and Map Division; Hague, Clark, and King",
     "Library of Congress Geography and Map Division; Hague, Clark, and King",
-    "Clyde Charles Brown via Wikimedia Commons",
-    "QKC via Wikimedia Commons",
-    "QKC via Wikimedia Commons"
+    "Library of Congress Geography and Map Division; Hague, Clark, and King"
   ],
   "source_image_licenses": [
     "CC BY-SA 3.0",
@@ -52,11 +50,9 @@
     "Public domain",
     "Public domain",
     "Public domain",
-    "CC BY-SA 4.0",
-    "CC BY-SA 3.0",
-    "CC BY-SA 3.0"
+    "Public domain"
   ],
   "source_image_attribution_url": "https://commons.wikimedia.org/wiki/Category:White_Pine_County,_Nevada",
-  "count": 8,
+  "count": 6,
   "publish_authorized": false
 }
