@@ -3,7 +3,6 @@ on:
   push:
     paths:
       - 'render-requests/*.json'
-      - '.github/workflows/render-video.yml'
   workflow_dispatch:
     inputs:
       request_path:
@@ -107,6 +106,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import glob,json,os,re,subprocess,statistics
+          from renderer.media_validation import required_terms_match
           mp4=glob.glob("output/*.mp4")[0]
           manifest=json.load(open("production/current/manifest.json"))
           probe=json.loads(subprocess.check_output([
@@ -158,6 +158,7 @@ jobs:
             "audio_not_silent": mean_volume > -45.0,
             "source_count": len(sources) >= 3,
             "source_place_match": source_place_ok,
+            "source_required_terms": required_terms_match(sources,manifest.get("required_terms",[])),
             "source_reject_terms_clear": source_reject_ok,
             "source_title_diversity": unique_titles >= min(3,len(sources)),
             "frame_diversity": len(set(hashes)) >= min(3,len(hashes)),
