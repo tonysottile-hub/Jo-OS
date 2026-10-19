@@ -43,10 +43,12 @@ jobs:
           print("media_order_titles_json="+json.dumps(d.get("media_order_titles",[]),separators=(",",":")))
           PY
       - name: Setup FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v3
-        with:
-          ffmpeg-version: release
-          linking-type: static
+        shell: bash
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
       - name: Verify FFmpeg
         run: ffmpeg -version && ffprobe -version
       - name: Download media
