@@ -4,5 +4,6 @@
   "media_run_id": 39222560724,
   "narration_run_id": 38392167185,
   "output_name": "hamilton-nevada-666e8f83-long-recovery.mp4",
-  "publish_authorized": false
+  "publish_authorized": false,
+  "recovery_attempt": 2
 }
