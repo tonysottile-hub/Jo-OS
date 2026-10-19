@@ -1,0 +1,18 @@
+{
+  "build_id": "666e8f83-1f40-4229-88ec-d66fbdaee3b6",
+  "queries": [
+    "Hamilton Nevada"
+  ],
+  "required_place": "Hamilton",
+  "required_terms": [
+    "Nevada"
+  ],
+  "explicit_only": true,
+  "file_titles": [
+    "Hamilton Nevada.jpg",
+    "Ruins at the silver mining ghost town of Hamilton, looking N-NW, White Pine Co., NV - panoramio.jpg",
+    "White Pine Mining District geological map circa 1869.jpg"
+  ],
+  "count": 3,
+  "publish_authorized": false
+}
