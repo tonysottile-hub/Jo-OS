@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse,json,pathlib,urllib.parse,urllib.request,re,html,time,random
+from media_validation import required_terms_match
 API="https://commons.wikimedia.org/w/api.php"
 UA="Jo-OS-UnmappedAmerica/1.0 (automated media sourcing; contact via repository tonysottile-hub/Jo-OS)"
 def get(url,timeout=60,retries=5):
@@ -33,6 +34,8 @@ def main():
     p.add_argument("--count",type=int,default=6)
     p.add_argument("--duration",type=float,default=8)
     a=p.parse_args();out=pathlib.Path(a.out_dir);out.mkdir(parents=True,exist_ok=True)
+    if not any(x.strip() for x in a.required_term):
+        raise SystemExit('Explicit geographic required terms are missing; refusing ambiguous media search')
     candidates=[];seen=set()
     reject=re.compile(r"\b(cemetery|grave|graves|headstone|headstones|tombstone|tombstones|memorial\s+park|burial|funeral|stereoscopic|stereo|cross[ -]?eyed|3d)\b",re.I)
     place=re.compile(r"\b"+re.escape(a.place.strip())+r"\b",re.I) if a.place and a.place.strip() else None
@@ -70,7 +73,7 @@ def main():
             if exclude_terms and any(rx.search(md) for rx in exclude_terms):continue
             if goldfield_conflicting and goldfield_conflicting.search(md):continue
             if place and not place.search(md):continue
-            if required_terms and not all(rx.search(md) for rx in required_terms):continue
+            if not required_terms_match([{'title':title,'description':desc,'categories':cats,'location':loc}],a.required_term):continue
             url=ii.get("thumburl") or ii.get("url")
             # Prefer the original for moderate-size explicit files. Wikimedia can
             # throttle on-demand thumbnail generation even when the original is small.

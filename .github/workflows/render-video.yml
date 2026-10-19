@@ -108,7 +108,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import glob,json,os,re,subprocess,statistics
-          from renderer.media_validation import required_terms_match
+          from renderer.media_validation import required_terms_match, unique_source_count
           mp4=glob.glob("output/*.mp4")[0]
           manifest=json.load(open("production/current/manifest.json"))
           probe=json.loads(subprocess.check_output([
@@ -158,7 +158,7 @@ jobs:
             "audio_codec_aac": audio.get("codec_name")=="aac",
             "duration_matches_kind": (120.0 <= duration <= 1800.0) if manifest.get("kind")=="long" else (20.0 <= duration <= 70.0),
             "audio_not_silent": mean_volume > -45.0,
-            "source_count": len(sources) >= 3,
+            "source_count": unique_source_count(sources) >= 3,
             "source_place_match": source_place_ok,
             "source_required_terms": required_terms_match(sources,manifest.get("required_terms",[])),
             "source_reject_terms_clear": source_reject_ok,
@@ -175,6 +175,7 @@ jobs:
               "audio":audio,
               "mean_volume_db":mean_volume,
               "source_count":len(sources),
+              "unique_source_count":unique_source_count(sources),
               "unique_source_titles":unique_titles,
               "required_place":required_place,
               "frame_hashes":hashes,
