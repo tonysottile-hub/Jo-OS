@@ -1,0 +1,18 @@
+{
+  "build_id": "666e8f83-1f40-4229-88ec-d66fbdaee3b6",
+  "queries": [
+    "\"Hamilton\" \"Nevada\"",
+    "\"Hamilton\" \"White Pine\""
+  ],
+  "required_place": "Hamilton",
+  "required_terms": [
+    "Nevada"
+  ],
+  "exclude_terms": [
+    "Alexander Hamilton",
+    "Hamilton Ontario",
+    "Hamilton New Zealand"
+  ],
+  "count": 8,
+  "publish_authorized": false
+}
