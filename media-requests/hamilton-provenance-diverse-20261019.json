@@ -1,0 +1,62 @@
+{
+  "build_id": "666e8f83-1f40-4229-88ec-d66fbdaee3b6",
+  "queries": [
+    "Hamilton Nevada White Pine County"
+  ],
+  "required_place": "Hamilton, Nevada",
+  "required_terms": [
+    "Hamilton",
+    "Nevada",
+    "White Pine"
+  ],
+  "exclude_terms": [
+    "Alexander Hamilton",
+    "Lewis Hamilton",
+    "Hamilton Ontario",
+    "Hamilton Lake",
+    "California"
+  ],
+  "source_image_urls": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Ruins_at_the_silver_mining_ghost_town_of_Hamilton%2C_looking_N-NW%2C_White_Pine_Co.%2C_NV_-_panoramio.jpg/1280px-Ruins_at_the_silver_mining_ghost_town_of_Hamilton%2C_looking_N-NW%2C_White_Pine_Co.%2C_NV_-_panoramio.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Mourner%27s_Point_Cemetery%2C_Hamilton%2C_Nevada%2C_US.jpg/1280px-Mourner%27s_Point_Cemetery%2C_Hamilton%2C_Nevada%2C_US.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg/1280px-Ruin_of_the_Wells_Fargo_Bank_building%2C_silver-mining_ghost_town_of_Treasure_Hill%2C_Pogonip_Ridge_in_the_background%2C_White_Pine_County%2C_NV%2C_USA_-_panoramio.jpg",
+    "https://tile.loc.gov/image-services/iiif/service:gmd:gmd435:g4352:g4352w:ct007804/full/pct:25/0/default.jpg",
+    "https://tile.loc.gov/image-services/iiif/service:ndnp:nvln:batch_nvln_gabbs_ver01:data:sn84022047:00340582561:1870070901:0136/full/pct:25/0/default.jpg",
+    "https://tile.loc.gov/image-services/iiif/service:ndnp:nvln:batch_nvln_gabbs_ver01:data:sn84022047:00340582561:1870053101:0020/full/pct:25/0/default.jpg",
+    "https://tile.loc.gov/image-services/iiif/service:ndnp:nvln:batch_nvln_gabbs_ver01:data:sn84022047:00340582573:1876071501:0158/full/pct:25/0/default.jpg",
+    "https://tile.loc.gov/image-services/iiif/service:ndnp:nvln:batch_nvln_sparks_ver01:data:sn84022044:00279555247:1885010701:0025/full/pct:25/0/default.jpg"
+  ],
+  "source_image_titles": [
+    "Hamilton ghost-town ruins, White Pine County, Nevada",
+    "Mourner's Point Cemetery, Hamilton, Nevada",
+    "Treasure Hill Wells Fargo bank ruin beside Hamilton, White Pine County, Nevada",
+    "Geological map of the White Pine Mining District, Nevada, circa 1869",
+    "White Pine Daily News, Hamilton, Nevada, July 9, 1870",
+    "White Pine Daily News, Hamilton, Nevada, May 31, 1870",
+    "White Pine News, Hamilton/White Pine County, July 15, 1876",
+    "Eureka Daily Sentinel report of the Hamilton courthouse fire, January 7, 1885"
+  ],
+  "source_image_credits": [
+    "QKC via Wikimedia Commons",
+    "Clyde Charles Brown via Wikimedia Commons",
+    "QKC via Wikimedia Commons",
+    "Library of Congress Geography and Map Division; Hague, Clark, and King",
+    "Library of Congress, Chronicling America",
+    "Library of Congress, Chronicling America",
+    "Library of Congress, Chronicling America",
+    "Library of Congress, Chronicling America"
+  ],
+  "source_image_licenses": [
+    "CC BY-SA 3.0",
+    "CC BY-SA 4.0",
+    "CC BY-SA 3.0",
+    "Public domain",
+    "Public domain",
+    "Public domain",
+    "Public domain",
+    "Public domain"
+  ],
+  "source_image_attribution_url": "https://www.loc.gov/newspapers/",
+  "count": 8,
+  "publish_authorized": false
+}
