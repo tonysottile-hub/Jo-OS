@@ -25,6 +25,18 @@
 - Historical counts: Tom 3 failed/5 stalled/1 awaiting verification; Mary 5 stalled/3 awaiting verification/4 in progress; Jo 2 stalled; Steve and Jeff owner-blocked.
 - Do not restart verified work or duplicate Tom's separately running recovery worker.
 
+## Priority zero — verified owner-visible progress reporting
+
+Make verified progress reporting an early recovery priority, alongside safe recovery of Jo's central execution loop. Reuse the existing Jeff/Jo reporting workflow and existing scheduled tasks; **do not create duplicate automations** or consume an additional task slot.
+
+- Deliver owner-visible briefings at **7:30 AM and 7:30 PM America/New_York**, using the already authorized delivery channel. Confirm delivery at the destination, not merely a created briefing row, log or job.
+- Report Jo's manager/watchdog health, each worker's real status, confirmed outputs and destination evidence links, failed or stalled work, current recovery action, and genuine owner-only blockers.
+- For Tom, only count public YouTube links as published; for Mary, include live verified product links; for Steve, isolate TEST evidence and provider approvals; for Jeff, confirm briefing and inbox-monitor delivery.
+- Between briefings, notify Tony **only** when a new major milestone is independently verified or a genuine owner-only action is required. Do not spam ordinary retries or report historical successes as new.
+- Record `scheduled_at`, `delivered_at`, destination/message identifier (if available), independent verifier, and failures/retries in durable Jo OS state.
+- On missed delivery, retry with bounded backoff, verify receipt, and open a recovery incident without stopping other worker lanes. After repair, verify **at least two consecutive scheduled briefing deliveries** and demonstrate unattended recovery from a delivery failure.
+- Never declare progress-reporting restored based solely on GitHub edits, successful cron triggers, database rows or a test that did not deliver the report to Tony.
+
 ## Jo — central manager (first infrastructure priority)
 
 Maintain live heartbeats, unique worker identities, bounded job leases, automatic detection of failures/stalls/expired leases, bounded retries with backoff, independent verification, durable checkpoints/failure memory, owner-only escalation and continuation of unrelated work during single-lane failures. Inspect and repair executors, watchdog and scheduled functions without disrupting known-good components. Demonstrate multiple unattended recovery cycles.
