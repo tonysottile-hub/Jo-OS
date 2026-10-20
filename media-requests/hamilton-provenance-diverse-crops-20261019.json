@@ -30,17 +30,17 @@
     "https://tile.loc.gov/image-services/iiif/service:ndnp:nvln:batch_nvln_sparks_ver01:data:sn84022044:00279555247:1885010701:0025/full/pct:25/0/default.jpg"
   ],
   "source_image_titles": [
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "Geological map of the White Pine Mining District, Nevada, circa 1869",
-    "White Pine Daily News, Hamilton, Nevada, July 9, 1870",
-    "White Pine Daily News, Hamilton, Nevada, July 9, 1870",
-    "White Pine Daily News, Hamilton, Nevada, May 31, 1870",
-    "White Pine Daily News, Hamilton, Nevada, May 31, 1870",
-    "White Pine News, Hamilton, Nevada and White Pine County, July 15, 1876",
-    "White Pine News, Hamilton, Nevada and White Pine County, July 15, 1876",
-    "Eureka Daily Sentinel report of the Hamilton, Nevada courthouse fire, January 7, 1885",
-    "Eureka Daily Sentinel report of the Hamilton, Nevada courthouse fire, January 7, 1885"
+    "Hamilton, Nevada, White Pine County context — Geological map of the White Pine Mining District, circa 1869",
+    "Hamilton, Nevada, White Pine County context — Geological map of the White Pine Mining District, circa 1869",
+    "Hamilton, Nevada, White Pine County context — Geological map of the White Pine Mining District, circa 1869",
+    "Hamilton, Nevada, White Pine County — White Pine Daily News, July 9, 1870",
+    "Hamilton, Nevada, White Pine County — White Pine Daily News, July 9, 1870",
+    "Hamilton, Nevada, White Pine County — White Pine Daily News, May 31, 1870",
+    "Hamilton, Nevada, White Pine County — White Pine Daily News, May 31, 1870",
+    "Hamilton, Nevada, White Pine County — White Pine News, July 15, 1876",
+    "Hamilton, Nevada, White Pine County — White Pine News, July 15, 1876",
+    "Hamilton, Nevada, White Pine County — Eureka Daily Sentinel courthouse-fire report, January 7, 1885",
+    "Hamilton, Nevada, White Pine County — Eureka Daily Sentinel courthouse-fire report, January 7, 1885"
   ],
   "source_image_credits": [
     "Library of Congress Geography and Map Division; Hague, Clark, and King",
@@ -70,5 +70,6 @@
   ],
   "source_image_attribution_url": "https://www.loc.gov/newspapers/",
   "count": 11,
-  "publish_authorized": false
+  "publish_authorized": false,
+  "recovery_attempt": 2
 }
