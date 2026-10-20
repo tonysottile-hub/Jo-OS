@@ -1,8 +1,9 @@
 {
   "build_id": "666e8f83-1f40-4229-88ec-d66fbdaee3b6",
   "kind": "long",
-  "media_run_id": 39312655300,
+  "media_run_id": 39371215192,
   "narration_run_id": 38392167185,
   "output_name": "hamilton-nevada-provenance-diverse.mp4",
-  "publish_authorized": false
+  "publish_authorized": false,
+  "recovery_attempt": 2
 }
