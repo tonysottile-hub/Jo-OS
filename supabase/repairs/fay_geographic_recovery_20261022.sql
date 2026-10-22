@@ -1,0 +1,12 @@
+BEGIN;
+DO $guard$ BEGIN
+ IF NOT EXISTS (SELECT 1 FROM public.video_builds WHERE id='a15769f4-c661-4a5e-b7bd-6ce3c364185c' AND status='blocked' AND blocker_stage='qa' AND publish_job_id IS NULL) THEN RAISE EXCEPTION 'Fay recovery precondition changed'; END IF;
+END $guard$;
+INSERT INTO public.video_build_logs(build_id,stage,detail) SELECT id,'geographic_media_recovery_started',jsonb_build_object('reason','Independent visual QA rejected Tropical Storm Fay media for Fay Nevada','previous_manifest',asset_manifest,'previous_output_storage_path',output_storage_path,'old_media_dispatch_id',783,'old_render_production_id',57,'old_render_artifact_id',11896815380,'publication_performed',false,'retry_limit',3) FROM public.video_builds WHERE id='a15769f4-c661-4a5e-b7bd-6ce3c364185c';
+UPDATE jo_core.github_dispatches SET state='failed',last_error='Rejected by independent visual QA: Tropical Storm Fay is not Fay Nevada; retained provenance, replaced by geographically constrained recovery',updated_at=now() WHERE dispatch_id=783 AND build_id='a15769f4-c661-4a5e-b7bd-6ce3c364185c' AND state='media_ready';
+UPDATE jo_core.production_runs SET state='failed',last_error='Render rejected for wrong-place media; preserve artifact evidence and valid narration, recover media only',updated_at=now() WHERE id=57 AND build_id='a15769f4-c661-4a5e-b7bd-6ce3c364185c' AND state='render_ready';
+UPDATE public.video_builds SET status='production_package_ready',blocker_stage=null,last_error=null,output_storage_path=null,updated_at=now(),
+ asset_manifest=(asset_manifest-'auto_qa'-'perceptual_review'-'render_ingested_at')||jsonb_build_object('publish_authorized',false,'required_place','Fay','required_terms',jsonb_build_array('Fay','Nevada'),'commons_exclude_terms',jsonb_build_array('tropical storm','hurricane','cyclone','Florida'),'media_queries',jsonb_build_array('Fay Nevada ghost town','Fay Lincoln County Nevada'),'media_recovery_started_at',now(),'recovery_reason','Wrong geographic media rejected; fresh place-constrained source recovery; independent review required')
+WHERE id='a15769f4-c661-4a5e-b7bd-6ce3c364185c';
+INSERT INTO jo_core.events(worker_key,event_type,detail) VALUES('tom','qa_failure_recovery_queued','{"build_id":"a15769f4-c661-4a5e-b7bd-6ce3c364185c","repair":"Require Fay AND Nevada in actual source metadata; exclude storms; preserve narration; invalidate rejected media/render","retry_limit":3,"publish_authorized":false,"external_work_verified":false}');
+COMMIT;
