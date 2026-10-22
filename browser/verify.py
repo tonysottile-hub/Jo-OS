@@ -1,4 +1,4 @@
-"""Independent HTTP verifier. No browser evidence can self-certify success."""
+"""Independent HTTP verifier. No execution transport can self-certify success."""
 import json, hashlib, urllib.request, urllib.parse, os
 from datetime import datetime, timezone
 ALLOWED={'cigar30-shop.fourthwall.com','cigars30jax.com','www.cigars30jax.com'}
@@ -23,26 +23,28 @@ if set(actual)!=expected or len(actual)!=len(expected):
     raise SystemExit('Audit scope mismatch: expected '+repr(sorted(expected))+'; got '+repr(actual))
 results=[]
 for row in execution['results']:
-    proof={'worker':row['worker'],'url':row['url'],'checked_at':datetime.now(timezone.utc).isoformat(),'mechanism':'independent_urllib_get','passed':False}
+    proof={'worker':row['worker'],'url':row['url'],'checked_at':datetime.now(timezone.utc).isoformat(),'mechanism':'independent_urllib_get','execution_transport':row.get('transport','playwright'),'passed':False}
     try:
         status,html=fetch(row.get('final_url',row['url']))
         proof.update(http_status=status,sha256=hashlib.sha256(html.encode()).hexdigest())
+        execution_passed=bool(row.get('browser_passed') or row.get('fallback_passed'))
         if row['worker']=='mary':
             matches=[p for p in row['products'] if urllib.parse.urlsplit(p['url']).path in html]
             proof['confirmed_products']=matches
             product_url=row.get('product_navigation',{}).get('url','')
-            if not product_url: raise ValueError('Browser could not navigate storefront: HTTP '+str(row.get('status','unknown')))
+            if not product_url: raise ValueError('Execution transport could not navigate storefront: HTTP '+str(row.get('status','unknown')))
             pstatus,phtml=fetch(product_url)
             proof['product_http_status']=pstatus
-            proof['passed']=bool(row.get('browser_passed') and matches and pstatus==200 and 'cigar' in phtml.lower())
+            proof['product_sha256']=hashlib.sha256(phtml.encode()).hexdigest()
+            proof['passed']=bool(execution_passed and matches and pstatus==200 and 'cigar' in phtml.lower())
         else:
-            proof['passed']=bool(row.get('browser_passed') and status==200)
+            proof['passed']=bool(execution_passed and status==200)
         proof['scope']='public pages only; no logo, cart, checkout, indexing, or post claims'
     except Exception as e:
         proof['error']=str(e)[:300]
     results.append(proof)
 overall_passed=bool(results) and all(row['passed'] for row in results)
-json.dump({'version':1,'execution':execution,'verification':results,'overall_passed':overall_passed,'scope':sorted(expected)},open('browser-output/result.json','w'),indent=2)
+json.dump({'version':2,'execution':execution,'verification':results,'overall_passed':overall_passed,'scope':sorted(expected)},open('browser-output/result.json','w'),indent=2)
 print(json.dumps(results,indent=2))
 if not overall_passed:
     raise SystemExit('Independent public audit verification failed')
