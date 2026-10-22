@@ -71,3 +71,11 @@ Owner-only: install the Stripe TEST secret through the secure MCR project secret
 External: failed Twilio campaign requires remediation/provider acceptance; not equivalent to approved external messaging.
 Engineering: deterministic licensed media sourcing and QA recovery, topic exhaustion, publication verification, real G Stack execution and remaining safe failure-injection tests. These are not mislabeled owner blockers.
 Remaining acceptance: missed schedule repair, missing production artifact repair, temporary API failure recovery, failed QA repair to a verified business output, recurrence escalation, all-five worker deliverables and real destination delivery.
+
+## Final readback at 22:28 UTC
+
+- Added missing storage artifact detection to the existing cloud incident detector, migration detect_missing_production_artifacts, commit17b283cb8cfe5f09420830af2d2b4534bc325052. Rollback-only injection changed a build pointer to a nonexistent object; detector produced the expected missing_production_artifact incident. Fixture rollback independently confirmed. No storage object was deleted. This proves DETECTION, not complete artifact restoration.
+- Company shared memory key recovery-evidence-20261022, knowledge8869f7c9-bd72-4358-99f5-46400dace566 persisted and independently read back.
+- Fay remains blocked/media, publish_authorized=false, only dispatch784 added; no repeat dispatch observed.
+- MCR fixture remains inactive/unpaid, opted_out=true, six simulated outbound records and zero provider messages.
+- Brief connector errors were retried successfully; no browser fallback or credentials exposure.
