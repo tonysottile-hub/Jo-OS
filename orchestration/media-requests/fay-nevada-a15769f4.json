@@ -1,8 +1,8 @@
 {
   "build_id": "a15769f4-c661-4a5e-b7bd-6ce3c364185c",
   "queries": [
-    "Fay Nevada",
-    "Fay Lincoln County"
+    "Fay Nevada ghost town",
+    "Fay Lincoln County Nevada"
   ],
   "count": 8,
   "required_place": "Fay",
@@ -14,8 +14,16 @@
     "tombstone",
     "burial",
     "stereoscopic",
-    "stereo"
+    "stereo",
+    "tropical storm",
+    "hurricane",
+    "cyclone",
+    "Florida"
+  ],
+  "required_terms": [
+    "Fay",
+    "Nevada"
   ],
   "publish_authorized": false,
-  "requested_at": "2026-10-14T13:03:33.348Z"
+  "requested_at": "2026-10-22T22:24:06.635Z"
 }
