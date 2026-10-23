@@ -60,6 +60,10 @@ end $$;
 revoke all on function public.jo_improvement_finish(uuid,uuid,jsonb) from public,anon,authenticated;
 grant execute on function public.jo_improvement_finish(uuid,uuid,jsonb) to service_role;
 
+grant usage on schema jo_core to service_role;
+grant select(worker_key,state,current_job_id) on jo_core.worker_state to service_role;
+grant select(worker_key,failure_class,summary,status,last_seen_at) on jo_core.failure_memory to service_role;
+grant select(memory_key,revision), insert(memory_key,scope,category,content,source,source_reference), update(content,source_reference,updated_at,revision) on jo_core.shared_knowledge to service_role;
 select cron.schedule('jo-continuous-improvement','*/10 * * * *',$job$
 select net.http_post(url:='https://pubnivjjeofxqvmttuzh.supabase.co/functions/v1/jo-continuous-improvement',
 headers:=jsonb_build_object('Content-Type','application/json','x-jo-scheduler-token',(select decrypted_secret from vault.decrypted_secrets where name='publisher_scheduler_bridge_token')),
