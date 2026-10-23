@@ -1,10 +1,10 @@
 import {createClient} from "jsr:@supabase/supabase-js@2.95.0";
 const lanes = [
  {worker:"jo",query:"repo:supabase/supabase is:issue cron retry",doc:"https://supabase.com/docs/guides/functions/schedule-functions",test:"Inject a missed schedule; verify recovery and independent completion without an interactive session."},
- {worker:"tom",query:"repo:googleapis/google-api-python-client is:issue youtube upload",doc:"https://developers.google.com/youtube/v3/guides/uploading_a_video",test:"Use approved place-specific media, verify QA and correct-channel delivery; preserve publication holds."},
+ {worker:"tom",query:"repo:googleapis/google-api-python-client is:issue youtube upload",doc:"https://developers.google.com/youtube/data/guides/uploading_a_video",test:"Use approved place-specific media, verify QA and correct-channel delivery; preserve publication holds."},
  {worker:"mary",query:"repo:microsoft/playwright is:issue 403",doc:"https://playwright.dev/docs/best-practices",test:"Verify approved product identity, visibility and cart availability without modifying artwork or purchasing."},
  {worker:"steve",query:"repo:twilio/twilio-node is:issue messaging",doc:"https://www.twilio.com/docs/messaging/guides/debugging-common-issues",test:"Diagnose provider rejection; test in isolation; require provider approval before live messaging."},
- {worker:"jeff",query:"repo:googleapis/google-api-python-client is:issue gmail authentication",doc:"https://developers.google.com/gmail/api/guides",test:"Verify authorized mailbox access and actual destination receipt; never treat a saved draft as delivery."}
+ {worker:"jeff",query:"repo:googleapis/google-api-python-client is:issue gmail authentication",doc:"https://developers.google.com/workspace/gmail/api/guides",test:"Verify authorized mailbox access and actual destination receipt; never treat a saved draft as delivery."}
 ];
 async function read(url:string) {
  const r=await fetch(url,{headers:{"User-Agent":"JoOS-Research/1.0","Accept":"application/json,text/html"},redirect:"error",signal:AbortSignal.timeout(10000)});
