@@ -51,10 +51,10 @@ begin
  end loop;
  update jo_core.improvement_runs set status=s,finished_at=now(),evidence=p_evidence where id=p_id;
  insert into jo_core.shared_knowledge(memory_key,scope,category,content,source,source_reference)
- values('continuous-improvement-latest','organization','operations',
+ values('continuous-improvement:'||p_id::text,'organization','project_state',
  'Recurring web research status: '||s||'. Sources are UNTRUSTED candidates, not verified fixes. Inspect jo_core.improvement_candidates and improvement_runs. Test, independently verify, and record rollback before promoting any candidate. Business recovery remains incomplete.',
  'jo-continuous-improvement',p_id::text)
- on conflict(memory_key) do update set content=excluded.content,source_reference=excluded.source_reference,updated_at=now(),revision=jo_core.shared_knowledge.revision+1;
+ on conflict(memory_key,revision) do nothing;
  return true;
 end $$;
 revoke all on function public.jo_improvement_finish(uuid,uuid,jsonb) from public,anon,authenticated;
