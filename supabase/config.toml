@@ -1,0 +1,3 @@
+[functions.rio-bridge]
+# Dedicated Rio bearer authentication is enforced in core.mjs and service-only RPC.
+verify_jwt = false
