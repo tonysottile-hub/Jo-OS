@@ -1,0 +1,27 @@
+{
+  "build_id": "fd8a0708-fccf-460d-a429-71ece159573e",
+  "queries": [
+    "Bodie California historic buildings",
+    "Bodie California Main Street",
+    "Bodie California ghost town"
+  ],
+  "count": 8,
+  "required_place": "Bodie",
+  "exclude_terms": [
+    "cemetery",
+    "grave",
+    "graves",
+    "headstone",
+    "tombstone",
+    "burial",
+    "stereoscopic",
+    "stereo",
+    "Washington"
+  ],
+  "required_terms": [
+    "Bodie",
+    "California"
+  ],
+  "publish_authorized": false,
+  "requested_at": "2026-11-02T00:35:25.510Z"
+}
